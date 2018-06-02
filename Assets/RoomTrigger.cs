@@ -1,0 +1,39 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RoomTrigger : MonoBehaviour {
+
+	GameObject player;
+	Room room;
+
+	public void Awake(){
+		room = GetComponent<Room>();
+	}
+	void OnTriggerEnter2D(Collider2D hit){
+//		Debug.Log( hit.gameObject.name + " entered room at " + Time.time);
+		if(hit.gameObject.tag == "Player"){
+			room.PlayerIntoRoom(room);
+		}
+		else if (hit.gameObject.tag == "Enemy"){
+			room.EnemyEnteredRoom(room);
+		}
+		Sconce sconce = hit.GetComponent<Sconce>();
+		if(sconce != null){
+			hit.gameObject.transform.parent = gameObject.transform;
+
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D hit){
+	//	Debug.Log(hit.gameObject.name + " exited room at " + Time.time);
+		if(hit.gameObject.tag == "Player"){
+			room.PlayerExited(room);
+		}
+		else if (hit.gameObject.tag == "Enemy"){
+			room.EnemyExitedRoom(room);
+		}
+	}
+	// Use this for initialization
+
+}
