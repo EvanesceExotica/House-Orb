@@ -12,10 +12,18 @@ public class CameraShakeCustom : MonoBehaviour {
 		ourCamera = GetComponent<ProCamera2D>();
 		mainCamera = Camera.main;
 		Monster.ReadyToScream += this.ScreamShake;
+		StarScream.ScreamHitPlayerCurrentRoom += ScreamShake;
+		PromptPlayerHit.PlayerParried += ScreamShake;
 	}
 
+	public void ScreamShake(int x){
+		Debug.Log("Getting shook");
+		mainCamera.DOShakePosition(3, 10, 10, 90, true);
+		//mainCamera.DOShakePosition(10, 10, 10, 90, true);
+	}
 	public void ScreamShake(){
-		mainCamera.DOShakePosition(10, 3, 10, 90, true);
+		Debug.Log("Getting shook");
+		mainCamera.DOShakePosition(3, 10, 10, 90, true);
 	}
 	public void ShakeUs(float duration, float strength, int vibrato, float randomness, bool fadeOut){
 		mainCamera.DOShakePosition(duration, strength, vibrato, randomness, fadeOut);

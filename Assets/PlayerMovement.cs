@@ -29,8 +29,8 @@ public class PlayerMovement : MonoBehaviour
         //make this a 
         OrbController.StoppedChannelingOrb += SetYesCanMove;
 
-       HidingSpace.PlayerHiding += SetCantMove;
-       HidingSpace.PlayerNoLongerHiding +=  SetYesCanMove; 
+        HidingSpace.PlayerHiding += SetCantMove;
+        HidingSpace.PlayerNoLongerHiding += SetYesCanMove;
     }
 
     List<GameObject> incapacitators = new List<GameObject>();
@@ -95,6 +95,13 @@ public class PlayerMovement : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+
+        foreach (Transform child in transform)
+        {
+            Vector3 childScale = transform.localScale;
+            childScale.x *= -1;
+            transform.localScale = theScale;
+        }
     }
 }
 // 	LayerMask floor;

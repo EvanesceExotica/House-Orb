@@ -23,6 +23,14 @@ public class RoomTrigger : MonoBehaviour {
 			hit.gameObject.transform.parent = gameObject.transform;
 
 		}
+		HidingSpace space = hit.GetComponent<HidingSpace>();
+		if(space != null){
+			hit.transform.parent = gameObject.transform;
+		}
+		Memory memory = hit.GetComponent<Memory>();
+		if(memory != null){
+			hit.transform.parent = gameObject.transform;
+		}
 	}
 
 	void OnTriggerExit2D(Collider2D hit){

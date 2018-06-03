@@ -10,6 +10,10 @@ public class Sconce : PooledObject, iInteractable
     public ParticleSystems revealedParticles;
     public event Action<Sconce> Revealed;
 
+    FatherOrb orbPrefab;
+
+    public bool startsWithOrb;
+
     public void RevealedWrapper(Sconce sconce)
     {
         PlayRevealedParticles();
@@ -127,6 +131,10 @@ public class Sconce : PooledObject, iInteractable
         if (fillStatus != Status.HoldingOrb)
         {
             StopOccupiedParticles();
+        }
+        if(startsWithOrb){
+            GameHandler.fatherOrbGO.transform.parent = transform;
+            GameHandler.fatherOrb.transform.position = transform.position;
         }
         //fillStatus = Status.Empty;
     }

@@ -6,11 +6,14 @@ using MirzaBeig.ParticleSystems;
 public class OrbEffects : MonoBehaviour {
 
 [Header("Assign in Inspector")]
-	public ParticleSystems FizzingParticleSystems;
+	public ParticleSystems FizzingParticleSystems; //ultima looping
 
-	public ParticleSystems parryParticleSystem;
+	public ParticleSystems parryParticleSystem; //ultima one s hot
 
-	public ParticleSystems closeToHiddenSystem;
+	public ParticleSystems closeToHiddenSystem; //
+
+	public ParticleSystems burningSystem ;//solar ; 
+
 	Light ourLight;
 	float defaultIntensity;
 	float defaultColor;
@@ -36,6 +39,9 @@ public class OrbEffects : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(Input.GetKeyDown(KeyCode.U)){
+			parryParticleSystem.Play();
+		}
 		
 	}
 }

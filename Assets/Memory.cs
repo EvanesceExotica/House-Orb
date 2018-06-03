@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class Memory : iInteractable
+using DG.Tweening;
+public class Memory : MonoBehaviour, iInteractable
 {
 
     public static Action HoveringOverMemoryObject;
@@ -62,6 +63,15 @@ public class Memory : iInteractable
 		}
     }
     public BuffGiven givenBuff;
+
+    void MoveToMemory(){
+       GameHandler.fatherOrb.MoveUsWrapper(GameHandler.fatherOrbGO.transform.position, transform.position) ;
+    }
+
+    void MoveBack(){
+        GameHandler.fatherOrb.MoveUsWrapper(this.gameObject.transform.position, GameHandler.player.transform.position);
+
+    }
     void Start()
     {
 

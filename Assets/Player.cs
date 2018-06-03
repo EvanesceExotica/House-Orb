@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using MirzaBeig.ParticleSystems;
 public class Player : MonoBehaviour {
 
-	
+	public ParticleSystems blinded; //serum2	
 	public PlayerRender playerRenderer;
 	public PlayerMovement movement;
 	// Use this for initialization
