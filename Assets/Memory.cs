@@ -65,6 +65,7 @@ public class Memory : MonoBehaviour, iInteractable
     public BuffGiven givenBuff;
 
     void MoveToMemory(){
+        //play like "Hands lifted" animation
        GameHandler.fatherOrb.MoveUsWrapper(GameHandler.fatherOrbGO.transform.position, transform.position) ;
     }
 

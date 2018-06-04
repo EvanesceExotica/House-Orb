@@ -12,6 +12,12 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     public static event Action Dropped;
 
+    public static event Action ReturnedToPreviousScone;
+
+    void ReturnedToPreviousSconeWrapper(){
+        
+    }
+
     void PlayerDroppedOrb()
     {
         heldStatus = HeldStatuses.Travelling;
@@ -99,7 +105,6 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         transform.parent = currentSconce.transform;
         instabilityStatus = InstabilityStatus.NotPickedUp;
     }
-    public static event Action ReturnedToPreviousScone;
     public float durationHeld;
     public float heldStartTime;
     public float elapsedTime;
@@ -185,6 +190,10 @@ public class FatherOrb : MonoBehaviour//, iInteractable
                 elapsedTime = 0;
                 yield break;
             }
+            if(cancelCarryCoroutine){
+                elapsedTime = 0;
+                yield break;
+            }
             if (elapsedTime >= durationBeforeFizzing && instabilityStatus != InstabilityStatus.Fizzing)
             {
                 instabilityStatus = InstabilityStatus.Fizzing;
@@ -238,6 +247,13 @@ public class FatherOrb : MonoBehaviour//, iInteractable
             transform.position = Vector2.MoveTowards(transform.position, destination, 5 * Time.deltaTime);
             yield return null;
         }
+    }
+
+    //TODO: Make sure this only applies to the automatic cancel travel vvvv
+    bool cancelCarryCoroutine;
+    public void ReturnToLastSconceWrapper(){
+        cancelCarryCoroutine = true;
+       StartCoroutine(ReturnToLastSconce()) ;
     }
 
     public IEnumerator ReturnToLastSconce()

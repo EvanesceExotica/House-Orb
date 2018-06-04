@@ -9,7 +9,7 @@ public class PromptPlayerHit : MonoBehaviour
 {
     public static event Action PlayerParried;
 
-    
+   public static event Action AutoRepelUsed; 
     public static event Action PlayerFailed;
 
 
@@ -24,12 +24,25 @@ public class PromptPlayerHit : MonoBehaviour
     {
 
     }
+    bool canAutoRepel;
+    void AutoRepelActivated(){
+        canAutoRepel = true;
+    }
+
+    void AutoRepelUsedWrapper(){
+
+        canAutoRepel = false;
+        if(AutoRepelUsed != null){
+            AutoRepelUsed();
+        }
+    }
     void Awake()
     {
         promptTimeImage = GetComponentInChildren<Image>();
         ourCanvasGroup = GetComponent<CanvasGroup>();
         textComponent = GetComponentInChildren<TextMeshProUGUI>();
         Room.RoomWithPlayerHit += this.PromptPlayerHitWrapper;
+        AutoRepel.AutoRepelTriggered+= AutoRepelActivated;
 
     }
 
@@ -80,6 +93,10 @@ public class PromptPlayerHit : MonoBehaviour
 
     public IEnumerator PromptPlayerHitCoroutine()
     {
+        if(canAutoRepel){
+            PlayerParriedScream();
+            yield break;
+        }
         float startTime = Time.time;
 		Debug.Log("Hit E");
         //Make the keys random?

@@ -12,6 +12,16 @@ public class PlayerRender : MonoBehaviour {
 		//spriteRenderer = GetComponent<SpriteRenderer>();
 		HidingSpace.PlayerHiding += TurnOffPlayerRenderer;
 		HidingSpace.PlayerNoLongerHiding += TurnOnPlayerRenderer;
+		ReturnPlayerToLastSconce.ReturningToLastSconceWithPlayer +=TurnOffPlayerRenderer;
+		ReturnPlayerToLastSconce.ArrivedAtLastSconceWithPlayer += TurnOnPlayerRenderer;
+	}
+
+	public void TurnOffPlayerRenderer(){
+		meshRenderer.enabled = false;
+	}
+
+	public void TurnOnPlayerRenderer(){
+		meshRenderer.enabled = true;
 	}
 	public void TurnOffPlayerRenderer(GameObject go){
 		meshRenderer.enabled = false;
