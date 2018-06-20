@@ -2,21 +2,77 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class HiddenSconce : MonoBehaviour
+using UnityEngine.UI;
+public class HiddenSconce : ParentTrigger
 {
-    public static event Action<FatherOrb.HeldStatuses> SconceRevealed;
-    public event Action<Sconce, HiddenSconce> RevealedSconce;
+    public Room parentRoom;
+    public enum SpriteVariations
+    {
+        GreenPotion,
 
-    public void RevealedSconceWrapper(Sconce sconce, HiddenSconce hiddenSconce){
-        if(RevealedSconce != null){
-            RevealedSconce(sconce, hiddenSconce);
+        PurplePotion,
+        FlowerDoll,
+
+        DevilDoll,
+
+    }
+
+    public static event Action InSemiCloseRange;
+
+    void InSemiCloseRangeWrapper()
+    {
+        if (InSemiCloseRange != null)
+        {
+            InSemiCloseRange();
         }
     }
-    public void SconceWasRevealed(FatherOrb.HeldStatuses orbStatus)
+
+    public static event Action OutOfRange;
+    void OutOfRangeWrapper()
+    {
+        if (OutOfRange != null)
+        {
+            OutOfRange();
+        }
+
+    }
+    public static event Action InCloseRange;
+
+    void InCloseRangeWrapper()
+    {
+        if (InCloseRange != null)
+        {
+            InCloseRange();
+        }
+    }
+    public SpriteVariations ourVariation;
+    public Sprite[] ourSprites = new Sprite[4];
+
+    SpriteRenderer spriteRenderer;
+
+    public event Action ThisSconceRevealed;
+    public static event Action SconceRevealed;
+    public event Action<Sconce, HiddenSconce> NewSconceRevealed;
+
+    public void ThisSconceRevealedWrapper()
+    {
+        if (ThisSconceRevealed != null)
+        {
+            ThisSconceRevealed();
+        }
+    }
+    public void NewSconceRevealedWrapper(Sconce sconce, HiddenSconce hiddenSconce)
+    {
+        if (NewSconceRevealed != null)
+        {
+            NewSconceRevealed(sconce, hiddenSconce);
+        }
+    }
+    public void SconceWasRevealed()
     {
         if (SconceRevealed != null)
         {
-            SconceRevealed(orbStatus);
+            SconceRevealed();
         }
     }
 
@@ -24,12 +80,18 @@ public class HiddenSconce : MonoBehaviour
 
 
     public Sconce sconceToReveal;
+    public GenerateNewBounds boundsGenerator;
 
     void Awake()
     {
-//        sconceToRevealGO = transform.GetChild(0).gameObject;// GetComponentInChildren<Sconce>().gameObject;
-//        sconceToReveal = sconceToRevealGO.GetComponent<Sconce>();
- //       sconceToReveal.fillStatus = Sconce.Status.Hidden;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        boundsGenerator = GetComponent<GenerateNewBounds>();
+
+        if (spriteRenderer.sprite != null)
+        {
+            boundsGenerator.GenerateNewColliderSize();
+        }
+
     }
     // Use this for initialization
     void Start()
@@ -45,6 +107,22 @@ public class HiddenSconce : MonoBehaviour
     }
 
     bool orbOverlappingUs = false;
+
+    public override void OnChildTriggerEnter2D(Collider2D hit, GameObject go)
+    {
+        if (hit.gameObject == GameHandler.fatherOrbGO)
+        {
+            InSemiCloseRangeWrapper();
+        }
+    }
+
+    public override void OnChildTriggerExit2D(Collider2D hit, GameObject go)
+    {
+        if (hit.gameObject == GameHandler.fatherOrbGO)
+        {
+            OutOfRangeWrapper();
+        }
+    }
     void OnTriggerEnter2D(Collider2D hit)
     {
         if (hit.gameObject == GameHandler.fatherOrbGO)
@@ -53,6 +131,7 @@ public class HiddenSconce : MonoBehaviour
             {
                 orbOverlappingUs = true;
                 StartCoroutine(BeginDeterminingProximity());
+                InCloseRangeWrapper();
             }
         }
     }
@@ -87,12 +166,12 @@ public class HiddenSconce : MonoBehaviour
     {
         //play some animation	
         Sconce revealedSconce = sconceToReveal.GetPooledInstance<Sconce>();
-        revealedSconce.transform.position  = transform.position;
+        revealedSconce.transform.position = transform.position;
         //sconceToRevealGO.SetActive(true);
         //sconceToRevealGO.transform.parent = null;
-        SconceWasRevealed(FatherOrb.HeldStatuses.InSconce);
-        RevealedSconceWrapper(revealedSconce, this);
         revealedSconce.OrbPlacedInUs(revealedSconce);
+        SconceWasRevealed();
+        NewSconceRevealedWrapper(revealedSconce, this);
         gameObject.SetActive(false);
 
 

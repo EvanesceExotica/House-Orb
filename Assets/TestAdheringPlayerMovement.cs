@@ -74,12 +74,12 @@ public class TestAdheringPlayerMovement : MonoBehaviour
         ourRigidbody = GetComponent<Rigidbody2D>();
         ourRigidbody.bodyType = RigidbodyType2D.Kinematic;
         // anim = GetComponent<Animator>();
-        OrbController.ChannelingOrb += SetCantMove;
+       // OrbController.ChannelingOrb += SetCantMove;
         //make this a 
-        OrbController.StoppedChannelingOrb += SetYesCanMove;
+       // OrbController.StoppedChannelingOrb += SetYesCanMove;
 
-        HidingSpace.PlayerHiding += SetCantMove;
-        HidingSpace.PlayerNoLongerHiding += SetYesCanMove;
+//        HidingSpace.PlayerHiding += SetCantMove;
+      //  HidingSpace.PlayerNoLongerHiding += SetYesCanMove;
     }
 
     List<GameObject> incapacitators = new List<GameObject>();

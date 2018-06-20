@@ -6,22 +6,34 @@ using DG.Tweening;
 
 public class OrbController : MonoBehaviour
 {
-    public static event Action<GameObject> ChannelingOrb;
-    void ChannelingOrbWrapper(GameObject orbGO)
+    public static event Action<MonoBehaviour> ChannelingOrb;
+    void ChannelingOrbWrapper(MonoBehaviour orb)
     {
         if (ChannelingOrb != null)
         {
-            ChannelingOrb(orbGO);
+            ChannelingOrb(orb);
         }
     }
-    public static event Action<GameObject> StoppedChannelingOrb;
-    void StoppedChannelingOrbWrapper(GameObject orbGO)
+
+    public static event Action<MonoBehaviour> SconceRevealedStoppedChannelingOrb;
+
+    void SconceRevealedStoppedChannelingOrbWrapper(MonoBehaviour mono){
+        if(SconceRevealedStoppedChannelingOrb != null){
+            SconceRevealedStoppedChannelingOrb(mono);
+        }
+    }
+
+    //this event is specifically to put the orb back into the player's hands.
+    public static event Action<MonoBehaviour> ManuallyStoppedChannelingOrb;
+    void ManuallyStoppedChannelingOrbWrapper(MonoBehaviour orb)
     {
-        if (StoppedChannelingOrb != null)
+        if (ManuallyStoppedChannelingOrb != null)
         {
-            StoppedChannelingOrb(orbGO);
+            ManuallyStoppedChannelingOrb(orb);
         }
     }
+
+
     bool canChannelOrb = false;
     bool channelingOrb = false;
     // Use this for initialization
@@ -33,13 +45,14 @@ public class OrbController : MonoBehaviour
     {
         FatherOrb.PickedUp += SetCanBeChanneled;
         FatherOrb.Dropped += SetCanNOTBeChanneled;
+        Sconce.OrbInSconce += SetCanNOTBeChanneled;
         HiddenSconce.SconceRevealed += StopOrbBeingChanneled;
         orb = GetComponent<FatherOrb>();
         orbRigidBody = GetComponent<Rigidbody2D>();
 
     }
 
-    void SetCanBeChanneled()
+    void SetCanBeChanneled(MonoBehaviour ourObject)
     {
 
         canChannelOrb = true;
@@ -50,29 +63,44 @@ public class OrbController : MonoBehaviour
         canChannelOrb = false;
     }
 
+    void SetCanNOTBeChanneled(MonoBehaviour ourObject)
+    {
+        canChannelOrb = false;
+    }
+
     void StartOrbBeingChanelled()
     {
         channelingOrb = true;
+        GameHandler.proCamera.RemoveCameraTarget(GameHandler.playerGO.transform);
+        GameHandler.proCamera.AddCameraTarget(GameHandler.fatherOrbGO.transform);
         orb.SetOrbBeingChanneled();
-        ChannelingOrbWrapper(gameObject);
+        ChannelingOrbWrapper(this);
         orbRigidBody.bodyType = RigidbodyType2D.Dynamic;
         orbRigidBody.gravityScale = 0;
 
     }
 
-    void StopOrbBeingChanneled(FatherOrb.HeldStatuses statusNow)
+    void StopOrbBeingChanneled()
     {
 
         channelingOrb = false;
+        GameHandler.proCamera.RemoveCameraTarget(GameHandler.fatherOrbGO.transform);
+        GameHandler.proCamera.AddCameraTarget(GameHandler.playerGO.transform);
         //todo: whether or not this is carried or handled depends on whether or not
         //todo: maybe the orb begins screaming when outside of sconce and hand for too long
         orbRigidBody.velocity = Vector2.zero;
-        orb.heldStatus = statusNow;
-        StoppedChannelingOrbWrapper(gameObject);
+        if (GameHandler.fatherOrb.heldStatus != FatherOrb.HeldStatuses.InSconce)
+        {
+            //if it's not in the sconce, then we manually recalled it
+            ManuallyStoppedChannelingOrbWrapper(this);
+        }
+        else{
+            SconceRevealedStoppedChannelingOrbWrapper(this);
+        }
         orbRigidBody.bodyType = RigidbodyType2D.Kinematic;
     }
 
-   
+
 
     void FixedUpdate()
     {
@@ -81,7 +109,7 @@ public class OrbController : MonoBehaviour
             Debug.Log("Orb is being channeled now");
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
-            
+
             if (moveHorizontal > 0)
             {
 
@@ -92,11 +120,13 @@ public class OrbController : MonoBehaviour
 
                 transform.Translate(-Vector3.right * speed * Time.deltaTime);
             }
-            if(moveVertical > 0){
+            if (moveVertical > 0)
+            {
                 transform.Translate(Vector3.up * speed * Time.deltaTime);
 
             }
-            if(moveVertical < 0 ){
+            if (moveVertical < 0)
+            {
                 transform.Translate(-Vector3.up * speed * Time.deltaTime);
             }
             Vector2 movement = new Vector2(moveHorizontal, moveVertical);
@@ -107,7 +137,7 @@ public class OrbController : MonoBehaviour
 
     void ReturnToPlayer()
     {
-        orb.MoveUsWrapper(transform.position, GameHandler.playerGO.transform.position);
+        orb.MoveUsWrapper(transform.position, GameHandler.fatherOrbHoldTransform.position);
     }
 
     void Start()
@@ -126,7 +156,7 @@ public class OrbController : MonoBehaviour
             }
             else if (channelingOrb)
             {
-                StopOrbBeingChanneled(FatherOrb.HeldStatuses.Carried);
+                StopOrbBeingChanneled();
                 ReturnToPlayer();
             }
         }

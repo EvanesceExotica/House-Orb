@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using MirzaBeig.ParticleSystems;
 public class PromptPlayerHit : MonoBehaviour
 {
     public static event Action PlayerParried;
@@ -36,6 +37,7 @@ public class PromptPlayerHit : MonoBehaviour
             AutoRepelUsed();
         }
     }
+    RoomManager roomManager;
     void Awake()
     {
         promptTimeImage = GetComponentInChildren<Image>();
@@ -45,6 +47,11 @@ public class PromptPlayerHit : MonoBehaviour
         AutoRepel.AutoRepelTriggered+= AutoRepelActivated;
 
     }
+
+    public ParticleSystems topSystem;
+    public ParticleSystems leftSystem;
+    public ParticleSystems downSystem;
+    public ParticleSystems rightSystem;
 
     void Update(){
 
@@ -88,6 +95,67 @@ public class PromptPlayerHit : MonoBehaviour
         }
 
 	}
+    void AddOrbAsTarget(){
+        GameHandler.proCamera.RemoveCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform);
+        GameHandler.proCamera.AddCameraTarget(GameHandler.fatherOrbGO.transform);
+    }
+
+    void RemoveOrbAsTarget(){
+        GameHandler.proCamera.RemoveCameraTarget(GameHandler.fatherOrbGO.transform);
+        GameHandler.proCamera.AddCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform);
+    }
+
+    void ZoomIn(){
+        //GameHandler.proCamera.Zoom(10, 0.5, );
+    }
+
+    void ZoomOut(){
+
+    }
+
+    enum Sides{
+        Up,
+        Down,
+        Left,
+        Right
+    }
+
+    KeyCode ourKeyCode;
+
+   KeyCode PickOrbSide(){
+       KeyCode potentialKeyCode = KeyCode.E;
+       int random = UnityEngine.Random.Range(0, 4);
+       if(random == 0){
+           //UP
+          potentialKeyCode = KeyCode.I; 
+          PlaySystem(topSystem);
+       }
+       else if(random == 1){
+           potentialKeyCode = KeyCode.J;
+           PlaySystem(leftSystem);
+
+       }
+       else if(random == 2){
+           potentialKeyCode = KeyCode.K;
+           PlaySystem(downSystem);
+
+       }
+       else if(random == 3){
+           potentialKeyCode = KeyCode.L;
+           PlaySystem(rightSystem);
+
+       }
+       return potentialKeyCode;
+    }
+
+    void PlaySystem(ParticleSystems chosenSystem){
+        chosenSystem.Play();
+    }
+
+    void StopSystem(ParticleSystems chosenSystem){
+        chosenSystem.Stop();
+    }
+
 
     bool hitSuccess = false;
 

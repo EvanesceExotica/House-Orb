@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Com.LuisPedroFonseca.ProCamera2D;
 public class GameHandler : MonoBehaviour {
 
 
+	public static RoomManager roomManager;
+	public static LayerMask defaultPlayerLayer;
 	public static Player player;
 	public static GameObject playerGO;
 
@@ -14,9 +16,22 @@ public class GameHandler : MonoBehaviour {
 	public static Monster monster;
 	public static GameObject monsterGO;
 
+	public static ProCamera2D proCamera;
+
+	public static Camera mainCamera;
+
+	public static Transform fatherOrbHoldTransform;
+
+	public static Transform bubbleLineStartTransform;
 	void Awake(){
+		fatherOrbHoldTransform = GameObject.Find("FatherOrbPos").transform;
+		bubbleLineStartTransform = GameObject.Find("LineStartPosition").transform;
+		proCamera = Camera.main.GetComponent<ProCamera2D>();
+		mainCamera=Camera.main;
+		roomManager = GameObject.Find("Managers").GetComponent<RoomManager>();
 		playerGO = GameObject.Find("Player");
 		player = playerGO.GetComponent<Player>();
+		defaultPlayerLayer = playerGO.layer;
 		fatherOrbGO = GameObject.Find("FatherOrb");
 		fatherOrb = fatherOrbGO.GetComponent<FatherOrb>();
 		monsterGO = GameObject.Find("Monster");

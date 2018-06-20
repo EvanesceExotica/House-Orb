@@ -18,6 +18,31 @@ MonoBehaviour:
     path: Assets/Train1.unity
     additional_guid: []
     additional_path: []
+  - guid: 44b1c1d0f217e400f8c98072868231cc
+    pin: 0
+    path: Assets/Anima2D/Examples/Scenes/UnityChan.unity
+    additional_guid: []
+    additional_path: []
+  - guid: bcb80952d8de613468b3b27832dbb993
+    pin: 0
+    path: Assets/Zippy 2D/Zippy Lights 2D/Demo/Demo Scenes/ZL2D Demo Scene Depth Example.unity
+    additional_guid: []
+    additional_path: []
+  - guid: b7465644aa30e4afaaa93dbb0dd18ff2
+    pin: 0
+    path: Assets/FungusExamples/Conversation/CustomSayDialogs.unity
+    additional_guid: []
+    additional_path: []
+  - guid: f9de98f03841042f6a139eccdfbfcadc
+    pin: 0
+    path: Assets/FungusExamples/Conversation/Conversation.unity
+    additional_guid: []
+    additional_path: []
+  - guid: 9cb2c3bd6962d487dba382e8e35f188c
+    pin: 0
+    path: Assets/FungusExamples/FungusTown/FungusTown.unity
+    additional_guid: []
+    additional_path: []
   - guid: e8e233d3e71a0a7489de2b295b3742cf
     pin: 0
     path: Assets/Mirza Beig/Particle Systems/Ultimate VFX/Scenes/1 - Ultimate VFX
@@ -33,11 +58,6 @@ MonoBehaviour:
   - guid: 263707a7591e62e47b55d2404ac588b0
     pin: 0
     path: Assets/Zippy 2D/Zippy Lights 2D/Demo/Demo Scenes/ZL2D Demo Scene Light Shaders.unity
-    additional_guid: []
-    additional_path: []
-  - guid: bcb80952d8de613468b3b27832dbb993
-    pin: 0
-    path: Assets/Zippy 2D/Zippy Lights 2D/Demo/Demo Scenes/ZL2D Demo Scene Depth Example.unity
     additional_guid: []
     additional_path: []
   - guid: 267bbb800dd4ff34996705af78f78930
@@ -68,11 +88,6 @@ MonoBehaviour:
   - guid: 069f3e538232cbc428306fee07c6adb0
     pin: 0
     path: Assets/Ferr/2DTerrain/Examples/2 - ExampleFillModes.unity
-    additional_guid: []
-    additional_path: []
-  - guid: 44b1c1d0f217e400f8c98072868231cc
-    pin: 0
-    path: Assets/Anima2D/Examples/Scenes/UnityChan.unity
     additional_guid: []
     additional_path: []
   last_scenes: []
@@ -169,6 +184,8 @@ MonoBehaviour:
     width: 68
   lastIconSelect: []
   lasHiglightColorSelect:
+  - serializedVersion: 2
+    rgba: 50331648
   - serializedVersion: 2
     rgba: 16777216
   - serializedVersion: 2

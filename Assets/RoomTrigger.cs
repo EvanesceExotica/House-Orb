@@ -21,15 +21,28 @@ public class RoomTrigger : MonoBehaviour {
 		Sconce sconce = hit.GetComponent<Sconce>();
 		if(sconce != null){
 			hit.gameObject.transform.parent = gameObject.transform;
+			sconce.parentRoom = room;
 
 		}
 		HidingSpace space = hit.GetComponent<HidingSpace>();
 		if(space != null){
 			hit.transform.parent = gameObject.transform;
+			space.parentRoom = room;
 		}
 		Memory memory = hit.GetComponent<Memory>();
 		if(memory != null){
 			hit.transform.parent = gameObject.transform;
+			memory.parentRoom = room;
+		}
+		FurnitureGroup furnitureGroup = hit.GetComponent<FurnitureGroup>();
+		if(furnitureGroup != null){
+			hit.transform.parent = gameObject.transform;
+
+		}
+		HiddenSconce hidden = hit.GetComponent<HiddenSconce>();
+		if(hidden != null){
+			hit.transform.parent = gameObject.transform;
+			hidden.parentRoom = room;
 		}
 	}
 

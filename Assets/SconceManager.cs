@@ -20,8 +20,9 @@ public class SconceManager : MonoBehaviour
     public List<Sconce> litSconces = new List<Sconce>();
     public static event Action AllSconcesLit;
 
-    void AddLitSconceToList(Sconce sconce)
+    void AddLitSconceToList(MonoBehaviour sconceObject)
     {
+        Sconce sconce = (Sconce)sconceObject;
         if (!litSconces.Contains(sconce))
         {
             litSconces.Add(sconce);
@@ -38,8 +39,9 @@ public class SconceManager : MonoBehaviour
 
 
 
-    void RemoveLitSconcesFromList(Sconce sconce)
+    void RemoveLitSconcesFromList(MonoBehaviour sconceObject)
     {
+        Sconce sconce = (Sconce)sconceObject;
         if (litSconces.Contains(sconce))
         {
             litSconces.Remove(sconce);
@@ -119,7 +121,7 @@ public class SconceManager : MonoBehaviour
         revealedSconces = GameObject.FindObjectsOfType<Sconce>().ToList();
         unrevealedSconces = GameObject.FindObjectsOfType<HiddenSconce>().ToList();
 
-        Sconce.OrbHeld += AddLitSconceToList;
+        Sconce.OrbInSconce += AddLitSconceToList;
         foreach (Sconce sconce in revealedSconces)
         {
             // sconce.Revealed += AddRevealedSconceToList;
@@ -131,7 +133,7 @@ public class SconceManager : MonoBehaviour
         }
         foreach (HiddenSconce hiddenSconce in unrevealedSconces)
         {
-            hiddenSconce.RevealedSconce += RemoveHiddenSconceAndAddRevealed;
+            hiddenSconce.NewSconceRevealed += RemoveHiddenSconceAndAddRevealed;
 
         }
         numberOfSconcesOnLevel = TallySconceNumber();

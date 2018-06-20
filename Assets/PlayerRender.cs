@@ -5,30 +5,31 @@ using UnityEngine;
 public class PlayerRender : MonoBehaviour {
 
 	//SpriteRenderer spriteRenderer;
-	MeshRenderer meshRenderer;
+	SpriteRenderer spriteRenderer;
 
 	void Awake(){
-		meshRenderer = GetComponent<MeshRenderer>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		//spriteRenderer = GetComponent<SpriteRenderer>();
-		HidingSpace.PlayerHiding += TurnOffPlayerRenderer;
-		HidingSpace.PlayerNoLongerHiding += TurnOnPlayerRenderer;
+	//	HidingSpace.PlayerHiding += TurnOffPlayerRenderer;
+		//HidingSpace.PlayerNoLongerHiding += TurnOnPlayerRenderer;
 		ReturnPlayerToLastSconce.ReturningToLastSconceWithPlayer +=TurnOffPlayerRenderer;
 		ReturnPlayerToLastSconce.ArrivedAtLastSconceWithPlayer += TurnOnPlayerRenderer;
+	//TODO: Maybe put the above back in? The camera script should handle it
 	}
 
-	public void TurnOffPlayerRenderer(){
-		meshRenderer.enabled = false;
+	public void TurnOffPlayerRenderer(UnityEngine.Object ourObject){
+		spriteRenderer.enabled = false;
 	}
 
-	public void TurnOnPlayerRenderer(){
-		meshRenderer.enabled = true;
+	public void TurnOnPlayerRenderer(UnityEngine.Object ourObject){
+		spriteRenderer.enabled = true;
 	}
 	public void TurnOffPlayerRenderer(GameObject go){
-		meshRenderer.enabled = false;
+		spriteRenderer.enabled = false;
 	}
 
 	public void TurnOnPlayerRenderer(GameObject go){
-		meshRenderer.enabled = true;
+		spriteRenderer.enabled = true;
 	}
 	// Use this for initialization
 	void Start () {

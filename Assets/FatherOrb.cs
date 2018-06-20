@@ -2,30 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 public class FatherOrb : MonoBehaviour//, iInteractable
 {
 
+    Transform FatherOrbPos;
     GameObject player;
     [SerializeField] Sconce previousSconce;
     [SerializeField] Sconce currentSconce;
-    public static event Action PickedUp;
 
-    public static event Action Dropped;
+    public static event Action<MonoBehaviour> MovingBetweenPlayerAndObject;
 
-    public static event Action ReturnedToPreviousScone;
-
-    void ReturnedToPreviousSconeWrapper(){
-        
+    void MovingBetweenPlayerAndObjectWrapper(MonoBehaviour mono)
+    {
+        if (MovingBetweenPlayerAndObject != null)
+        {
+            MovingBetweenPlayerAndObject(mono);
+        }
     }
 
-    void PlayerDroppedOrb()
+    public static event Action<MonoBehaviour> StoppedMovingBetweenPlayerAndObject;
+
+    void StoppedMovingBetweenPlayerAndObjectWrapper(MonoBehaviour mono)
+    {
+        if (StoppedMovingBetweenPlayerAndObject != null)
+        {
+            StoppedMovingBetweenPlayerAndObject(mono);
+        }
+    }
+    public static event Action<MonoBehaviour> PickedUp;
+
+    public static event Action<MonoBehaviour> Dropped;
+
+    public static event Action<MonoBehaviour> Placed;
+    public static event Action<MonoBehaviour> ArrivedAtPreviousSconce;
+
+
+    void ArrivedAtPreviousSconceWrapper(Sconce sconce)
+    {
+        if (ArrivedAtPreviousSconce != null)
+        {
+            ArrivedAtPreviousSconce(sconce);
+        }
+    }
+
+    // void PlayerPlacedOrb(Sconce sconce){
+    //     heldStatus = HeldStatuses.InSconce;
+    //     if(sconce)
+    // }
+
+    void PlayerDroppedOrb(MonoBehaviour mono)
     {
         heldStatus = HeldStatuses.Travelling;
         if (Dropped != null)
         {
-            Dropped();
+            Dropped(this);
         }
     }
+
+
     public static event Action Fizzing;
 
     void OrbFizzing()
@@ -46,10 +81,18 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     }
     public static event Action Overheated;
 
+    public static event Action<UnityEngine.Object> OrbRefreshed;
 
+    void OrbRefreshedWrapper()
+    {
+        if (OrbRefreshed != null)
+        {
+            OrbRefreshed(this);
+        }
+    }
     void OrbOverheated()
     {
-        PlayerDroppedOrb();
+        PlayerDroppedOrb(this);
         StartCoroutine(ReturnToLastSconce());
         if (Overheated != null)
         {
@@ -58,42 +101,59 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         instabilityStatus = InstabilityStatus.NotPickedUp;
     }
 
+    bool movingToObject;
 
+    Vector2 tempPos = new Vector2();
+    Vector2 posOffset = new Vector2();
 
-    public void OnInteractWithMe(Player player)
+    float frequency = 1.0f;
+
+    float amplitude = 0.1f;
+
+    void FloatMe()
     {
-        if (heldStatus == HeldStatuses.InSconce && (player.playerState != Player.PlayerState.Burned || player.playerState != Player.PlayerState.Hiding))
+        if (heldStatus == HeldStatuses.Carried && !movingToObject)
         {
-            // PickedUpByPlayer();
+            tempPos = posOffset;
+            tempPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
+
+            transform.localPosition = tempPos;
         }
+        //  transform.DOLocalMoveY(transform.localPosition.y + flip,);
     }
-    public void OnHoverMe(Player player)
-    {
-        //TODO: Add a prompt
-        if (heldStatus == HeldStatuses.InSconce && player.playerState == Player.PlayerState.NotCarryingOrb)
-        {
-            // Debug.Log("Press E to pick up orb");
-        }
-    }
-    public void OnStopHoverMe(Player player)
-    {
-        //TODO: Remove prompt
-    }
+
     void Awake()
     {
-        player = GameObject.FindWithTag("Player");
+        renderer = GetComponent<MeshRenderer>();
+        player = GameHandler.playerGO;
+        FatherOrbPos = player.transform.Find("FatherOrbPos");
         durationHeld = 22.0f;
         durationBeforeFizzing = 10.0f;
         durationBeforeRedHot = 17.0f;
         durationAtBurn = 22.0f;
-        Sconce.OrbHeld += this.EnteredSconce;
-        Sconce.OrbRemoved += this.PickedUpByPlayer;
+        Memory.RefreshGiven += RefreshTime;
+        Sconce.OrbInSconce += this.PlayerDroppedOrb;
+        Sconce.OrbInSconce += this.EnteredSconce;
+        Sconce.OrbRemovedFromSconce += this.PickedUpByPlayer;
+        //you want a successful parry to refresh the orb time -- maybe a failure should too so it's not a double fail? Or have the failure make the orb return to sconce early w/ out burn
+        PromptPlayerHit.PlayerParried += RefreshTime;
+        PromptPlayerHit.PlayerFailed += ReturnToLastSconceEarlyWrapper;
+        //TODO: Fix the below
+        OrbController.ManuallyStoppedChannelingOrb += PickedUpByPlayer;
+        //TODO: Add for if the orb remains charged w/ power up even when it is not in the player's hands
         if (transform.parent != null)
         {
             Sconce sconce = transform.parent.GetComponent<Sconce>();
             sconce.OrbPlacedInUs(sconce);
+            SetZToNegative2();
         }
+        posOffset = transform.position;
         //SetInSconce(transform.parent.gameObject);
+    }
+
+    void SetZToNegative2()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, -2);
     }
 
     void SetInSconce(Sconce sconce)
@@ -102,7 +162,9 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         heldStatus = HeldStatuses.InSconce;
         currentSconce = sconce;
         inSconce = true;
-        transform.parent = currentSconce.transform;
+        transform.parent = sconce.transform;
+        transform.localPosition = Vector3.zero;
+        SetZToNegative2();
         instabilityStatus = InstabilityStatus.NotPickedUp;
     }
     public float durationHeld;
@@ -134,15 +196,19 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     public InstabilityStatus instabilityStatus;
     bool inSconce;
-    public void EnteredSconce(Sconce sconce)
+    public void EnteredSconce(MonoBehaviour sconce)
     {
-        PlayerDroppedOrb();
-        SetInSconce(sconce);
-        StartCoroutine(MoveUs(transform.position, sconce.transform.position));
-        transform.parent = sconce.transform;
+        // PlayerDroppedOrb();
+        SetInSconce((Sconce)sconce);
+        MonoBehaviour mono = (MonoBehaviour)sconce;
+        if (Vector2.Distance(transform.position, mono.transform.position) > 0.1f)
+        {
+            //TODO: Put this back in
+            //StartCoroutine(MoveUs(transform.position, sconce.transform.position));
+        }
     }
 
-  
+
 
     public void SetOrbBeingChanneled()
     {
@@ -152,18 +218,19 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         heldStatus = HeldStatuses.Channeled;
     }
 
-    public void PickedUpByPlayer(Sconce sconce)
+    public void PickedUpByPlayer(MonoBehaviour ourObject)
     {
         heldStatus = HeldStatuses.Carried;
         inSconce = false;
         previousSconce = currentSconce;
         currentSconce = null;
         instabilityStatus = InstabilityStatus.FreshPickedUp;
-        StartCoroutine(MoveUs(transform.position, player.transform.position));
+        StartCoroutine(MoveUs(transform.position, GameHandler.fatherOrbHoldTransform.position));
         transform.parent = player.transform;
+        posOffset = transform.localPosition;
         if (PickedUp != null)
         {
-            PickedUp();
+            PickedUp(this);
         }
         StartCoroutine(BeingCarried());
     }
@@ -180,22 +247,38 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     bool carriedOrChanneled;
     public IEnumerator BeingCarried()
     {
+        //this coroutine handles the orb being carried by the player
         carriedOrChanneled = true;
         heldStartTime = Time.time;
 
         while (elapsedTime < durationHeld)
         {
+            FloatMe();
+
+            if (timeRefreshed)
+            {
+                //if something triggered the time to refresh, like the "memory" that has this function
+                elapsedTime = 0;
+                instabilityStatus = InstabilityStatus.FreshPickedUp;
+                OrbRefreshedWrapper();
+                timeRefreshed = false;
+            }
             if (inSconce)
             {
+                //if the player places the orb in a sconce, reset and break free
                 elapsedTime = 0;
                 yield break;
             }
-            if(cancelCarryCoroutine){
+            if (cancelCarryCoroutineEarly)
+            {
+                //if the coroutine was cancelled early, like by the function that allows the player to return to a previous sconce
                 elapsedTime = 0;
                 yield break;
             }
+
             if (elapsedTime >= durationBeforeFizzing && instabilityStatus != InstabilityStatus.Fizzing)
             {
+
                 instabilityStatus = InstabilityStatus.Fizzing;
                 OrbFizzing();
             }
@@ -205,7 +288,12 @@ public class FatherOrb : MonoBehaviour//, iInteractable
                 OrbRedHot();
 
             }
-            elapsedTime += Time.deltaTime;
+            if (!movingToObject)
+            {
+                //we want to pause the timer while the object is being moved from a sconce or to a memory
+
+                elapsedTime += Time.deltaTime;
+            }
             yield return null;
         }
         elapsedTime = 0;
@@ -241,38 +329,58 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     public IEnumerator MoveUs(Vector2 startingPosition, Vector2 destination)
     {
+        movingToObject = true;
+        MovingBetweenPlayerAndObjectWrapper(this);
         while (Vector2.Distance(transform.position, destination) > 0.1f)
         {
             //TODO: uncomment the below and fix it
             transform.position = Vector2.MoveTowards(transform.position, destination, 5 * Time.deltaTime);
             yield return null;
         }
+        StoppedMovingBetweenPlayerAndObjectWrapper(this);
+        movingToObject = false;
+        SetZToNegative2();
     }
 
     //TODO: Make sure this only applies to the automatic cancel travel vvvv
-    bool cancelCarryCoroutine;
-    public void ReturnToLastSconceWrapper(){
-        cancelCarryCoroutine = true;
-       StartCoroutine(ReturnToLastSconce()) ;
+    bool cancelCarryCoroutineEarly;
+    public void ReturnToLastSconceEarlyWrapper()
+    {
+        if (heldStatus == HeldStatuses.Carried)
+        {
+            cancelCarryCoroutineEarly = true;
+            PlayerDroppedOrb(this);
+            StartCoroutine(ReturnToLastSconce());
+        }
+    }
+
+    bool timeRefreshed;
+    public void RefreshTime()
+    {
+        timeRefreshed = true;
     }
 
     public IEnumerator ReturnToLastSconce()
     {
         yield return StartCoroutine(MoveUs(transform.position, previousSconce.transform.position));
-        SetInSconce(previousSconce);
-       // currentSconce = previousSconce;
+        ArrivedAtPreviousSconceWrapper(previousSconce);
+        //SetInSconce(previousSconce);
+        // currentSconce = previousSconce;
         //transform.parent = currentSconce.gameObject.transform;
 
     }
-    // Use this for initialization
+    MeshRenderer renderer;
+    public string sortingLayerName;        // The name of the sorting layer .
+    public int sortingOrder;            //The sorting order
+
     void Start()
     {
-
+        // Set the sorting layer and order.
+        renderer.sortingLayerName = sortingLayerName;
+        renderer.sortingOrder = sortingOrder;
     }
+    // Use this for initialization
 
     // Update is called once per frame
-    void Update()
-    {
 
-    }
 }

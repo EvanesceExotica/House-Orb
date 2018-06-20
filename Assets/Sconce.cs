@@ -6,9 +6,10 @@ using MirzaBeig.ParticleSystems;
 public class Sconce : PooledObject, iInteractable
 {
 
+    public Room parentRoom;
     public ParticleSystems orbOccupiedParticles;
     public ParticleSystems revealedParticles;
-    public event Action<Sconce> Revealed;
+    public event Action<MonoBehaviour> Revealed;
 
     FatherOrb orbPrefab;
 
@@ -23,7 +24,7 @@ public class Sconce : PooledObject, iInteractable
         }
     }
 
-    public event Action<Sconce> Extinguished;
+    public event Action<MonoBehaviour> Extinguished;
 
     public void ExtinguishedWrapper(Sconce sconce)
     {
@@ -36,28 +37,27 @@ public class Sconce : PooledObject, iInteractable
     }
 
     // Use this for initialization
-    public static event Action<Sconce> OrbHeld;
+    public static event Action<MonoBehaviour> OrbInSconce;
 
 
-    public void OrbPlacedInUs(Sconce sconce)
+    public void OrbPlacedInUs(MonoBehaviour ourObject)
     {
-        Debug.Log(sconce + " is holding orb now");
         PlayOccupiedParticles();
         fillStatus = Status.HoldingOrb;
-        if (OrbHeld != null)
+        if (OrbInSconce != null)
         {
-            OrbHeld(sconce);
+            OrbInSconce(ourObject);
         }
     }
-    public static event Action<Sconce> OrbRemoved;
+    public static event Action<Sconce> OrbRemovedFromSconce;
 
     public void OrbRemovedFromUs(Sconce sconce)
     {
         fillStatus = Status.FreshlyLit;
         StartCoroutine(CountdownToEmpty());
-        if (OrbRemoved != null)
+        if (OrbRemovedFromSconce != null)
         {
-            OrbRemoved(sconce);
+            OrbRemovedFromSconce(sconce);
         }
     }
 
@@ -92,38 +92,48 @@ public class Sconce : PooledObject, iInteractable
 
     public void OnInteractWithMe(Player player)
     {
-        Debug.Log(gameObject.name + " is being interacted with");
         if (player.playerState == Player.PlayerState.CarryingOrb)
         {
-            Debug.Log("Orb placed in " + gameObject.name);
             OrbPlacedInUs(this);
+            //we're reseting the onHoverMe so that the prompt is reset to treat it as if we walked up to it again
+            OnHoverMe(player);
         }
         else if (fillStatus == Status.HoldingOrb && (player.playerState != Player.PlayerState.Hiding || player.playerState != Player.PlayerState.Burned || player.playerState != Player.PlayerState.CarryingOrb))
         {
             //if the player is able to receive the orb, isn't carrying it, isn't burned or hiding, the orb will be removed upon interaction
             OrbRemovedFromUs(this);
+            //we're reseting the onHoverMe so that the prompt is reset to treat it as if we walked up to it again
+            OnHoverMe(player);
         }
     }
+
+    public string orbHeldPrompt;
+    public string emptyButOrbCarriedPrompt;
 
     public void OnHoverMe(Player player)
     {
         if (player.playerState == Player.PlayerState.CarryingOrb)
         {
+            player.interactPrompt.DisplayPrompt(emptyButOrbCarriedPrompt, this.gameObject);
             Debug.Log("Press E to place orb in sconce");
         }
         else if (fillStatus == Status.HoldingOrb && player.playerState == Player.PlayerState.NotCarryingOrb)
         {
+            player.interactPrompt.DisplayPrompt(orbHeldPrompt, this.gameObject);
             Debug.Log("Press E to take orb from sconce");
         }
     }
 
     public void OnStopHoverMe(Player player)
     {
+        player.interactPrompt.HidePrompt(gameObject);
         //todo: Remove Prompt
     }
 
     void Awake()
     {
+        orbHeldPrompt = " take orb from sconce";
+        emptyButOrbCarriedPrompt = " place orb in sconce";
         //TODO: Fix this so that it's an assignment later
         orbOccupiedParticles = transform.GetChild(1).GetComponent<ParticleSystems>();
         revealedParticles = transform.GetChild(0).GetComponent<ParticleSystems>();
@@ -136,6 +146,7 @@ public class Sconce : PooledObject, iInteractable
             GameHandler.fatherOrbGO.transform.parent = transform;
             GameHandler.fatherOrb.transform.position = transform.position;
         }
+        FatherOrb.ArrivedAtPreviousSconce += OrbPlacedInUs;
         //fillStatus = Status.Empty;
     }
 

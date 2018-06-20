@@ -6,6 +6,9 @@ using System;
 public class Monster : MonoBehaviour
 {
 
+    int starScreamDirection;
+    
+    public GameObject ourLightObject;
     public static event Action MonsterReachedPlayer;
     public static event Action ReadyToScream;
 
@@ -28,7 +31,10 @@ public class Monster : MonoBehaviour
     {
         roomManager = GameObject.Find("Managers").GetComponent<RoomManager>();
         HidingSpace.PlayerHiding += PlayerHid;
+        PromptPlayerHit.PlayerFailed += HuntPlayerWrapper;
+        StarScream.ScreamHitPlayerCurrentRoom += SetStarScreamDirection;
     }
+
 
     void Start()
     {
@@ -41,6 +47,7 @@ public class Monster : MonoBehaviour
         yield return new WaitForSeconds(1);
         ChooseRandomRoom();
     }
+
 
     void ChooseRandomRoom()
     {
@@ -166,8 +173,12 @@ public class Monster : MonoBehaviour
         }
     }
 
+    void SetStarScreamDirection(int direction){
+        //this method determines what direction the monster should hunt the player in based on the direction the star scream travelled
+        starScreamDirection = direction;
+    }
     bool playerHiding = false;
-    void PlayerHid(GameObject hidingPlace)
+    void PlayerHid(UnityEngine.Object ourObject)
     {
         playerHiding = false;
     }
@@ -200,10 +211,10 @@ public class Monster : MonoBehaviour
 
     }
 
-    void HuntPlayerWrapper(int direction){
-        StartCoroutine(HuntPlayer(direction));
+    void HuntPlayerWrapper(/*int direction*/){
+        StartCoroutine(HuntPlayer(/*direction*/));
     }
-    public IEnumerator HuntPlayer(int direction)
+    public IEnumerator HuntPlayer(/*int direction*/)
     {
         int currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex();
         int playerRoomIndex = roomManager.GetPlayerCurrentRoomIndex();
@@ -211,7 +222,7 @@ public class Monster : MonoBehaviour
         {
 
             playerRoomIndex = roomManager.GetPlayerCurrentRoomIndex();
-            currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex()+1;
+            currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex()+  starScreamDirection;
 
             if (currentRoomIndex == -1)
             {

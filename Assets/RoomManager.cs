@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 public class RoomManager : MonoBehaviour
 {
 
@@ -9,6 +10,13 @@ public class RoomManager : MonoBehaviour
     public List<Room> roomsEnteredList = new List<Room>();
     public List<Room> roomList = new List<Room>();
 
+    public static event Action<Room> PlayerEnteredNewRoom;
+
+    public void PlayerEnteredNewRoomWrapper(Room room){
+        if(PlayerEnteredNewRoom != null){
+            PlayerEnteredNewRoom(room);
+        }
+    }
     int maxNumberOfRoomsScentLingersIn;
     [SerializeField] Room playerCurrentRoom;
     [SerializeField] Room enemyCurrentRoom;
@@ -18,6 +26,7 @@ public class RoomManager : MonoBehaviour
     public void SetPlayerCurrentRoom(Room room)
     {
         playerCurrentRoom = room;
+        PlayerEnteredNewRoomWrapper(room);
     }
 
     public int GetPlayerCurrentRoomIndex()
@@ -35,7 +44,7 @@ public class RoomManager : MonoBehaviour
         enemyCurrentRoom = room;
     }
 
-    void AddRoomsEntered(Room room)
+    void AddScentToRoomsEntered(Room room)
     {
         if (roomsPlayerEntered.Count == 4)
         {
@@ -65,6 +74,14 @@ public class RoomManager : MonoBehaviour
 
 
     }
+    public void ClearAllRoomScent(){
+        foreach(Room room in roomsPlayerEntered){
+            ScentDispersed(room);
+        }
+        roomsPlayerEntered.Clear();
+        roomsEnteredList.Clear();
+
+    }
 
     void ScentDispersed(Room room)
     {
@@ -84,17 +101,43 @@ public class RoomManager : MonoBehaviour
         foreach (Room room in roomList)
         {
             room.PlayerEnteredRoom += SetPlayerCurrentRoom;
-            room.PlayerEnteredRoom += AddRoomsEntered;
+            room.PlayerEnteredRoom += AddScentToRoomsEntered;
             room.EnemyEntered += SetEnemyCurrentRoom;
+            SetAdjacentRooms(room);
         }
         numberOfRooms = roomList.Count;
+    }
+
+
+    void SetAdjacentRooms(Room room){
+        List<Room> adjacentRooms = new List<Room>();
+        if((roomList.IndexOf(room) - 1) < 0){
+            //if the index before is less than zero,
+            Room roomToAdd = roomList.Last();
+            adjacentRooms.Add(roomToAdd);
+        }
+        else if((roomList.IndexOf(room) - 1) >= 0){
+            Room roomToAdd = roomList[roomList.IndexOf(room) - 1];
+            adjacentRooms.Add(roomToAdd);
+        }
+        if((roomList.IndexOf(room) + 1) > (roomList.Count - 1)){
+            //if the index is out of range and goes over the last room in the list
+
+            Room roomToAdd = roomList[0];
+            adjacentRooms.Add(roomToAdd);
+        }
+        else{
+            Room roomToAdd = roomList[roomList.IndexOf(room) + 1];
+            adjacentRooms.Add(roomToAdd);
+        }
+        room.adjacentRooms = adjacentRooms;  
     }
     // Use this for initialization
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            Debug.Log(GetPlayerCurrentRoomIndex());
+            ClearAllRoomScent();
         }
     }
 }

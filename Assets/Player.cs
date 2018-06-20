@@ -8,6 +8,11 @@ public class Player : MonoBehaviour {
 	public ParticleSystems blinded; //serum2	
 	public PlayerRender playerRenderer;
 	public PlayerMovement movement;
+
+	public InteractPrompt interactPrompt;
+
+	public bool cantEat;
+	public float eatingCooldown;
 	// Use this for initialization
 	public static event Action PickUpOrb;
 
@@ -32,54 +37,72 @@ public class Player : MonoBehaviour {
 		Hiding,
 		Burned
 	}
+	void EatingCooldownWrapper(){
+		StartCoroutine(EatingCooldown());
+	}
+	IEnumerator EatingCooldown(){
+		cantEat = true;
+		yield return new WaitForSeconds(eatingCooldown);
+		cantEat = false;
+
+	}
 
 	public PlayerState playerState;
 	
-	void SetCarryingOrb(){
+	void SetCarryingOrb(MonoBehaviour ourObject){
 		playerState = PlayerState.CarryingOrb;
 	}
 
-	void SetCarryingOrb(GameObject source){
-		playerState = PlayerState.CarryingOrb;
-	}
 
-	void SetNotCarryingOrb(GameObject source){
+	void SetNotCarryingOrb(MonoBehaviour ourObject){
 		playerState = PlayerState.NotCarryingOrb;
 	}
 
-	void SetNotCarryingOrb(){
-		playerState = PlayerState.NotCarryingOrb;
-	}
+	
 	void SetBurned(){
 
 		playerState = PlayerState.Burned;
 		if(Burning != null){
 			Burning();
 		}
-		StartCoroutine(EffectCountDown(4.0f, NegativeEffects.Burn));
+		StartCoroutine(EffectCountDown(4.0f, Effects.Burn));
 	}
 
 	void SetBlinded(){
 		if(Blinded != null){
 			Blinded();
 		}
-		StartCoroutine(EffectCountDown(8.0f, NegativeEffects.Blind));
+		StartCoroutine(EffectCountDown(8.0f, Effects.Blind));
 	}
-	void SetHiding(GameObject source){
+
+	public static event Action Boosted;
+	void SetBoosted(){
+		//maybe make these cancel better
+		if(Boosted != null){
+			Boosted();
+		}
+		ReverseBoostEffects();
+		ReverseBlindEffects();
+		StartCoroutine(EffectCountDown(8.0f, Effects.Boost));
+	}
+	void SetHiding(MonoBehaviour ourObject){
 		playerState = PlayerState.Hiding;
 
 	}
 
 	public float burnDuration;
 	public float burnStartTime;
-	public IEnumerator EffectCountDown(float duration, NegativeEffects typeOfEffect){
+	public IEnumerator EffectCountDown(float duration, Effects typeOfEffect){
 		float startTime = Time.time;
 
-		if(typeOfEffect == NegativeEffects.Burn){
+		if(typeOfEffect == Effects.Burn){
 			ApplyBurnEffects();
 		}
-		else if (typeOfEffect == NegativeEffects.Blind){
+		else if (typeOfEffect == Effects.Blind){
 			ApplyBlindEffects();
+		}
+		else if(typeOfEffect == Effects.Boost){
+			ApplyBoostEffects();
 		}
 
 		while(Time.time < startTime + duration){
@@ -87,37 +110,57 @@ public class Player : MonoBehaviour {
 			yield return null;
 		}
 
-		if(typeOfEffect == NegativeEffects.Burn){
+		if(typeOfEffect == Effects.Burn){
 			ReverseBurnEffects();
 		}
-		else if(typeOfEffect == NegativeEffects.Blind){
+		else if(typeOfEffect == Effects.Blind){
 			ReverseBlindEffects();
+		} 
+		else if(typeOfEffect == Effects.Boost){
+			ReverseBoostEffects();
 		}
 	}
 
-	public enum NegativeEffects{
+	public enum Effects{
 		Burn,
-		Blind
+		Blind,
+
+		Boost
+	}
+	List<Effects> effects = new List<Effects>();
+	void ApplyBoostEffects(){
+		effects.Add(Effects.Boost);
+		Debug.Log("Boosted!");
+		movement.maxSpeed *= 2.0f;
+	}
+
+	void ReverseBoostEffects(){
+		effects.Remove(Effects.Blind);
+		movement.maxSpeed /= 2.0f;
 	}
 
 	void ApplyBurnEffects(){
 		Debug.Log("BURNED");
+		effects.Add(Effects.Burn);
 		///one effect of the burn is to half the speed
 		movement.maxSpeed *= 0.5f;
 	}
 
 	void ReverseBurnEffects(){
 		Debug.Log("No longer burned");
+		effects.Remove(Effects.Burn);
 		movement.maxSpeed /= 0.5f;
 	}
 
 	void ApplyBlindEffects(){
 		Debug.Log("BLINDED");
+		effects.Add(Effects.Blind);
 		movement.maxSpeed *= 0.5f;
 	}
 
 	void ReverseBlindEffects(){
 		Debug.Log("No longer blinded");
+		effects.Remove(Effects.Blind);
 		movement.maxSpeed /= 0.5f;
 	}
 
@@ -129,18 +172,27 @@ public class Player : MonoBehaviour {
 
 	}
 	void Awake(){
+		interactPrompt = GetComponentInChildren<InteractPrompt>();
 		burnDuration = 5.0f;
+
 		playerState = PlayerState.NotCarryingOrb;
 		FatherOrb.PickedUp += this.SetCarryingOrb;
 		FatherOrb.Dropped += this.SetNotCarryingOrb;
+		Sconce.OrbInSconce +=  this.SetNotCarryingOrb;
+
 		playerRenderer = GetComponent<PlayerRender>();
 		movement = GetComponent<PlayerMovement>();
+
 		OrbController.ChannelingOrb += SetNotCarryingOrb;
-		OrbController.StoppedChannelingOrb += SetCarryingOrb;
+		OrbController.ManuallyStoppedChannelingOrb += SetCarryingOrb;
 		HidingSpace.PlayerHiding += SetHiding;
+
 		//TODO -- separate the hiding and the orb-carrying. I want the light to cause the player to be unhidden.
+
 		HidingSpace.PlayerNoLongerHiding += SetNotCarryingOrb;
 		PromptPlayerHit.PlayerFailed += SetBlinded;
+		Food.AteFood += SetBoosted;
+		Food.AteFood +=EatingCooldownWrapper;
 	}
 
 }

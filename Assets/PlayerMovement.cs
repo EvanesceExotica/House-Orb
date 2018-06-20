@@ -27,23 +27,46 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         OrbController.ChannelingOrb += SetCantMove;
         //make this a 
-        OrbController.StoppedChannelingOrb += SetYesCanMove;
-
-        HidingSpace.PlayerHiding += SetCantMove;
-        HidingSpace.PlayerNoLongerHiding += SetYesCanMove;
+        OrbController.ManuallyStoppedChannelingOrb += SetYesCanMove;
+        OrbController.SconceRevealedStoppedChannelingOrb += SetYesCanMove;
+        FatherOrb.MovingBetweenPlayerAndObject += SetCantMove;
+        FatherOrb.StoppedMovingBetweenPlayerAndObject +=SetYesCanMove;
+        Memory.LookingAtMemory += SetCantMove;
+        Memory.StoppedLookingAtMemory += SetYesCanMove;
+        HidingSpace.PlayerHiding += MakePlayerStatic;
+        HidingSpace.PlayerNoLongerHiding += MakePlayerDynamic;
     }
 
-    List<GameObject> incapacitators = new List<GameObject>();
-    void SetCantMove(GameObject incapacitator)
+    void MakePlayerStatic(MonoBehaviour ourObject)
     {
-        Debug.Log(incapacitator.name + " made us not move ");
-        incapacitators.Add(incapacitator);
+        SetCantMove(GameHandler.player);
+        SetKinematic();
+    }
+
+    void MakePlayerDynamic(MonoBehaviour ourObject)
+    {
+        SetYesCanMove(GameHandler.player);
+        SetDynamic();
+    }
+
+    public List<GameObject> incapacitators = new List<GameObject>();
+    void SetCantMove(MonoBehaviour incapacitator)
+    {
+        rb.velocity = new Vector2(0, 0);
+        Debug.Log(incapacitator.ToString() + " made us not move ");
+        if (!incapacitators.Contains(incapacitator.gameObject))
+        {
+            incapacitators.Add(incapacitator.gameObject);
+        }
         cantMove = true;
     }
 
-    void SetYesCanMove(GameObject incapacitator)
+    void SetYesCanMove(MonoBehaviour incapacitator)
     {
-        incapacitators.Remove(incapacitator);
+        if (incapacitators.Contains(incapacitator.gameObject))
+        {
+            incapacitators.Remove(incapacitator.gameObject);
+        }
         if (incapacitators.Count == 0)
         {
             cantMove = false;
@@ -60,19 +83,32 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void SetKinematic()
+    {
+        rb.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    void SetDynamic()
+    {
+        rb.bodyType = RigidbodyType2D.Dynamic;
+    }
+
     void FixedUpdate()
     {
         float h = Input.GetAxisRaw("Horizontal");
 
+            Vector2 currentVelocity = rb.velocity;
+            currentVelocity.x = Input.GetAxisRaw("Horizontal") * maxSpeed;
         // anim.SetFloat("Speed", Mathf.Abs(h));
 
         if (!cantMove)
         {
-            if (h * rb.velocity.x < maxSpeed)
-                rb.AddForce(Vector2.right * h * moveForce);
+            rb.velocity = currentVelocity;
+            // if (h * rb.velocity.x < maxSpeed)
+            //     rb.velocity = new Vector2(0,;
 
-            if (Mathf.Abs(rb.velocity.x) > maxSpeed)
-                rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
+            // if (Mathf.Abs(rb.velocity.x) > maxSpeed)
+            //     rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
 
             if (h > 0 && !facingRight)
                 Flip();
@@ -103,7 +139,13 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = theScale;
         }
     }
+
+    public void ChangeSpeed(float value)
+    {
+        maxSpeed *= value;
+    }
 }
+
 // 	LayerMask floor;
 // 	bool grounded;
 // 	Transform groundCheck;

@@ -11,6 +11,7 @@ public class AutoRepel : MonoBehaviour {
 
 	void Awake(){
 		ourGivenBuff = Memory.BuffGiven.AutoReflect;
+		Memory.AutoReflectGiven += ActivateAutoRepel;
 		PromptPlayerHit.AutoRepelUsed += DeactivateAutoRepel;
 	}
 	public bool activated;

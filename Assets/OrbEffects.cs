@@ -3,45 +3,167 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using MirzaBeig.ParticleSystems;
-public class OrbEffects : MonoBehaviour {
+public class OrbEffects : MonoBehaviour
+{
 
-[Header("Assign in Inspector")]
-	public ParticleSystems FizzingParticleSystems; //ultima looping
+    [Header("Assign in Inspector")]
 
-	public ParticleSystems parryParticleSystem; //ultima one s hot
+    public ParticleSystems baseParticleSystem;
+    public ParticleSystems FizzingParticleSystems; //ultima looping
 
-	public ParticleSystems closeToHiddenSystem; //
+    public ParticleSystems parryParticleSystem; //ultima one s hot
 
-	public ParticleSystems burningSystem ;//solar ; 
+    public ParticleSystems closeToHiddenSystem; //
 
-	Light ourLight;
-	float defaultIntensity;
-	float defaultColor;
-	void Awake(){
-		ourLight = GetComponentInChildren<Light>();
-		PromptPlayerHit.PlayerParried += Parry;
-	}
+    public ParticleSystems burningSystem;//solar ; 
 
-	void ChangeLightIntensity(float intensity, float duration){
-		ourLight.DOIntensity(intensity, duration);
-	}
+    public ParticleSystems inRoomWithHiddenSconce; // this one should trigger if you've seen a hint in a memory?
 
-	void ChangeLightColor(Color color, float duration){
-		ourLight.DOColor(color, duration);
-	}
+    public ParticleSystems hoveringOverMemory;
 
-	void Parry(){
-		parryParticleSystem.Play();
-	}
+    public ParticleSystems nearHiddenSconce;
 
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.U)){
-			parryParticleSystem.Play();
-		}
-		
-	}
+    public ParticleSystems hintParticleSystems;
+
+    public ParticleSystems autoParryReadySystem;
+
+    public ParticleSystems returnToSconceReadySystem;
+
+    public ParticleSystems autoReflectChargeParticleSystem;
+
+    public ParticleSystems prevSconeTeleportParticleSystem;
+
+    public ParticleSystems refreshGivenParticleSystem;
+
+    public ParticleSystems buffSpinParticleSystem;
+
+    ParticleSystems mainCurrentPlayingSystem;
+    Light ourLight;
+    float defaultIntensity;
+    float defaultColor;
+    void Awake()
+    {
+        ourLight = GetComponentInChildren<Light>();
+        HiddenSconce.SconceRevealed += ReturnToStandardParticleEffect;
+        ReturnPlayerToLastSconce.ArrivedAtLastSconceWithPlayer += ResetSystems;
+        PromptPlayerHit.AutoRepelUsed += ReturnToStandardParticleEffect;
+
+        Memory.AutoReflectGiven += StartAutoReflectChargeParticleSystem;
+        Memory.RefreshGiven += StartRefreshParticleSystem;
+        Memory.PrevSconceTeleportGiven += StartPrevSconceTeleportParticleSystem;
+        Memory.HintGiven+= StartHintParticleSystem;
+
+        PromptPlayerHit.PlayerParried += Parry;
+        PromptPlayerHit.AutoRepelUsed += Parry;
+
+        FatherOrb.Fizzing += StartFizz;
+        FatherOrb.RedHot += IncreaseFizzTempo;
+        //FatherOrb.Overheated += StopFizz;
+        FatherOrb.OrbRefreshed += StopFizz;
+        FatherOrb.Dropped += StopFizz;
+    }
+
+    void StopAllButFizz()
+    {
+
+    }
+
+    void ResetSystems(MonoBehaviour mono){
+        ReturnToStandardParticleEffect();
+    }
+
+    void ReturnToStandardParticleEffect()
+    {
+        mainCurrentPlayingSystem.Stop();
+        baseParticleSystem.Play();
+        mainCurrentPlayingSystem = baseParticleSystem;
+    }
+
+
+    void GeneralBuff()
+    {
+        buffSpinParticleSystem.Play();
+    }
+
+    void StartHintParticleSystem(HiddenSconce irrelevant)
+    {
+        baseParticleSystem.Stop();
+        hintParticleSystems.Play();
+        mainCurrentPlayingSystem = hintParticleSystems;
+    }
+
+    void PlayInRoomWithSconceParticleSystem()
+    {
+
+    }
+
+    void StartAutoReflectChargeParticleSystem()
+    {
+        if (autoReflectChargeParticleSystem != null)
+        {
+            baseParticleSystem.Stop();
+            autoReflectChargeParticleSystem.Play();
+            mainCurrentPlayingSystem = autoReflectChargeParticleSystem;
+        }
+    }
+
+    void StartRefreshParticleSystem()
+    {
+        //TODO: Maybe all of the memories should refresh time
+        //TODO: This one maybe can just be demonstrated by the turn.
+    }
+
+    void StartPrevSconceTeleportParticleSystem()
+    {
+        baseParticleSystem.Stop();
+        prevSconeTeleportParticleSystem.Play();
+        mainCurrentPlayingSystem = prevSconeTeleportParticleSystem;
+    }
+    void StartFizz()
+    {
+        FizzingParticleSystems.Play();
+
+    }
+
+    void StopFizz(UnityEngine.Object ourObject)
+    {
+        FizzingParticleSystems.Stop();
+    }
+
+    void IncreaseFizzTempo()
+    {
+        FizzingParticleSystems.SetPlaybackSpeed(2.0f);
+    }
+    void ChangeLightIntensity(float intensity, float duration)
+    {
+        ourLight.DOIntensity(intensity, duration);
+    }
+
+    void ChangeLightColor(Color color, float duration)
+    {
+        ourLight.DOColor(color, duration);
+    }
+
+    void Parry()
+    {
+        parryParticleSystem.Play();
+    }
+
+    void Start()
+    {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            StartFizz();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            IncreaseFizzTempo();
+        }
+
+    }
 }

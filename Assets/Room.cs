@@ -5,42 +5,79 @@ using System;
 using System.Linq;
 using DG.Tweening;
 using MirzaBeig.ParticleSystems;
+using Com.LuisPedroFonseca.ProCamera2D;
 public class Room : MonoBehaviour
 {
     [Header("Assigned In Inspector")]
     public ParticleSystems scentParticles;
 
     [Header("Other Attributes")]
-   public List<Light> roomLights = new List<Light>();
+    public List<Light> roomLights = new List<Light>();
 
     public event Action<Room> PlayerEnteredRoom;
 
+    public event Action<Room> EnemyEnteredAdjacentRoom;
+    public event Action<Room> EnemyExitedAdjacentRoom;
+
+    public void EnemyExitedAdjacentRoomWrapper(Room room){
+        if(playerLocation == PlayerStatus.InRoom){
+            if(EnemyExitedAdjacentRoom != null){
+                EnemyExitedAdjacentRoom(room);
+            }
+        }
+    }
+
+    public void EnemyEnteredAdjacentRoomWrapper(Room room)
+    {
+        //this event can trigger a dialogue for if the player
+        //we only want to trigger this event if the player is in the room
+        //we should have screenshake and audio cues when the enemy enters the room too
+        if (playerLocation == PlayerStatus.InRoom)
+        {
+            if (EnemyEnteredAdjacentRoom != null)
+            {
+                EnemyEnteredAdjacentRoom(room);
+            }
+        }
+    }
+
     public static event Action<bool> RoomWithPlayerHit;
 
-    void RoomWithPlayerHitWrapper(bool orbHeld){
-        if(RoomWithPlayerHit != null){
+    void RoomWithPlayerHitWrapper(bool orbHeld)
+    {
+        //this is for if the room with the player is hit by the starscream, NOT the enemy itself. The enemy entering the room of a non-hiding player will result in immediate game-over
+        if (RoomWithPlayerHit != null)
+        {
             RoomWithPlayerHit(orbHeld);
         }
-    } 
+    }
     bool hasSconce;
 
     Sconce sconce;
 
+    public List<Room> adjacentRooms = new List<Room>();
     List<HidingSpace> hidingSpaces;
 
     HidingSpace hidingSpace;
     Player player;
 
-    bool CheckIfOrbInPlayerOrSconce(){
+    ProCamera2D ourProCamera;
+
+    bool CheckIfOrbInPlayerOrSconce()
+    {
         bool orbInSconeOrCarried = false;
-        if(sconce != null){
-            if(sconce.fillStatus == Sconce.Status.HoldingOrb || GameHandler.player.playerState == Player.PlayerState.CarryingOrb)  {
+        if (sconce != null)
+        {
+            if (sconce.fillStatus == Sconce.Status.HoldingOrb || GameHandler.player.playerState == Player.PlayerState.CarryingOrb)
+            {
                 //both won't be true, but one must be true
                 orbInSconeOrCarried = true;
             }
         }
-        else if(sconce == null){
-            if(GameHandler.player.playerState == Player.PlayerState.CarryingOrb){
+        else if (sconce == null)
+        {
+            if (GameHandler.player.playerState == Player.PlayerState.CarryingOrb)
+            {
                 orbInSconeOrCarried = true;
             }
         }
@@ -52,6 +89,7 @@ public class Room : MonoBehaviour
         OutOfRoom
     }
 
+
     public PlayerStatus playerLocation;
 
     public void HandleScreamWrapper()
@@ -62,7 +100,7 @@ public class Room : MonoBehaviour
         {
             bool orbHeld = CheckIfOrbInPlayerOrSconce();
             RoomWithPlayerHitWrapper(orbHeld);
-            
+
             Debug.Log("FLASH HIT PLAYER ROOM");
             //a light must be in a sconce or in the player's hand  to jar the monster's senses
             //the player can move the thing around to try and find the sconces.
@@ -70,31 +108,40 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void HandleRumbleWrapper(){
+    public void HandleRumbleWrapper()
+    {
         PlayShakeAnimation();
-        if(playerLocation == PlayerStatus.InRoom){
+        if (playerLocation == PlayerStatus.InRoom)
+        {
             Debug.Log("");
         }
     }
     void PlayShakeAnimation()
     {
-       transform.DOShakePosition(1.0f, 0.5f, 1, 45, false, true) ;
-      //  transform.DOShakePosition(1.0f, 0.5f, 1, 1, true, true);
+        transform.DOShakePosition(1.0f, 0.5f, 1, 45, false, true);
+        //  transform.DOShakePosition(1.0f, 0.5f, 1, 1, true, true);
         //todo: Have a shake animation played when the enemy's scouting call passes through this room
     }
 
-    void PlayPunchAnimation(){
+    void PlayPunchAnimation()
+    {
 
         transform.DOPunchPosition(transform.up, 0.5f, 0, 0.5f, true);
     }
 
     void Awake()
     {
+        ourProCamera = Camera.main.GetComponent<ProCamera2D>();
         playerLocation = PlayerStatus.OutOfRoom;
         enemyLocation = EnemyStatus.OutOfRoom;
-		roomLights = gameObject.GetComponentsInChildren<Light>().ToList();
+        roomLights = gameObject.GetComponentsInChildren<Light>().ToList();
         sconce = GetComponentInChildren<Sconce>(true);
         scentParticles = GetComponentInChildren<ParticleSystems>();
+        foreach (Room adjacentRoom in adjacentRooms)
+        {
+            adjacentRoom.EnemyEntered += EnemyEnteredAdjacentRoomWrapper;
+            adjacentRoom.EnemyExited += EnemyExitedAdjacentRoomWrapper;
+        }
     }
     public enum EnemyStatus
     {
@@ -103,12 +150,14 @@ public class Room : MonoBehaviour
         OutOfRoom
     }
 
-   public void PlayScentParticleSystem(){
-       scentParticles.transform.DOLocalMoveY(-2, 4.0f, false);
-       scentParticles.Play();
+    public void PlayScentParticleSystem()
+    {
+        scentParticles.transform.DOLocalMoveY(-2, 4.0f, false);
+        scentParticles.Play();
     }
 
-    public void StopScentParticleSystem(){
+    public void StopScentParticleSystem()
+    {
         scentParticles.transform.DOLocalMoveY(-6, 4.0f, false);
         //TODO: Attach this and the above method to the player entering/leaving the room aciton
         scentParticles.Stop();
@@ -117,6 +166,7 @@ public class Room : MonoBehaviour
     public EnemyStatus enemyLocation;
     public void PlayerIntoRoom(Room room)
     {
+        ourProCamera.AddCameraTarget(room.gameObject.transform);
         if (PlayerEnteredRoom != null)
         {
             PlayerEnteredRoom(room);
@@ -127,6 +177,7 @@ public class Room : MonoBehaviour
 
     public void PlayerExited(Room room)
     {
+        ourProCamera.RemoveCameraTarget(room.gameObject.transform);
         PlayScentParticleSystem();
         if (PlayerLeftRoom != null)
         {
@@ -214,5 +265,5 @@ public class Room : MonoBehaviour
         yield return null;
     }
     // Use this for initialization
-   
+
 }

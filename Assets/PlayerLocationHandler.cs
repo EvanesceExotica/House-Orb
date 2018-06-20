@@ -8,7 +8,7 @@ public class PlayerLocationHandler : MonoBehaviour
     LayerMask sconceLayer;
     LayerMask orbLayer;
 
-    public List<iInteractable> objectsWereHovering = new List<iInteractable>();
+    public List<iInteractable> interactablesWereHovering = new List<iInteractable>();
     public List<GameObject> gameObjectsWereHovering = new List<GameObject>();
     Player player;
 
@@ -29,7 +29,7 @@ public class PlayerLocationHandler : MonoBehaviour
         {
 
             interactableObject.OnHoverMe(player);
-            objectsWereHovering.Add(interactableObject);
+            interactablesWereHovering.Add(interactableObject);
             gameObjectsWereHovering.Add(hit.gameObject);
         }
 
@@ -40,10 +40,12 @@ public class PlayerLocationHandler : MonoBehaviour
         iInteractable interactableObject = hit.GetComponent<iInteractable>();
         if (interactableObject != null)
         {
+            
+            interactableObject.OnStopHoverMe(player);
 
-            if (objectsWereHovering.Contains(interactableObject))
+            if (interactablesWereHovering.Contains(interactableObject))
             {
-                objectsWereHovering.Remove(interactableObject);
+                interactablesWereHovering.Remove(interactableObject);
             }
             if (gameObjectsWereHovering.Contains(hit.gameObject))
             {
@@ -83,15 +85,43 @@ public class PlayerLocationHandler : MonoBehaviour
     //     }
     // }
 
+    GameObject FindClosest()
+    {
+        GameObject closestObject = null;
+        float minDistance = Mathf.Infinity;
+        foreach (GameObject go in gameObjectsWereHovering)
+        {
+            float distance = Vector2.Distance(go.transform.position, gameObject.transform.position);
+            if (distance < minDistance)
+            {
+                closestObject = go;
+                minDistance = distance;
+            }
+        }
+        return closestObject;
+    }
+
+    void CheckInteractable(iInteractable interactableObject){
+        if(interactableObject.GetType() == typeof(Food)){
+            if(!player.cantEat){
+                interactableObject.OnInteractWithMe(player);
+            }
+        }
+        else{
+            interactableObject.OnInteractWithMe(player);
+        }
+    }
+
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             //todo -- if hovering multiple objects, make sure 
-            if (objectsWereHovering.Count > 0)
+            if (interactablesWereHovering.Count > 0)
             {
-                objectsWereHovering[0].OnInteractWithMe(player);
+                CheckInteractable(FindClosest().GetComponent<iInteractable>());
+                //FindClosest().GetComponent<iInteractable>().OnInteractWithMe(player);
             }
             // if (objectsWereHovering.Count >  1)
             // {
