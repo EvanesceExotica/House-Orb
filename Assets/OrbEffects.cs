@@ -74,9 +74,11 @@ public class OrbEffects : MonoBehaviour
 
     void ReturnToStandardParticleEffect()
     {
+        if(mainCurrentPlayingSystem != null){
         mainCurrentPlayingSystem.Stop();
         baseParticleSystem.Play();
         mainCurrentPlayingSystem = baseParticleSystem;
+        }
     }
 
 

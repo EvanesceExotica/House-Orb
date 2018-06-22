@@ -19,6 +19,9 @@ public class AutoRepel : MonoBehaviour {
 	public static event Action AutoRepelTriggered; 
 	void ActivateAutoRepel(){
 		activated = true;
+		if(AutoRepelTriggered != null){
+			AutoRepelTriggered();
+		}
 	}
 
 	void DeactivateAutoRepel(){
