@@ -147,7 +147,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
             sconce.OrbPlacedInUs(sconce);
             SetZToNegative2();
         }
-        posOffset = transform.position;
+        //posOffset = transform.position;
         //SetInSconce(transform.parent.gameObject);
     }
 
@@ -227,7 +227,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         instabilityStatus = InstabilityStatus.FreshPickedUp;
         StartCoroutine(MoveUs(transform.position, GameHandler.fatherOrbHoldTransform.position));
         transform.parent = player.transform;
-        posOffset = transform.localPosition;
+        //posOffset = transform.localPosition;
         if (PickedUp != null)
         {
             PickedUp(this);
@@ -337,6 +337,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
             transform.position = Vector2.MoveTowards(transform.position, destination, 5 * Time.deltaTime);
             yield return null;
         }
+        posOffset = transform.localPosition;
         StoppedMovingBetweenPlayerAndObjectWrapper(this);
         movingToObject = false;
         SetZToNegative2();
