@@ -29,12 +29,18 @@ public class PlayerMovement : MonoBehaviour
         //make this a 
         OrbController.ManuallyStoppedChannelingOrb += SetYesCanMove;
         OrbController.SconceRevealedStoppedChannelingOrb += SetYesCanMove;
+
         FatherOrb.MovingBetweenPlayerAndObject += SetCantMove;
         FatherOrb.StoppedMovingBetweenPlayerAndObject +=SetYesCanMove;
+
         Memory.LookingAtMemory += SetCantMove;
         Memory.StoppedLookingAtMemory += SetYesCanMove;
+
         HidingSpace.PlayerHiding += MakePlayerStatic;
         HidingSpace.PlayerNoLongerHiding += MakePlayerDynamic;
+
+        PromptPlayerHit.WaitingForScreamPrompt += SetCantMove;
+        PromptPlayerHit.ScreamPromptPassed += SetYesCanMove;
     }
 
     void MakePlayerStatic(MonoBehaviour ourObject)

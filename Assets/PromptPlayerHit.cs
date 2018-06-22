@@ -10,13 +10,32 @@ public class PromptPlayerHit : MonoBehaviour
 {
     public static event Action PlayerParried;
 
-   public static event Action AutoRepelUsed; 
+    public static event Action AutoRepelUsed;
     public static event Action PlayerFailed;
 
+    public static event Action<MonoBehaviour> WaitingForScreamPrompt;
 
+    void WaitingForScreamPromptWrapper()
+    {
+        if (WaitingForScreamPrompt != null)
+        {
+            WaitingForScreamPrompt(this);
+        }
+    }
+    public static event Action<MonoBehaviour> ScreamPromptPassed;
+
+    void ScreamPromptPassedWrapper()
+    {
+
+        if (ScreamPromptPassed != null)
+        {
+            ScreamPromptPassed(this);
+        }
+
+    }
     Image promptTimeImage;
-   TextMeshProUGUI textComponent; 
-        CanvasGroup ourCanvasGroup;
+    TextMeshProUGUI textComponent;
+    CanvasGroup ourCanvasGroup;
 
     public float hitDurationWindow = 1.0f;
     float startTime;
@@ -26,14 +45,18 @@ public class PromptPlayerHit : MonoBehaviour
 
     }
     bool canAutoRepel;
-    void AutoRepelActivated(){
+    void AutoRepelActivated()
+    {
+        Debug.Log("We were set to auto-repel");
         canAutoRepel = true;
     }
 
-    void AutoRepelUsedWrapper(){
+    void AutoRepelUsedWrapper()
+    {
 
         canAutoRepel = false;
-        if(AutoRepelUsed != null){
+        if (AutoRepelUsed != null)
+        {
             AutoRepelUsed();
         }
     }
@@ -44,7 +67,7 @@ public class PromptPlayerHit : MonoBehaviour
         ourCanvasGroup = GetComponent<CanvasGroup>();
         textComponent = GetComponentInChildren<TextMeshProUGUI>();
         Room.RoomWithPlayerHit += this.PromptPlayerHitWrapper;
-        AutoRepel.AutoRepelTriggered+= AutoRepelActivated;
+        AutoRepel.AutoRepelTriggered += AutoRepelActivated;
 
     }
 
@@ -53,7 +76,8 @@ public class PromptPlayerHit : MonoBehaviour
     public ParticleSystems downSystem;
     public ParticleSystems rightSystem;
 
-    void Update(){
+    void Update()
+    {
 
     }
 
@@ -64,56 +88,67 @@ public class PromptPlayerHit : MonoBehaviour
             FadeInPrompt();
             StartCoroutine(PromptPlayerHitCoroutine());
         }
-		else{
-			PlayerMissedOrFailed();
-		}
+        else
+        {
+            PlayerMissedOrFailed();
+        }
 
     }
 
-    void FadeInPrompt(){
+    void FadeInPrompt()
+    {
         Debug.Log("Fade in prompted");
         ourCanvasGroup.DOFade(1, 0.5f);
     }
 
-    void FadeOutPrompt(){
+    void FadeOutPrompt()
+    {
 
         ourCanvasGroup.DOFade(0, 0.5f);
     }
 
     void PlayerMissedOrFailed()
     {
-        if(PlayerFailed != null){
+        if (PlayerFailed != null)
+        {
             PlayerFailed();
         }
-		Debug.Log("Player MISSED OR FAILED");
+        Debug.Log("Player MISSED OR FAILED");
     }
 
-	void PlayerParriedScream(){
-		Debug.Log("SCREAM PARRIED");
-        if(PlayerParried != null){
+    void PlayerParriedScream()
+    {
+        Debug.Log("SCREAM PARRIED");
+        if (PlayerParried != null)
+        {
             PlayerParried();
         }
 
-	}
-    void AddOrbAsTarget(){
+    }
+    void AddOrbAsTarget()
+    {
         GameHandler.proCamera.RemoveCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform);
         GameHandler.proCamera.AddCameraTarget(GameHandler.fatherOrbGO.transform);
     }
 
-    void RemoveOrbAsTarget(){
+    void RemoveOrbAsTarget()
+    {
         GameHandler.proCamera.RemoveCameraTarget(GameHandler.fatherOrbGO.transform);
         GameHandler.proCamera.AddCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform);
     }
 
-    void ZoomIn(){
+    void ZoomIn()
+    {
         //GameHandler.proCamera.Zoom(10, 0.5, );
     }
 
-    void ZoomOut(){
+    void ZoomOut()
+    {
 
     }
 
-    enum Sides{
+    enum Sides
+    {
         Up,
         Down,
         Left,
@@ -122,78 +157,128 @@ public class PromptPlayerHit : MonoBehaviour
 
     KeyCode ourKeyCode;
 
-   KeyCode PickOrbSide(){
-       KeyCode potentialKeyCode = KeyCode.E;
-       int random = UnityEngine.Random.Range(0, 4);
-       if(random == 0){
-           //UP
-          potentialKeyCode = KeyCode.I; 
-          PlaySystem(topSystem);
-       }
-       else if(random == 1){
-           potentialKeyCode = KeyCode.J;
-           PlaySystem(leftSystem);
+    ParticleSystems chosenSystem;
+    KeyCode PickOrbSide()
+    {
+        KeyCode potentialKeyCode = KeyCode.E;
+        int random = UnityEngine.Random.Range(0, 4);
+        if (random == 0)
+        {
+            //UP
+            potentialKeyCode = KeyCode.I;
+            chosenSystem = topSystem;
+            PlaySystem();
+        }
+        else if (random == 1)
+        {
+            potentialKeyCode = KeyCode.J;
+            chosenSystem = leftSystem;
+            PlaySystem();
 
-       }
-       else if(random == 2){
-           potentialKeyCode = KeyCode.K;
-           PlaySystem(downSystem);
+        }
+        else if (random == 2)
+        {
+            potentialKeyCode = KeyCode.K;
 
-       }
-       else if(random == 3){
-           potentialKeyCode = KeyCode.L;
-           PlaySystem(rightSystem);
+            chosenSystem = downSystem;
+            PlaySystem();
 
-       }
-       return potentialKeyCode;
+        }
+        else if (random == 3)
+        {
+            potentialKeyCode = KeyCode.L;
+            chosenSystem = rightSystem;
+            PlaySystem();
+
+        }
+        Debug.Log("Chose potential key " + potentialKeyCode.ToString());
+        return potentialKeyCode;
     }
 
-    void PlaySystem(ParticleSystems chosenSystem){
+    void PlaySystem()
+    {
+        chosenSystem.SetPlaybackSpeed(2.0f);
         chosenSystem.Play();
     }
 
-    void StopSystem(ParticleSystems chosenSystem){
+    void StopSystem()
+    {
         chosenSystem.Stop();
     }
 
 
+    bool waitingForPrompt;
+    KeyCode lastHitKey;
+    void OnGui()
+    {
+        if (waitingForPrompt)
+        {
+            if (Input.anyKeyDown)
+            {
+                lastHitKey = Event.current.keyCode;
+            }
+        }
+    }
     bool hitSuccess = false;
 
     public IEnumerator PromptPlayerHitCoroutine()
     {
-        if(canAutoRepel){
+        if (canAutoRepel)
+        {
             PlayerParriedScream();
+            AutoRepelUsedWrapper();
             yield break;
         }
         float startTime = Time.time;
-		Debug.Log("Hit E");
-        //Make the keys random?
+
+        //grab the side of the orb -- up down left or right
+        KeyCode ourKeyCode = PickOrbSide();
+        waitingForPrompt = true;
+        WaitingForScreamPromptWrapper();
         while (Time.time < startTime + hitDurationWindow)
         {
-             promptTimeImage.fillAmount -= Time.deltaTime / hitDurationWindow;
+            promptTimeImage.fillAmount -= Time.deltaTime / hitDurationWindow;
             //TODO: this key will change and be random
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.anyKeyDown)
             {
-                textComponent.color = Color.green;
-                hitSuccess = true;
-                break;
+                if (Input.GetKeyDown(ourKeyCode))
+                {
+                    textComponent.color = Color.green;
+                    hitSuccess = true;
+                    break;
+                }
+                if (lastHitKey != ourKeyCode)
+                {
+                    textComponent.color = Color.red;
+                    break;
+                }
+                // if (!Input.GetKeyDown(ourKeyCode))
+                // {
+                //     textComponent.color = Color.red;
+                //     break;
+                // }
             }
             yield return null;
         }
-        FadeOutPrompt();
-        if (hitSuccess)
-        {
-			PlayerParriedScream();
-            Debug.Log("Stunned enemy!");
-            //TODO: Insert good stuff, stunning the enemy here
-        }
-        else
-        {
-            PlayerMissedOrFailed();
-            textComponent.color = Color.red;
-            Debug.Log("we're blinded oh no");
-            //TODO: Insert bad stuff, player blinded here.
-        }
+            waitingForPrompt = false;
+            StopSystem();
+            //TODO: play some cowering animation by the player here
+            ScreamPromptPassedWrapper();
+            FadeOutPrompt();
+            if (hitSuccess)
+            {
+                PlayerParriedScream();
+                Debug.Log("Stunned enemy!");
+                //TODO: Insert good stuff, stunning the enemy here
+            }
+            else
+            {
+                PlayerMissedOrFailed();
+                textComponent.color = Color.red;
+                Debug.Log("we're blinded oh no");
+                //TODO: Insert bad stuff, player blinded here.
+            }
+        
     }
     public IEnumerator PromptPlayerJumpCoroutine()
     {
@@ -216,7 +301,7 @@ public class PromptPlayerHit : MonoBehaviour
 
         else
         {
-			//PlayerMissedOrFailed();
+            //PlayerMissedOrFailed();
             Debug.Log("Player is stunned and if was carrying orb, dropped it ");
         }
     }
@@ -227,5 +312,5 @@ public class PromptPlayerHit : MonoBehaviour
     }
 
     // Update is called once per frame
-   
+
 }

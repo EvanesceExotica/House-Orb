@@ -109,6 +109,7 @@ public class OrbEffects : MonoBehaviour
 
     void StartRefreshParticleSystem()
     {
+        refreshGivenParticleSystem.Play();
         //TODO: Maybe all of the memories should refresh time
         //TODO: This one maybe can just be demonstrated by the turn.
     }
