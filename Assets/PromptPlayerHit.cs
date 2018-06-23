@@ -65,16 +65,51 @@ public class PromptPlayerHit : MonoBehaviour
     {
         promptTimeImage = GetComponentInChildren<Image>();
         ourCanvasGroup = GetComponent<CanvasGroup>();
+
         textComponent = GetComponentInChildren<TextMeshProUGUI>();
         Room.RoomWithPlayerHit += this.PromptPlayerHitWrapper;
         AutoRepel.AutoRepelTriggered += AutoRepelActivated;
 
+        topCanvasGroup.alpha = 0;
+        leftCanvasGroup.alpha = 0;
+        downCanvasGroup.alpha = 0;
+        rightCanvasGroup.alpha = 0;
+
+        topImage = topCanvasGroup.GetComponentInChildren<Image>();
+        leftImage = leftCanvasGroup.GetComponentInChildren<Image>();
+        downImage = downCanvasGroup.GetComponentInChildren<Image>();
+        rightImage = rightCanvasGroup.GetComponentInChildren<Image>();
+
+        StarScream.ScreamHitRoomAdjacent += FocusOnOrb;
+
     }
 
+    [Header("Top")]
     public ParticleSystems topSystem;
+
+    public CanvasGroup topCanvasGroup;
+
+    public Image topImage;
+
+    [Header("Left")]
     public ParticleSystems leftSystem;
+
+    public CanvasGroup leftCanvasGroup;
+
+    public Image leftImage;
+    [Header("Down")]
     public ParticleSystems downSystem;
+
+    public CanvasGroup downCanvasGroup;
+
+    public Image downImage;
+
+    [Header("Right")]
     public ParticleSystems rightSystem;
+
+
+    public CanvasGroup rightCanvasGroup;
+    public Image rightImage;
 
     void Update()
     {
@@ -85,7 +120,6 @@ public class PromptPlayerHit : MonoBehaviour
     {
         if (orbHeld)
         {
-            FadeInPrompt();
             StartCoroutine(PromptPlayerHitCoroutine());
         }
         else
@@ -125,6 +159,20 @@ public class PromptPlayerHit : MonoBehaviour
         }
 
     }
+
+    void FocusOnOrb()
+    {
+        i += 1;
+        Debug.Log("This was triggered " + i + " times");
+        AddOrbAsTarget();
+        ZoomIn();
+    }
+
+    void FocusOnPlayer()
+    {
+        RemoveOrbAsTarget();
+        ZoomOut();
+    }
     void AddOrbAsTarget()
     {
         GameHandler.proCamera.RemoveCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform);
@@ -139,12 +187,13 @@ public class PromptPlayerHit : MonoBehaviour
 
     void ZoomIn()
     {
-        //GameHandler.proCamera.Zoom(10, 0.5, );
+        GameHandler.proCamera.Zoom(-1, 0.5f, Com.LuisPedroFonseca.ProCamera2D.EaseType.EaseInOut);
     }
 
     void ZoomOut()
     {
 
+        GameHandler.proCamera.Zoom(1, 0.5f, Com.LuisPedroFonseca.ProCamera2D.EaseType.EaseInOut);
     }
 
     enum Sides
@@ -167,11 +216,15 @@ public class PromptPlayerHit : MonoBehaviour
             //UP
             potentialKeyCode = KeyCode.I;
             chosenSystem = topSystem;
+            ourCanvasGroup = topCanvasGroup;
+            promptTimeImage = topImage;
             PlaySystem();
         }
         else if (random == 1)
         {
             potentialKeyCode = KeyCode.J;
+            ourCanvasGroup = leftCanvasGroup;
+            promptTimeImage = leftImage;
             chosenSystem = leftSystem;
             PlaySystem();
 
@@ -179,7 +232,8 @@ public class PromptPlayerHit : MonoBehaviour
         else if (random == 2)
         {
             potentialKeyCode = KeyCode.K;
-
+            ourCanvasGroup = downCanvasGroup;
+            promptTimeImage = downImage;
             chosenSystem = downSystem;
             PlaySystem();
 
@@ -187,6 +241,8 @@ public class PromptPlayerHit : MonoBehaviour
         else if (random == 3)
         {
             potentialKeyCode = KeyCode.L;
+            ourCanvasGroup = rightCanvasGroup;
+            promptTimeImage = rightImage;
             chosenSystem = rightSystem;
             PlaySystem();
 
@@ -233,6 +289,7 @@ public class PromptPlayerHit : MonoBehaviour
 
         //grab the side of the orb -- up down left or right
         KeyCode ourKeyCode = PickOrbSide();
+        FadeInPrompt();
         waitingForPrompt = true;
         WaitingForScreamPromptWrapper();
         while (Time.time < startTime + hitDurationWindow)
@@ -249,7 +306,7 @@ public class PromptPlayerHit : MonoBehaviour
                 }
                 if (lastHitKey != ourKeyCode)
                 {
-                    textComponent.color = Color.red;
+                    promptTimeImage.color = Color.red;
                     break;
                 }
                 // if (!Input.GetKeyDown(ourKeyCode))
@@ -260,25 +317,29 @@ public class PromptPlayerHit : MonoBehaviour
             }
             yield return null;
         }
-            waitingForPrompt = false;
-            StopSystem();
-            //TODO: play some cowering animation by the player here
-            ScreamPromptPassedWrapper();
-            FadeOutPrompt();
-            if (hitSuccess)
-            {
-                PlayerParriedScream();
-                Debug.Log("Stunned enemy!");
-                //TODO: Insert good stuff, stunning the enemy here
-            }
-            else
-            {
-                PlayerMissedOrFailed();
-                textComponent.color = Color.red;
-                Debug.Log("we're blinded oh no");
-                //TODO: Insert bad stuff, player blinded here.
-            }
-        
+
+        FocusOnPlayer();
+        waitingForPrompt = false;
+        StopSystem();
+        //TODO: play some cowering animation by the player here
+        ScreamPromptPassedWrapper();
+        FadeOutPrompt();
+        if (hitSuccess)
+        {
+            //TODO: Add some particle effect that shows a sheild or something exploding forth from the parried side
+            PlayerParriedScream();
+            Debug.Log("Stunned enemy!");
+            //TODO: Insert good stuff, stunning the enemy here
+        }
+        else
+        {
+            PlayerMissedOrFailed();
+            promptTimeImage.color = Color.red;
+            //textComponent.color = Color.red;
+            Debug.Log("we're blinded oh no");
+            //TODO: Insert bad stuff, player blinded here.
+        }
+
     }
     public IEnumerator PromptPlayerJumpCoroutine()
     {
@@ -306,6 +367,7 @@ public class PromptPlayerHit : MonoBehaviour
         }
     }
     // Use this for initialization
+    int i = 0;
     void Start()
     {
 
