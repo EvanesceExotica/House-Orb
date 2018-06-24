@@ -176,7 +176,7 @@ public class PromptPlayerHit : MonoBehaviour
     void AddOrbAsTarget()
     {
         GameHandler.proCamera.RemoveCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform);
-        GameHandler.proCamera.AddCameraTarget(GameHandler.fatherOrbGO.transform);
+        GameHandler.proCamera.AddCameraTarget(GameHandler.fatherOrbGO.transform, 1, 1, 0.5f, Vector2.zero);
     }
 
     void RemoveOrbAsTarget()

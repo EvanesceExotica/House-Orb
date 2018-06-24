@@ -71,8 +71,10 @@ public class DialogueDisplayer : MonoBehaviour
         SetSpeechBubble(speech);
         yield return new WaitForSeconds(delay);
         FadeIn();
+        SetDialogueBoxAsCameraTarget();
         yield return StartCoroutine(TypeText(speech));
         yield return new WaitForSeconds(delay);
+        RemoveDialogueBoxAsCameraTarget();
         FadeOut();
     }
 
@@ -112,7 +114,17 @@ public class DialogueDisplayer : MonoBehaviour
             Vector2 speechBubbleLineStartPosition = GameHandler.bubbleLineStartTransform.position;
             ourLineRenderer.SetPosition(0, speechBubbleLineStartPosition);
             ourLineRenderer.SetPosition(1, ourSpeaker.transform.position);
+            transform.parent = ourSpeaker.transform;
         }
+    }
+
+    void SetDialogueBoxAsCameraTarget(){
+        GameHandler.proCamera.AddCameraTarget(this.transform);
+    }
+
+    void RemoveDialogueBoxAsCameraTarget(){
+
+        GameHandler.proCamera.RemoveCameraTarget(this.transform);
     }
 
     GameObject ReturnSpeaker(Speech speech)
