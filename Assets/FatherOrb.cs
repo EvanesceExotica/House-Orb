@@ -122,6 +122,8 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         //  transform.DOLocalMoveY(transform.localPosition.y + flip,);
     }
 
+   
+
     void Awake()
     {
         renderer = GetComponent<MeshRenderer>();

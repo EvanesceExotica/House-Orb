@@ -38,6 +38,8 @@ public class OrbEffects : MonoBehaviour
     public ParticleSystems buffSpinParticleSystem;
 
     ParticleSystems mainCurrentPlayingSystem;
+
+    public ParticleSystems failureSystem;
     Light ourLight;
     float defaultIntensity;
     float defaultColor;
@@ -82,6 +84,14 @@ public class OrbEffects : MonoBehaviour
     }
 
 
+void Shake(){
+    transform.DOShakePosition(1.0f, 1, 10, 90, false, true);
+}
+
+void PlayFailureEffect(){
+    failureSystem.Play();
+
+}
     void GeneralBuff()
     {
         buffSpinParticleSystem.Play();

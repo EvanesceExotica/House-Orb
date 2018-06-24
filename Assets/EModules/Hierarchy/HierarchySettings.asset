@@ -13,6 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pluginID: 0
   last_scenesV2:
+  - guid: e8e233d3e71a0a7489de2b295b3742cf
+    pin: 0
+    path: Assets/Mirza Beig/Particle Systems/Ultimate VFX/Scenes/1 - Ultimate VFX
+      (Demo).unity
+    additional_guid: []
+    additional_path: []
   - guid: 27369b64eb68a3b4e98a3be2a20cf27c
     pin: 0
     path: Assets/Train1.unity
@@ -41,12 +47,6 @@ MonoBehaviour:
   - guid: 9cb2c3bd6962d487dba382e8e35f188c
     pin: 0
     path: Assets/FungusExamples/FungusTown/FungusTown.unity
-    additional_guid: []
-    additional_path: []
-  - guid: e8e233d3e71a0a7489de2b295b3742cf
-    pin: 0
-    path: Assets/Mirza Beig/Particle Systems/Ultimate VFX/Scenes/1 - Ultimate VFX
-      (Demo).unity
     additional_guid: []
     additional_path: []
   - guid: 7bc3756b1525d6b42bb859cf122bc628
