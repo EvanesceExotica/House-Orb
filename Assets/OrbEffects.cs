@@ -53,7 +53,7 @@ public class OrbEffects : MonoBehaviour
         Memory.AutoReflectGiven += StartAutoReflectChargeParticleSystem;
         Memory.RefreshGiven += StartRefreshParticleSystem;
         Memory.PrevSconceTeleportGiven += StartPrevSconceTeleportParticleSystem;
-        Memory.HintGiven+= StartHintParticleSystem;
+        Memory.HintGiven += StartHintParticleSystem;
 
         PromptPlayerHit.PlayerParried += Parry;
         PromptPlayerHit.AutoRepelUsed += Parry;
@@ -63,6 +63,8 @@ public class OrbEffects : MonoBehaviour
         //FatherOrb.Overheated += StopFizz;
         FatherOrb.OrbRefreshed += StopFizz;
         FatherOrb.Dropped += StopFizz;
+
+        PromptPlayerHit.PlayerFailed += PlayFailureEffect;
     }
 
     void StopAllButFizz()
@@ -70,28 +72,37 @@ public class OrbEffects : MonoBehaviour
 
     }
 
-    void ResetSystems(MonoBehaviour mono){
+    void ResetSystems(MonoBehaviour mono)
+    {
         ReturnToStandardParticleEffect();
     }
 
     void ReturnToStandardParticleEffect()
     {
-        if(mainCurrentPlayingSystem != null){
-        mainCurrentPlayingSystem.Stop();
-        baseParticleSystem.Play();
-        mainCurrentPlayingSystem = baseParticleSystem;
+        if (mainCurrentPlayingSystem != null)
+        {
+            mainCurrentPlayingSystem.Stop();
+            baseParticleSystem.Play();
+            mainCurrentPlayingSystem = baseParticleSystem;
         }
     }
 
 
-void Shake(){
-    transform.DOShakePosition(1.0f, 1, 10, 90, false, true);
-}
+    void Shake()
+    {
+        transform.DOShakePosition(1.0f, 1, 10, 90, false, true);
+    }
 
-void PlayFailureEffect(){
-    failureSystem.Play();
+    void PlayFailureEffect()
+    {
+        //TODO: We want maybe a red vingette effect 
+        Shake();
+        if (failureSystem != null)
+        {
+            failureSystem.Play();
+        }
 
-}
+    }
     void GeneralBuff()
     {
         buffSpinParticleSystem.Play();

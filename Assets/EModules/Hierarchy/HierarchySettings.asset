@@ -13,15 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pluginID: 0
   last_scenesV2:
+  - guid: 27369b64eb68a3b4e98a3be2a20cf27c
+    pin: 0
+    path: Assets/Train1.unity
+    additional_guid: []
+    additional_path: []
   - guid: e8e233d3e71a0a7489de2b295b3742cf
     pin: 0
     path: Assets/Mirza Beig/Particle Systems/Ultimate VFX/Scenes/1 - Ultimate VFX
       (Demo).unity
-    additional_guid: []
-    additional_path: []
-  - guid: 27369b64eb68a3b4e98a3be2a20cf27c
-    pin: 0
-    path: Assets/Train1.unity
     additional_guid: []
     additional_path: []
   - guid: 44b1c1d0f217e400f8c98072868231cc

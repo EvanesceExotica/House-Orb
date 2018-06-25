@@ -87,12 +87,15 @@ public class PromptPlayerHit : MonoBehaviour
     [Header("Top")]
     public ParticleSystems topSystem;
 
+    public ParticleSystems successBeamTop;
+
     public CanvasGroup topCanvasGroup;
 
     public Image topImage;
 
     [Header("Left")]
     public ParticleSystems leftSystem;
+    public ParticleSystems successBeamLeft;
 
     public CanvasGroup leftCanvasGroup;
 
@@ -100,6 +103,7 @@ public class PromptPlayerHit : MonoBehaviour
     [Header("Down")]
     public ParticleSystems downSystem;
 
+    public ParticleSystems successBeamDown;
     public CanvasGroup downCanvasGroup;
 
     public Image downImage;
@@ -108,6 +112,7 @@ public class PromptPlayerHit : MonoBehaviour
     public ParticleSystems rightSystem;
 
 
+    public ParticleSystems successBeamRight;
     public CanvasGroup rightCanvasGroup;
     public Image rightImage;
 
@@ -216,6 +221,7 @@ public class PromptPlayerHit : MonoBehaviour
             //UP
             potentialKeyCode = KeyCode.I;
             chosenSystem = topSystem;
+            chosenSuccessfulSystem = successBeamTop;
             ourCanvasGroup = topCanvasGroup;
             promptTimeImage = topImage;
             PlaySystem();
@@ -226,6 +232,7 @@ public class PromptPlayerHit : MonoBehaviour
             ourCanvasGroup = leftCanvasGroup;
             promptTimeImage = leftImage;
             chosenSystem = leftSystem;
+            chosenSuccessfulSystem = successBeamLeft;
             PlaySystem();
 
         }
@@ -235,6 +242,7 @@ public class PromptPlayerHit : MonoBehaviour
             ourCanvasGroup = downCanvasGroup;
             promptTimeImage = downImage;
             chosenSystem = downSystem;
+            chosenSuccessfulSystem = successBeamDown;
             PlaySystem();
 
         }
@@ -244,6 +252,7 @@ public class PromptPlayerHit : MonoBehaviour
             ourCanvasGroup = rightCanvasGroup;
             promptTimeImage = rightImage;
             chosenSystem = rightSystem;
+            chosenSuccessfulSystem = successBeamRight;
             PlaySystem();
 
         }
@@ -262,6 +271,10 @@ public class PromptPlayerHit : MonoBehaviour
         chosenSystem.Stop();
     }
 
+    ParticleSystems chosenSuccessfulSystem;
+    void PlaySuccessSystem(){
+        chosenSuccessfulSystem.Play();
+    }
 
     bool waitingForPrompt;
     KeyCode lastHitKey;
@@ -300,7 +313,7 @@ public class PromptPlayerHit : MonoBehaviour
             {
                 if (Input.GetKeyDown(ourKeyCode))
                 {
-                    textComponent.color = Color.green;
+                    promptTimeImage.color = Color.green;
                     hitSuccess = true;
                     break;
                 }
@@ -328,11 +341,14 @@ public class PromptPlayerHit : MonoBehaviour
         {
             //TODO: Add some particle effect that shows a sheild or something exploding forth from the parried side
             PlayerParriedScream();
+            PlaySuccessSystem();
+           // TODO: We still need to add the systems through the inspector
             Debug.Log("Stunned enemy!");
             //TODO: Insert good stuff, stunning the enemy here
         }
         else
         {
+            //TODO: We need to add a delay before the orb leaves the player's hands
             PlayerMissedOrFailed();
             promptTimeImage.color = Color.red;
             //textComponent.color = Color.red;
@@ -340,6 +356,12 @@ public class PromptPlayerHit : MonoBehaviour
             //TODO: Insert bad stuff, player blinded here.
         }
 
+    }
+
+    public IEnumerator RecoveryDelay(){
+
+        yield return new WaitForSeconds(2.0f);
+        PlayerMissedOrFailed();
     }
     public IEnumerator PromptPlayerJumpCoroutine()
     {
