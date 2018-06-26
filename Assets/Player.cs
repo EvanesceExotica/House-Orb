@@ -37,6 +37,14 @@ public class Player : MonoBehaviour {
 		Hiding,
 		Burned
 	}
+
+	public enum TaggedState{
+		Normal,
+		Hiding,
+		Tagged
+	}
+
+	public TaggedState taggedState;
 	void EatingCooldownWrapper(){
 		StartCoroutine(EatingCooldown());
 	}

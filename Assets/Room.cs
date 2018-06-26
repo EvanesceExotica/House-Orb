@@ -23,6 +23,18 @@ public class Room : MonoBehaviour
     public event Action<Room> EnemyEnteredAdjacentRoom;
     public event Action<Room> EnemyExitedAdjacentRoom;
 
+    public enum RoomType{
+        Bedroom,
+        Kitchen,
+        EdgeRoomLeft,
+
+        EdgeRoomRight,
+        TallRoomLeft,
+        TallRoomRight
+
+    }
+
+    public RoomType ourRoomType;
     public void EnemyExitedAdjacentRoomWrapper(Room room){
         if(playerLocation == PlayerStatus.InRoom){
             if(EnemyExitedAdjacentRoom != null){
