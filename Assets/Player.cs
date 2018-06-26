@@ -40,11 +40,16 @@ public class Player : MonoBehaviour {
 
 	public enum TaggedState{
 		Normal,
-		Hiding,
-		Tagged
+		HidingNormal,
+		Tagged,
+		HidingTagged
 	}
 
 	public TaggedState taggedState;
+
+	void SetTagged(){
+		taggedState = TaggedState.Tagged;
+	}
 	void EatingCooldownWrapper(){
 		StartCoroutine(EatingCooldown());
 	}
@@ -201,6 +206,8 @@ public class Player : MonoBehaviour {
 		PromptPlayerHit.PlayerFailed += SetBlinded;
 		Food.AteFood += SetBoosted;
 		Food.AteFood +=EatingCooldownWrapper;
+
+		PromptPlayerHit.PlayerFailed += SetTagged;
 	}
 
 }

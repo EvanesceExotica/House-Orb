@@ -20,6 +20,7 @@ public class ScreamFollowObject : MonoBehaviour {
     SpriteRenderer spriteRenderer;
 	 IEnumerator MoveScreamObject(Room room, int direction, float duration)
     {
+        Debug.Log("We have started to move the screamObject");
         float startTime = Time.time;
         float elapsedTime = 0;
         Transform destination = null;
@@ -32,7 +33,8 @@ public class ScreamFollowObject : MonoBehaviour {
             destination = room.entranceA;
         }
 
-        while(Time.time + startTime < duration){
+        while(Time.time < startTime + duration){
+            Debug.Log("We are moving the scream object");
             transform.position = Vector2.Lerp(transform.position, destination.position, elapsedTime);
             elapsedTime += Time.deltaTime;
             yield return null;

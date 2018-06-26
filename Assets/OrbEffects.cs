@@ -8,6 +8,11 @@ public class OrbEffects : MonoBehaviour
 
     [Header("Assign in Inspector")]
 
+    AudioSource source;
+
+    public AudioClip failClip;
+
+    public AudioClip succeedClip;
     public ParticleSystems baseParticleSystem;
     public ParticleSystems FizzingParticleSystems; //ultima looping
 
@@ -45,6 +50,7 @@ public class OrbEffects : MonoBehaviour
     float defaultColor;
     void Awake()
     {
+        source = GetComponent<AudioSource>();
         ourLight = GetComponentInChildren<Light>();
         HiddenSconce.SconceRevealed += ReturnToStandardParticleEffect;
         ReturnPlayerToLastSconce.ArrivedAtLastSconceWithPlayer += ResetSystems;
@@ -90,7 +96,7 @@ public class OrbEffects : MonoBehaviour
 
     void Shake()
     {
-        transform.DOShakePosition(1.0f, 1, 10, 90, false, true);
+        transform.DOShakePosition(1.0f, 0.5f, 3, 90, false, true);
     }
 
     void PlayFailureEffect()
@@ -101,6 +107,7 @@ public class OrbEffects : MonoBehaviour
         {
             failureSystem.Play();
         }
+        source.PlayOneShot(failClip);
 
     }
     void GeneralBuff()

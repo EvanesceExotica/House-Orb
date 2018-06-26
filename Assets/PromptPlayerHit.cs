@@ -349,7 +349,8 @@ public class PromptPlayerHit : MonoBehaviour
         else
         {
             //TODO: We need to add a delay before the orb leaves the player's hands
-            RecoveryDelay();
+            PlayerMissedOrFailed();
+            //StartCoroutine(RecoveryDelay());
             //PlayerMissedOrFailed();
             promptTimeImage.color = Color.red;
             //textComponent.color = Color.red;

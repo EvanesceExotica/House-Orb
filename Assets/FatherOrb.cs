@@ -101,7 +101,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         instabilityStatus = InstabilityStatus.NotPickedUp;
     }
 
-    bool movingToObject;
+    [SerializeField] bool movingToObject;
 
     Vector2 tempPos = new Vector2();
     Vector2 posOffset = new Vector2();
@@ -112,7 +112,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     void FloatMe()
     {
-        if (heldStatus == HeldStatuses.Carried && !movingToObject)
+        if ((heldStatus == HeldStatuses.Carried && !movingToObject) || (inSconce && !movingToObject))
         {
             tempPos = posOffset;
             tempPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
@@ -139,7 +139,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         Sconce.OrbRemovedFromSconce += this.PickedUpByPlayer;
         //you want a successful parry to refresh the orb time -- maybe a failure should too so it's not a double fail? Or have the failure make the orb return to sconce early w/ out burn
         PromptPlayerHit.PlayerParried += RefreshTime;
-        PromptPlayerHit.PlayerFailed += ReturnToLastSconceEarlyWrapper;
+        PromptPlayerHit.PlayerFailed += FailureDelayWrapper;
         //TODO: Fix the below
         OrbController.ManuallyStoppedChannelingOrb += PickedUpByPlayer;
         //TODO: Add for if the orb remains charged w/ power up even when it is not in the player's hands
@@ -151,6 +151,15 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         }
         //posOffset = transform.position;
         //SetInSconce(transform.parent.gameObject);
+    }
+
+    void FailureDelayWrapper(){
+        StartCoroutine(FailureDelay());
+    }
+
+    public IEnumerator FailureDelay(){
+        yield return new WaitForSeconds(1);
+        ReturnToLastSconceEarlyWrapper();
     }
 
     void SetZToNegative2()
@@ -381,6 +390,12 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         // Set the sorting layer and order.
         renderer.sortingLayerName = sortingLayerName;
         renderer.sortingOrder = sortingOrder;
+    }
+
+    void Update(){
+        if(inSconce && !movingToObject){
+            FloatMe();
+        }
     }
     // Use this for initialization
 

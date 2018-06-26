@@ -19,6 +19,7 @@ public class FollowObject : MonoBehaviour
     }
     
     void ScreamSucceeded(){
+        Debug.Log("Our scream succeeded, now we're going to follow the player");
         //TODO: This will follow the player around for a while and then fade?
         SetObjectWereFollowing(GameHandler.playerGO.transform);
         infectedPlayerStartTime = Time.time;
@@ -34,7 +35,7 @@ public class FollowObject : MonoBehaviour
         ourSystem.Stop();
     }
 
-    public float speed = 8.0f;
+    public float speed = 15.0f;
     public float distanceFromCamera = 5.0f;
 
     bool following;
