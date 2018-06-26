@@ -8,6 +8,7 @@ public class OrbEffects : MonoBehaviour
 
     [Header("Assign in Inspector")]
 
+    List<ParticleSystems> parryParticles = new List<ParticleSystems>();
     AudioSource source;
 
     public AudioClip failClip;
@@ -48,6 +49,10 @@ public class OrbEffects : MonoBehaviour
     Light ourLight;
     float defaultIntensity;
     float defaultColor;
+
+    public GameObject parryParticlesGO;
+
+    bool burnedOut;
     void Awake()
     {
         source = GetComponent<AudioSource>();
@@ -71,11 +76,34 @@ public class OrbEffects : MonoBehaviour
         FatherOrb.Dropped += StopFizz;
 
         PromptPlayerHit.PlayerFailed += PlayFailureEffect;
+
+        Room.RoomWithPlayerHit += SetParryParticlesToDoubleSpeed;
+
+        parryParticles.AddRange(parryParticlesGO.GetComponentsInChildren<ParticleSystems>());
+        parryParticles.Add(baseParticleSystem);
+        parryParticles.Add(parryParticleSystem);
+        parryParticles.Add(failureSystem);
     }
 
     void StopAllButFizz()
     {
 
+    }
+
+    void SetParryParticlesToDoubleSpeed(bool held)
+    {
+        foreach (ParticleSystems system in parryParticles)
+        {
+            system.SetPlaybackSpeed(2.0f);
+        }
+    }
+
+    void SetParryParticlesToNormalSpeed()
+    {
+        foreach (ParticleSystems system in parryParticles)
+        {
+            system.SetPlaybackSpeed(1.0f);
+        }
     }
 
     void ResetSystems(MonoBehaviour mono)
@@ -85,11 +113,17 @@ public class OrbEffects : MonoBehaviour
 
     void ReturnToStandardParticleEffect()
     {
+        //this will return us to the base blue particle system
         if (mainCurrentPlayingSystem != null)
         {
             mainCurrentPlayingSystem.Stop();
-            baseParticleSystem.Play();
-            mainCurrentPlayingSystem = baseParticleSystem;
+        }
+        baseParticleSystem.Play();
+        mainCurrentPlayingSystem = baseParticleSystem;
+        if (burnedOut)
+        {
+            //if the player has recently failed a parry and burned out the orb
+            Sconce.OrbInSconce -= ResetSystems;
         }
     }
 
@@ -101,14 +135,17 @@ public class OrbEffects : MonoBehaviour
 
     void PlayFailureEffect()
     {
+        Sconce.OrbInSconce += ResetSystems;
         //TODO: We want maybe a red vingette effect 
+        burnedOut = true;
         Shake();
+        baseParticleSystem.Stop();
         if (failureSystem != null)
         {
             failureSystem.Play();
         }
         source.PlayOneShot(failClip);
-
+        //Debug.Break();
     }
     void GeneralBuff()
     {

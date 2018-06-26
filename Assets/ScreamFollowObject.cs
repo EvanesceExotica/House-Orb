@@ -34,12 +34,22 @@ public class ScreamFollowObject : MonoBehaviour {
         }
 
         while(Time.time < startTime + duration){
+            if(room = GameHandler.roomManager.GetPlayerCurrentRoom()){
+                if(Vector2.Distance(GameHandler.playerGO.transform.position, transform.position) <= 1.0f){
+                    //the particles will either attach to the player or disperse on their own time
+                    yield break;
+                }
+            }
             Debug.Log("We are moving the scream object");
             transform.position = Vector2.Lerp(transform.position, destination.position, elapsedTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
     }
+
+   
+
+    
 
     public void MoveScreamObjectWrapper(Room room, int direction, float duration){
 

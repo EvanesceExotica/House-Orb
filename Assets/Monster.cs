@@ -6,14 +6,24 @@ using System;
 public class Monster : MonoBehaviour
 {
 
+
+    AudioSource ourSource;
+
+    public AudioClip nearScream;
+
+    public AudioClip scoutingScream;
+
+    public AudioClip scareChord;
+
     int starScreamDirection;
-    
+
     public GameObject ourLightObject;
     public static event Action MonsterReachedPlayer;
     public static event Action ReadyToScream;
 
     void ScreamReady()
     {
+        PlayScoutingScream();
         if (ReadyToScream != null)
         {
             ReadyToScream();
@@ -29,16 +39,25 @@ public class Monster : MonoBehaviour
     public List<Room> acceptableRoomsToDrawFrom;
     void Awake()
     {
+        ourSource = GetComponent<AudioSource>();
         roomManager = GameObject.Find("Managers").GetComponent<RoomManager>();
         HidingSpace.PlayerHiding += PlayerHid;
         PromptPlayerHit.PlayerFailed += HuntPlayerWrapper;
         StarScream.ScreamHitPlayerCurrentRoom += SetStarScreamDirection;
     }
 
+    void PlayScoutingScream()
+    {
+        ourSource.PlayOneShot(scoutingScream);
+    }
+
+    void PlayLocatedPlayerChord()
+    {
+        ourSource.PlayOneShot(scareChord);
+    }
 
     void Start()
     {
-
         StartCoroutine(MonsterInitializationCoroutine());
     }
 
@@ -173,7 +192,8 @@ public class Monster : MonoBehaviour
         }
     }
 
-    void SetStarScreamDirection(int direction){
+    void SetStarScreamDirection(int direction)
+    {
         //this method determines what direction the monster should hunt the player in based on the direction the star scream travelled
         starScreamDirection = direction;
     }
@@ -200,18 +220,23 @@ public class Monster : MonoBehaviour
 
     }
 
-    void MonsterReachedPlayerWrapper(){
-        if(MonsterReachedPlayer != null){
+    void MonsterReachedPlayerWrapper()
+    {
+        if (MonsterReachedPlayer != null)
+        {
             MonsterReachedPlayer();
         }
 
     }
 
-    void SearchPlayer(){
+    void SearchPlayer()
+    {
 
     }
 
-    void HuntPlayerWrapper(/*int direction*/){
+    void HuntPlayerWrapper(/*int direction*/)
+    {
+        PlayLocatedPlayerChord();
         StartCoroutine(HuntPlayer(/*direction*/));
     }
     public IEnumerator HuntPlayer(/*int direction*/)
@@ -222,7 +247,7 @@ public class Monster : MonoBehaviour
         {
 
             playerRoomIndex = roomManager.GetPlayerCurrentRoomIndex();
-            currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex()+  starScreamDirection;
+            currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex() + starScreamDirection;
 
             if (currentRoomIndex == -1)
             {
@@ -237,10 +262,12 @@ public class Monster : MonoBehaviour
             transform.position = roomManager.roomList[currentRoomIndex].gameObject.transform.position;
             yield return new WaitForSeconds(2.0f);
         }
-        if(playerHiding){
+        if (playerHiding)
+        {
 
         }
-        else{
+        else
+        {
             MonsterReachedPlayerWrapper();
         }
     }

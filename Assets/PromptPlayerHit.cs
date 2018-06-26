@@ -167,27 +167,26 @@ public class PromptPlayerHit : MonoBehaviour
 
     void FocusOnOrb()
     {
-        i += 1;
-        Debug.Log("This was triggered " + i + " times");
-        AddOrbAsTarget();
-        ZoomIn();
+        // i += 1;
+        // AddOrbAsTarget();
+        //ZoomIn();
     }
 
     void FocusOnPlayer()
     {
-        RemoveOrbAsTarget();
-        ZoomOut();
+       // RemoveOrbAsTarget();
+        //ZoomOut();
     }
     void AddOrbAsTarget()
     {
-        GameHandler.proCamera.RemoveCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform);
-        GameHandler.proCamera.AddCameraTarget(GameHandler.fatherOrbGO.transform, 1, 1, 0.5f, Vector2.zero);
+        GameHandler.proCamera.RemoveCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform, 1.0f);
+        GameHandler.proCamera.AddCameraTarget(GameHandler.fatherOrbGO.transform, 1.0f);
     }
 
     void RemoveOrbAsTarget()
     {
-        GameHandler.proCamera.RemoveCameraTarget(GameHandler.fatherOrbGO.transform);
-        GameHandler.proCamera.AddCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform);
+        GameHandler.proCamera.RemoveCameraTarget(GameHandler.fatherOrbGO.transform, 1.0f);
+        GameHandler.proCamera.AddCameraTarget(GameHandler.roomManager.GetPlayerCurrentRoom().gameObject.transform, 1.0f);
     }
 
     void ZoomIn()
@@ -262,7 +261,7 @@ public class PromptPlayerHit : MonoBehaviour
 
     void PlaySystem()
     {
-        chosenSystem.SetPlaybackSpeed(2.0f);
+        //chosenSystem.SetPlaybackSpeed(2.0f);
         chosenSystem.Play();
     }
 
@@ -290,8 +289,12 @@ public class PromptPlayerHit : MonoBehaviour
     }
     bool hitSuccess = false;
 
+    Color32 gold = new Color32(218,165,32, 255);
+
+
     public IEnumerator PromptPlayerHitCoroutine()
     {
+        Time.timeScale *= 0.5f;
         if (canAutoRepel)
         {
             PlayerParriedScream();
@@ -305,6 +308,7 @@ public class PromptPlayerHit : MonoBehaviour
         FadeInPrompt();
         waitingForPrompt = true;
         WaitingForScreamPromptWrapper();
+        hitDurationWindow *= 0.5f;
         while (Time.time < startTime + hitDurationWindow)
         {
             promptTimeImage.fillAmount -= Time.deltaTime / hitDurationWindow;
@@ -313,7 +317,7 @@ public class PromptPlayerHit : MonoBehaviour
             {
                 if (Input.GetKeyDown(ourKeyCode))
                 {
-                    promptTimeImage.color = Color.green;
+                    promptTimeImage.color = gold;
                     hitSuccess = true;
                     break;
                 }
@@ -337,6 +341,7 @@ public class PromptPlayerHit : MonoBehaviour
         //TODO: play some cowering animation by the player here
         ScreamPromptPassedWrapper();
         FadeOutPrompt();
+        Time.timeScale *= 2; 
         if (hitSuccess)
         {
             //TODO: Add some particle effect that shows a sheild or something exploding forth from the parried side

@@ -8,6 +8,11 @@ using MirzaBeig.ParticleSystems;
 using Com.LuisPedroFonseca.ProCamera2D;
 public class Room : MonoBehaviour
 {
+
+    AudioSource ourSource;
+
+    AudioClip boom;
+
     [Header("Assigned In Inspector")]
     public ParticleSystems scentParticles;
 
@@ -55,6 +60,11 @@ public class Room : MonoBehaviour
                 EnemyEnteredAdjacentRoom(room);
             }
         }
+    }
+
+    void PlayBoom(){
+        //TODO: Add something to calculate the distance from player
+        ourSource.PlayOneShot(boom);
     }
 
     public static event Action<bool> RoomWithPlayerHit;
