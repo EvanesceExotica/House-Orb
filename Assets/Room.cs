@@ -14,6 +14,10 @@ public class Room : MonoBehaviour
     [Header("Other Attributes")]
     public List<Light> roomLights = new List<Light>();
 
+    public Transform entranceA;
+
+    public Transform entranceB;
+
     public event Action<Room> PlayerEnteredRoom;
 
     public event Action<Room> EnemyEnteredAdjacentRoom;
@@ -119,6 +123,7 @@ public class Room : MonoBehaviour
     void PlayShakeAnimation()
     {
         transform.DOShakePosition(1.0f, 0.5f, 1, 45, false, true);
+        
         //  transform.DOShakePosition(1.0f, 0.5f, 1, 1, true, true);
         //todo: Have a shake animation played when the enemy's scouting call passes through this room
     }
@@ -131,6 +136,10 @@ public class Room : MonoBehaviour
 
     void Awake()
     {
+        entranceA = transform.Find("EntranceA");
+        //entrance A will always be on the left
+        entranceB = transform.Find("EntranceB");
+        //entrance B will always be on the right
         ourProCamera = Camera.main.GetComponent<ProCamera2D>();
         playerLocation = PlayerStatus.OutOfRoom;
         enemyLocation = EnemyStatus.OutOfRoom;

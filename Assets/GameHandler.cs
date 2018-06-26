@@ -4,7 +4,7 @@ using UnityEngine;
 using Com.LuisPedroFonseca.ProCamera2D;
 public class GameHandler : MonoBehaviour {
 
-
+	public static ScreamFollowObject screamFollowObject;
 	public static RoomManager roomManager;
 	public static LayerMask defaultPlayerLayer;
 	public static Player player;
@@ -24,6 +24,7 @@ public class GameHandler : MonoBehaviour {
 
 	public static Transform bubbleLineStartTransform;
 	void Awake(){
+		screamFollowObject = GameObject.Find("ScreamFollowObject").GetComponent<ScreamFollowObject>();
 		fatherOrbHoldTransform = GameObject.Find("FatherOrbPos").transform;
 		bubbleLineStartTransform = GameObject.Find("LineStartPosition").transform;
 		proCamera = Camera.main.GetComponent<ProCamera2D>();

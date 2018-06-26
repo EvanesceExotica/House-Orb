@@ -349,7 +349,8 @@ public class PromptPlayerHit : MonoBehaviour
         else
         {
             //TODO: We need to add a delay before the orb leaves the player's hands
-            PlayerMissedOrFailed();
+            RecoveryDelay();
+            //PlayerMissedOrFailed();
             promptTimeImage.color = Color.red;
             //textComponent.color = Color.red;
             Debug.Log("we're blinded oh no");
@@ -360,7 +361,7 @@ public class PromptPlayerHit : MonoBehaviour
 
     public IEnumerator RecoveryDelay(){
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         PlayerMissedOrFailed();
     }
     public IEnumerator PromptPlayerJumpCoroutine()

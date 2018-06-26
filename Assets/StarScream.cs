@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 public class StarScream : MonoBehaviour
 {
 
@@ -20,8 +21,10 @@ public class StarScream : MonoBehaviour
 
     public static event Action ScreamHitRoomAdjacent;
 
-    void ScreamHitRoomAdjacentWrapper(){
-        if(ScreamHitRoomAdjacent != null){
+    void ScreamHitRoomAdjacentWrapper()
+    {
+        if (ScreamHitRoomAdjacent != null)
+        {
             ScreamHitRoomAdjacent();
         }
     }
@@ -42,6 +45,8 @@ public class StarScream : MonoBehaviour
     int screamStartIndex;
     Monster monster;
 
+    public ScreamFollowObject screamFollowObject;
+
     float screamDelay = 2.0f;
     void Awake()
     {
@@ -54,8 +59,11 @@ public class StarScream : MonoBehaviour
         StartCoroutine(SendScream());
     }
 
-    public IEnumerator StartScream(){
+    public IEnumerator StartScream()
+    {
         //have something play audio clip here
+        //we want the scream object to start from the monster
+        GameHandler.screamFollowObject.gameObject.transform.position = GameHandler.monsterGO.transform.position;
         yield return new WaitForSeconds(screamDelay);
         StartCoroutine(SendScream());
     }
@@ -74,15 +82,16 @@ public class StarScream : MonoBehaviour
         screaming = true;
         while (screaming)
         {
+            GameHandler.screamFollowObject.MoveScreamObjectWrapper(roomList[currentRoomIndexOfScream], positiveOrNegative, 0.5f);
             //	Debug.Log("We're on room " + roomList[roomIndexOfScream].gameObject.name + " which has an index of " + roomIndexOfScream);
             if (currentRoomIndexOfScream == roomManager.GetPlayerCurrentRoomIndex())
             {
                 //if we're in the player's room
                 ScreamHitPlayerRoom(positiveOrNegative);
-                screaming =  false;
+                screaming = false;
                 reachedPlayer = true;
                 //we want it to stop after hitting the player room, failure means the enemy finds the player anyway, success means it's repelled
-               // break;
+                // break;
             }
             if (currentRoomIndexOfScream == screamStartIndex && numberOfRoomsWeveBeenThrough == roomManager.numberOfRooms)
             {
@@ -97,7 +106,8 @@ public class StarScream : MonoBehaviour
             {
                 //if it equals the first index
                 currentRoomIndexOfScream = roomList.Count - 1;
-                if(currentRoomIndexOfScream == roomManager.GetPlayerCurrentRoomIndex() + 1 && !reachedPlayer){
+                if (currentRoomIndexOfScream == roomManager.GetPlayerCurrentRoomIndex() + 1 && !reachedPlayer)
+                {
                     ScreamHitRoomAdjacentWrapper();
                     Debug.Log(currentRoomIndexOfScream + " vs " + roomManager.GetPlayerCurrentRoomIndex());
                     //if this room is adjacent to player
@@ -109,15 +119,18 @@ public class StarScream : MonoBehaviour
             {
                 //if it equals the last index
                 currentRoomIndexOfScream = 0;
-                if(currentRoomIndexOfScream == roomManager.GetPlayerCurrentRoomIndex() - 1 && !reachedPlayer){
+                if (currentRoomIndexOfScream == roomManager.GetPlayerCurrentRoomIndex() - 1 && !reachedPlayer)
+                {
                     ScreamHitRoomAdjacentWrapper();
                     Debug.Log(currentRoomIndexOfScream + " vs " + roomManager.GetPlayerCurrentRoomIndex());
 
                 }
                 //positiveOrNegative*= -1;
             }
-            else{
-                if((currentRoomIndexOfScream == roomManager.GetPlayerCurrentRoomIndex() - 1 || currentRoomIndexOfScream == roomManager.GetPlayerCurrentRoomIndex() + 1) && !reachedPlayer){
+            else
+            {
+                if ((currentRoomIndexOfScream == roomManager.GetPlayerCurrentRoomIndex() - 1 || currentRoomIndexOfScream == roomManager.GetPlayerCurrentRoomIndex() + 1) && !reachedPlayer)
+                {
                     ScreamHitRoomAdjacentWrapper();
                     Debug.Log(currentRoomIndexOfScream + " vs " + roomManager.GetPlayerCurrentRoomIndex());
                 }
@@ -170,6 +183,8 @@ public class StarScream : MonoBehaviour
         }
 
     }
+
+   
     void Start()
     {
 
