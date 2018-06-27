@@ -40,7 +40,7 @@ public class ScreamFollowObject : MonoBehaviour {
                     yield break;
                 }
             }
-            Debug.Log("We are moving the scream object");
+            Debug.Log("We are moving the scream object " + destination);
             transform.position = Vector2.Lerp(transform.position, destination.position, elapsedTime);
             elapsedTime += Time.deltaTime;
             yield return null;
