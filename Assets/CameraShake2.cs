@@ -31,13 +31,23 @@ public class CameraShake2 : MonoBehaviour {
 		smoothness = 0.1f;
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space)){
+	void Awake(){
+		StarScream.ScreamHitPlayerCurrentRoom += ScreamShake;
+		PromptPlayerHit.PlayerParried += ScreamShake;
+	}
+
+	void ScreamShake(int irrelevant){
+
 			shaker.Shake(duration, strength, vibrato, randomness, initialAngle, rotation, smoothness, false);
-			//shaker.Shake(1.0f, new Vector2(-2, -2), 10, 1.0f, -1, default(Vector2), 0.5f, false);
+	}
+
+	void ScreamShake() {
+			shaker.Shake(duration, strength, vibrato, randomness, initialAngle, rotation, smoothness, false);
+	}
+
+	void Update(){
+		if(Input.GetKeyDown(KeyCode.Space)){
+			ScreamShake();
 		}
-		
 	}
 }
