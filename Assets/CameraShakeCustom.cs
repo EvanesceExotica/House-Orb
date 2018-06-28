@@ -17,16 +17,14 @@ public class CameraShakeCustom : MonoBehaviour {
 	}
 
 	public void ScreamShake(int x){
-		Debug.Log("Getting shook");
 		mainCamera.DOShakePosition(3, 10, 10, 90, true);
 		//mainCamera.DOShakePosition(10, 10, 10, 90, true);
 	}
 	public void ScreamShake(){
-		Debug.Log("Getting shook");
-		mainCamera.DOShakePosition(3, 10, 10, 90, true);
+		Camera.main.DOShakePosition(3, 10, 10, 90, true);
 	}
 	public void ShakeUs(float duration, float strength, int vibrato, float randomness, bool fadeOut){
-		mainCamera.DOShakePosition(duration, strength, vibrato, randomness, fadeOut);
+		Camera.main.DOShakePosition(duration, strength, vibrato, randomness, fadeOut);
 
 	}
 	// Use this for initialization

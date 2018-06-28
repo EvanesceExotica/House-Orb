@@ -56,7 +56,7 @@ public class StarScream : MonoBehaviour
 
     void StartScreamWrapper()
     {
-        StartCoroutine(SendScream());
+        StartCoroutine(StartScream());
     }
 
     public IEnumerator StartScream()
@@ -195,7 +195,7 @@ public class StarScream : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            StartCoroutine(SendScream());
+           // StartCoroutine(SendScream());
         }
     }
 }

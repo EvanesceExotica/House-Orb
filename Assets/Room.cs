@@ -89,7 +89,7 @@ public class Room : MonoBehaviour
 
     ProCamera2D ourProCamera;
 
-    bool CheckIfOrbInPlayerOrSconce()
+    public bool CheckIfOrbInPlayerOrSconce()
     {
         bool orbInSconeOrCarried = false;
         if (sconce != null)

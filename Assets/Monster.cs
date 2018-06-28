@@ -208,6 +208,12 @@ public class Monster : MonoBehaviour
 
     }
 
+    void Update(){
+        if(Input.GetKeyDown(KeyCode.L)){
+            ScreamReady();
+        }
+    }
+
     bool playerSucessfullyHiding;
     bool playerChangedRoom;
     void RecalculatePlayerRoom()
