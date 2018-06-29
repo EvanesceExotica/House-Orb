@@ -51,6 +51,7 @@ public class Sconce : PooledObject, iInteractable
     public void OrbPlacedInUs(MonoBehaviour ourObject)
     {
         PlayOccupiedParticles();
+        PlayEnteredSconceSound();
         fillStatus = Status.HoldingOrb;
         if (OrbInSconce != null)
         {
@@ -61,6 +62,7 @@ public class Sconce : PooledObject, iInteractable
 
     public void OrbRemovedFromUs(Sconce sconce)
     {
+        PlayExitedSconceSound();
         fillStatus = Status.FreshlyLit;
        // ChangeRevealedParticleColor(new Color32(0, 116, 255, 25));
         StartCoroutine(CountdownToEmpty());
@@ -141,6 +143,7 @@ public class Sconce : PooledObject, iInteractable
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         orbHeldPrompt = " take orb from sconce";
         emptyButOrbCarriedPrompt = " place orb in sconce";
         //TODO: Fix this so that it's an assignment later
@@ -166,6 +169,20 @@ public class Sconce : PooledObject, iInteractable
         orbAcceptedParticleSystem.Play();
         orbOccupiedParticles.Play();
        // ChangeRevealedParticleColor(new Color32(255, 215, 0, 25));
+    }
+
+    void PlayEnteredSconceSound(){
+        audioSource.time = 1.0f;
+        audioSource.PlayOneShot(orbInSconceSound);
+    }
+
+    void PlayExitedSconceSound(){
+        audioSource.time = 1.0f;
+        audioSource.PlayOneShot(orbOutOfSconceSound);
+    } 
+
+    void PlayRevealedSound(){
+        audioSource.PlayOneShot(sconceRevealedSound);
     }
 
     void StopOccupiedParticles()

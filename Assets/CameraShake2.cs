@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Com.LuisPedroFonseca.ProCamera2D;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class CameraShake2 : MonoBehaviour {
 
+	CanvasGroup canvasGroup;
+	Image image;	
 	private ProCamera2DShake shaker;
 
 	public float duration;
@@ -32,6 +36,7 @@ public class CameraShake2 : MonoBehaviour {
 		
 	}
 	void Awake(){
+		canvasGroup = GetComponentInChildren<CanvasGroup>();
 		Monster.ReadyToScream += StartShakeWithDelay;
 		StarScream.ScreamHitPlayerCurrentRoom += ScreamShake;
 		PromptPlayerHit.PlayerParried += ScreamShake;
@@ -59,5 +64,11 @@ public class CameraShake2 : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Space)){
 			ScreamShake();
 		}
+	}
+
+	void FlashScreen(){
+		//TODO: Put these back in once Tweening is fixed
+		canvasGroup.DOFade(1.0f, 0.2f);
+		canvasGroup.DOFade(0, 0.2f);
 	}
 }

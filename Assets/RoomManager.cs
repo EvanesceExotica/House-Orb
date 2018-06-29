@@ -51,7 +51,7 @@ public class RoomManager : MonoBehaviour
         return ourIndex;
     }
 
-    public int DetermineHowCloseRoomIsToPlayer(Room room, int travelDirection){
+    public int DetermineHowCloseRoomIsToPlayer(Room room){
 
         int closestValue = 0;
         int playerRoomIndex = GetPlayerCurrentRoomIndex(); 
@@ -60,25 +60,28 @@ public class RoomManager : MonoBehaviour
         int calcB = Mathf.Abs(room.ourReverseRoomIndex - playerRoomIndex);
 
         if(calcA < calcB) {
-            closestValue = room.ourRoomIndex;
+            closestValue = Mathf.Abs(room.ourRoomIndex);
         }
         else{
-            closestValue = BackwardIndex[room];
+            closestValue = Mathf.Abs(BackwardIndex[room]);
         }
+        
+        int distance = Mathf.Abs(playerRoomIndex - closestValue);
         //this decides the distance of the player
-       return closestValue;
+       return distance;
     }
 
     void SetReversedIndex(){
         for(int i = 0; i < roomList.Count; i++){
             if(i == 0){
+                BackwardIndex.Add(roomList[i], 0);
                 continue;
             }
             BackwardIndex.Add(roomList[i], i - roomList.Count);
         }
-        // foreach(KeyValuePair<Room, int> entry in BackwardIndex){
-        //     Debug.Log(roomList.IndexOf(entry.Key) + " vs " + entry.Value);
-        // }
+        //   foreach(KeyValuePair<Room, int> entry in BackwardIndex){
+        //       Debug.Log(entry.Key +  " vs " + entry.Value);
+        //   }
     }
     void AddScentToRoomsEntered(Room room)
     {
@@ -129,10 +132,16 @@ public class RoomManager : MonoBehaviour
 
         return roomList.IndexOf(enemyCurrentRoom);
     }
+
+    public int GetReverseIndexOfRoom(Room room){
+        int reverseIndex = BackwardIndex[room];
+        return reverseIndex;
+    }
     //TODO: You have to make sure this list grabs the objects in order of hwo they are in the scene -- maybe have a room instantiator
     void Awake()
     {
         roomList = transform.GetComponentsInChildren<Room>().ToList();
+        SetReversedIndex();
         //	levelRooms = FindObjectsOfType<Room>().ToList();
         foreach (Room room in roomList)
         {
@@ -142,7 +151,6 @@ public class RoomManager : MonoBehaviour
             SetAdjacentRooms(room);
         }
         numberOfRooms = roomList.Count;
-        SetReversedIndex();
     }
 
 

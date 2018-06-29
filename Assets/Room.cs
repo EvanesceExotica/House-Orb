@@ -65,9 +65,38 @@ public class Room : MonoBehaviour
         }
     }
 
+    float ScaleAudio(int distance){
+        float ourAudioScale = 1.0f;
+        int maxDistance = 0;
+        if(GameHandler.roomManager.numberOfRooms%2 == 0){
+            maxDistance = GameHandler.roomManager.numberOfRooms/2;
+        }
+        else if(GameHandler.roomManager.numberOfRooms%2 != 0){
+            maxDistance = (int)(GameHandler.roomManager.numberOfRooms/2 + 0.5f);
+        }
+
+        if(distance == maxDistance){
+            ourAudioScale = 0.5f;
+        }
+        else if(distance == (int)(maxDistance * 0.75)){
+            ourAudioScale = 0.625f;
+        }
+        else if(distance == (maxDistance * 0.5)){
+            ourAudioScale = 0.75f;
+        }
+        else if(distance == (maxDistance * 0.25)){
+            ourAudioScale = 0.875f;
+        }
+        else if(distance == 1){
+            ourAudioScale = 1;
+        }
+        return ourAudioScale;
+
+    }
     void PlayBoom(){
         //TODO: Add something to calculate the distance from player
-        ourSource.PlayOneShot(boom);
+        float audioScale =  ScaleAudio(GameHandler.roomManager.DetermineHowCloseRoomIsToPlayer(this));
+        ourSource.PlayOneShot(boom, audioScale);
     }
 
     public static event Action<bool> RoomWithPlayerHit;
@@ -164,7 +193,7 @@ public class Room : MonoBehaviour
     void Awake()
     {
         ourRoomIndex = GameHandler.roomManager.GetIndexOfRoom(this);
-        ourReverseRoomIndex = GameHandler.roomManager.BackwardIndex[this];
+        ourReverseRoomIndex = GameHandler.roomManager.GetReverseIndexOfRoom(this);
         ourSource = GetComponent<AudioSource>();
         entranceA = transform.Find("EntranceA");
         //entrance A will always be on the left
@@ -205,7 +234,7 @@ public class Room : MonoBehaviour
     public EnemyStatus enemyLocation;
     public void PlayerIntoRoom(Room room)
     {
-        ourProCamera.AddCameraTarget(room.gameObject.transform);
+        GameHandler.proCamera.AddCameraTarget(room.gameObject.transform);
         if (PlayerEnteredRoom != null)
         {
             PlayerEnteredRoom(room);
