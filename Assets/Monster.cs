@@ -88,6 +88,7 @@ public class Monster : MonoBehaviour
     public List<Room> compilation = new List<Room>();
     public List<Room> GetRoomAtLeastMinRoomsAway(int numberOfRoomsToStayAway)
     {
+        //this should probably be in the RoomManager class
 
         //make a copy of the roomlist -- we're going to delete from them
 

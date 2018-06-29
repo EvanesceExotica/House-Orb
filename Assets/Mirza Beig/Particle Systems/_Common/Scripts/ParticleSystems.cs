@@ -18,7 +18,7 @@ namespace MirzaBeig
         // =================================	
         // Classes.
         // =================================
-        
+
         public class ParticleSystems : MonoBehaviour
         {
             // =================================	
@@ -219,6 +219,16 @@ namespace MirzaBeig
                 }
 
                 return pcount;
+            }
+
+            public void ChangeColor(Color color)
+            {
+                //method added by me
+                for (int i = 0; i < particleSystems.Length; i++)
+                {
+                    ParticleSystem.MainModule m = particleSystems[i].main;
+                    m.startColor = color; 
+                }
             }
 
             // =================================	

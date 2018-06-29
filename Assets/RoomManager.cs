@@ -12,6 +12,8 @@ public class RoomManager : MonoBehaviour
 
     public static event Action<Room> PlayerEnteredNewRoom;
 
+    public Dictionary<Room, int> BackwardIndex = new Dictionary<Room, int>();
+
     public void PlayerEnteredNewRoomWrapper(Room room){
         if(PlayerEnteredNewRoom != null){
             PlayerEnteredNewRoom(room);
@@ -44,6 +46,40 @@ public class RoomManager : MonoBehaviour
         enemyCurrentRoom = room;
     }
 
+    public int GetIndexOfRoom(Room room){
+        int ourIndex = roomList.IndexOf(room);
+        return ourIndex;
+    }
+
+    public int DetermineHowCloseRoomIsToPlayer(Room room, int travelDirection){
+
+        int closestValue = 0;
+        int playerRoomIndex = GetPlayerCurrentRoomIndex(); 
+
+        int calcA = Mathf.Abs(room.ourRoomIndex - playerRoomIndex);
+        int calcB = Mathf.Abs(room.ourReverseRoomIndex - playerRoomIndex);
+
+        if(calcA < calcB) {
+            closestValue = room.ourRoomIndex;
+        }
+        else{
+            closestValue = BackwardIndex[room];
+        }
+        //this decides the distance of the player
+       return closestValue;
+    }
+
+    void SetReversedIndex(){
+        for(int i = 0; i < roomList.Count; i++){
+            if(i == 0){
+                continue;
+            }
+            BackwardIndex.Add(roomList[i], i - roomList.Count);
+        }
+        // foreach(KeyValuePair<Room, int> entry in BackwardIndex){
+        //     Debug.Log(roomList.IndexOf(entry.Key) + " vs " + entry.Value);
+        // }
+    }
     void AddScentToRoomsEntered(Room room)
     {
         if (roomsPlayerEntered.Count == 4)
@@ -106,6 +142,7 @@ public class RoomManager : MonoBehaviour
             SetAdjacentRooms(room);
         }
         numberOfRooms = roomList.Count;
+        SetReversedIndex();
     }
 
 

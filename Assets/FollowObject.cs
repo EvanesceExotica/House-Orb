@@ -5,6 +5,19 @@ using MirzaBeig.ParticleSystems;
 public class FollowObject : MonoBehaviour
 {
 
+
+    AudioSource audioSource;
+
+    public AudioClip eatingClip;
+    public AudioClip drinkingClip;
+
+    public AudioClip buffClip;
+    enum FoodType{
+        Food,
+        Drink
+    }
+
+    FoodType ourFoodType;
     float followPlayerDuration = 14.0f;
     ParticleSystems ourSystem;
     Transform objectWereFollowing;

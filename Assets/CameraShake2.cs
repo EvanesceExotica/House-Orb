@@ -21,7 +21,7 @@ public class CameraShake2 : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		shaker = GetComponent<ProCamera2DShake>();
-		duration = 0.5f;
+		duration = 1.0f;
 		strength = new Vector2(2, 2);
 		vibrato = 10;
 		randomness = 0.1f;
@@ -32,8 +32,18 @@ public class CameraShake2 : MonoBehaviour {
 		
 	}
 	void Awake(){
+		Monster.ReadyToScream += StartShakeWithDelay;
 		StarScream.ScreamHitPlayerCurrentRoom += ScreamShake;
 		PromptPlayerHit.PlayerParried += ScreamShake;
+	}
+
+
+	void StartShakeWithDelay(){
+		StartCoroutine(ShakeWithDelay());
+	}
+	public IEnumerator ShakeWithDelay(){
+		yield return new WaitForSeconds(1.0f);
+		ScreamShake();
 	}
 
 	void ScreamShake(int irrelevant){

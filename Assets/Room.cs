@@ -9,9 +9,9 @@ using Com.LuisPedroFonseca.ProCamera2D;
 public class Room : MonoBehaviour
 {
 
-    AudioSource ourSource;
+    public AudioSource ourSource;
 
-    AudioClip boom;
+    public AudioClip boom;
 
     [Header("Assigned In Inspector")]
     public ParticleSystems scentParticles;
@@ -27,6 +27,9 @@ public class Room : MonoBehaviour
 
     public event Action<Room> EnemyEnteredAdjacentRoom;
     public event Action<Room> EnemyExitedAdjacentRoom;
+
+    public int ourRoomIndex;
+    public int ourReverseRoomIndex;
 
     public enum RoomType{
         Bedroom,
@@ -120,6 +123,8 @@ public class Room : MonoBehaviour
 
     public void HandleScreamWrapper()
     {
+        Debug.Log("This is working");
+        PlayBoom();
         PlayShakeAnimation();
         StartCoroutine(FullFlash());
         if (playerLocation == PlayerStatus.InRoom)
@@ -158,6 +163,9 @@ public class Room : MonoBehaviour
 
     void Awake()
     {
+        ourRoomIndex = GameHandler.roomManager.GetIndexOfRoom(this);
+        ourReverseRoomIndex = GameHandler.roomManager.BackwardIndex[this];
+        ourSource = GetComponent<AudioSource>();
         entranceA = transform.Find("EntranceA");
         //entrance A will always be on the left
         entranceB = transform.Find("EntranceB");

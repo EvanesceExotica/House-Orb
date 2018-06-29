@@ -6,7 +6,15 @@ using MirzaBeig.ParticleSystems;
 public class Sconce : PooledObject, iInteractable
 {
 
+    public AudioClip orbInSconceSound;
+
+    public AudioClip orbOutOfSconceSound;
+
+    public AudioClip sconceRevealedSound;
+    public AudioSource audioSource;
     public Room parentRoom;
+
+    public ParticleSystem orbAcceptedParticleSystem;
     public ParticleSystems orbOccupiedParticles;
     public ParticleSystems revealedParticles;
     public event Action<MonoBehaviour> Revealed;
@@ -54,6 +62,7 @@ public class Sconce : PooledObject, iInteractable
     public void OrbRemovedFromUs(Sconce sconce)
     {
         fillStatus = Status.FreshlyLit;
+       // ChangeRevealedParticleColor(new Color32(0, 116, 255, 25));
         StartCoroutine(CountdownToEmpty());
         if (OrbRemovedFromSconce != null)
         {
@@ -142,7 +151,8 @@ public class Sconce : PooledObject, iInteractable
         {
             StopOccupiedParticles();
         }
-        if(startsWithOrb){
+        if (startsWithOrb)
+        {
             GameHandler.fatherOrbGO.transform.parent = transform;
             GameHandler.fatherOrb.transform.position = transform.position;
         }
@@ -152,8 +162,10 @@ public class Sconce : PooledObject, iInteractable
 
     void PlayOccupiedParticles()
     {
-        Debug.Log("Occupied particles are played");
+
+        orbAcceptedParticleSystem.Play();
         orbOccupiedParticles.Play();
+       // ChangeRevealedParticleColor(new Color32(255, 215, 0, 25));
     }
 
     void StopOccupiedParticles()
@@ -171,6 +183,13 @@ public class Sconce : PooledObject, iInteractable
     {
         revealedParticles.Stop();
     }
+
+    void ChangeRevealedParticleColor(Color color)
+    {
+        revealedParticles.ChangeColor(color);
+    }
+
+
 
     void Start()
     {
