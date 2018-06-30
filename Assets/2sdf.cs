@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Conversation : ScriptableObject {
+public class 2sdf : MonoBehaviour {
 
-	public List<Speech> speeches;
 	// Use this for initialization
 	void Start () {
 		

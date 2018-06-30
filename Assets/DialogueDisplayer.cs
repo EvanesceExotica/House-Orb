@@ -10,7 +10,9 @@ public class DialogueDisplayer : MonoBehaviour
     Transform dialogueSpace;
 
     Transform lineStart;
-    CanvasGroup ourCanvasGroup;
+    CanvasGroup ourBubbleCanvas;
+
+    CanvasGroup ourFullScreenCanvasGroup;
     Image image;
     GameObject speaker;
     LineRenderer ourLineRenderer;
@@ -52,10 +54,10 @@ public class DialogueDisplayer : MonoBehaviour
         dialogueSpace = GameObject.Find("DialogueSpace").transform;
         ourLineRenderer = GetComponentInChildren<LineRenderer>();
         image = GetComponentInChildren<Image>();
-        ourCanvasGroup = GetComponent<CanvasGroup>();
+        ourBubbleCanvas = GetComponent<CanvasGroup>();
         Memory.HoveringOverMemoryObject += ReactToMemoryHover;
         SpeechTrigger.SpeechTriggered += SetSpeech;
-        ourCanvasGroup.alpha = 0;
+        ourBubbleCanvas.alpha = 0;
         ourLineRenderer.material.DOFade(0, 0);
         //ourLineRenderer.material.color = new Color(0, 0, 0, 0);
     }
@@ -96,6 +98,11 @@ public class DialogueDisplayer : MonoBehaviour
             }
             yield return new WaitForSeconds(delayTime/*speech.textSpeed*/);
         }
+    }
+
+    IEnumerator Converse(float delay, Conversation conversation){
+        yield return new WaitForSeconds(delay);
+        
     }
 
     void SetSpeechBubble(Speech speech)
@@ -144,14 +151,14 @@ public class DialogueDisplayer : MonoBehaviour
     void FadeIn()
     {
 
-        ourCanvasGroup.DOFade(1, 0.5f);
+        ourBubbleCanvas.DOFade(1, 0.5f);
         ourLineRenderer.DOColor(new Color2(Color.clear, Color.clear), new Color2(currentColor, Color.white), 0.5f);
         ourLineRenderer.material.DOFade(1, 5.0f);
     }
 
     void FadeOut()
     {
-        ourCanvasGroup.DOFade(0, 0.5f);
+        ourBubbleCanvas.DOFade(0, 0.5f);
         ourLineRenderer.DOColor(new Color2(ourLineRenderer.startColor, ourLineRenderer.endColor), new Color2(Color.clear, Color.clear), 0.5f);
         ourLineRenderer.material.DOFade(0, 0.5f);
     }

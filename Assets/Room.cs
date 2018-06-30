@@ -31,6 +31,9 @@ public class Room : MonoBehaviour
     public int ourRoomIndex;
     public int ourReverseRoomIndex;
 
+
+
+
     public enum RoomType{
         Bedroom,
         Kitchen,
