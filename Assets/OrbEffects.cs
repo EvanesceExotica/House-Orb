@@ -215,6 +215,7 @@ public class OrbEffects : MonoBehaviour
     void Parry()
     {
         parryParticleSystem.Play();
+        source.PlayOneShot(succeedClip, 2.0f);
     }
 
     void Start()

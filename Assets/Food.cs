@@ -9,6 +9,11 @@ public class Food : MonoBehaviour, iInteractable {
 	public ParticleSystems eatenParticleSystem;
 	public static event Action AteFood;
 
+	AudioSource audioSource;
+
+	public AudioClip eatSound;
+	public AudioClip drinkSound;
+
 	void Awake(){
 		eatPrompt = " eat";
 	}
@@ -21,9 +26,18 @@ public class Food : MonoBehaviour, iInteractable {
 	void BeConsumed(){
 		//TODO: Put this system back in
 		//eatenParticleSystem.Play();
+
 		AteFoodWrapper();
 		gameObject.SetActive(false);
 
+	}
+
+	void PlayEatSound(){
+		audioSource.PlayOneShot(eatSound);
+	}
+
+	void PlayDrinkSound(){
+		audioSource.PlayOneShot(drinkSound);
 	}
 	public void OnHoverMe(Player player){
 		player.interactPrompt.DisplayPrompt(eatPrompt, gameObject);

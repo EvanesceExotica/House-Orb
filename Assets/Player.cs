@@ -117,6 +117,9 @@ public class Player : MonoBehaviour {
 		else if(typeOfEffect == Effects.Boost){
 			ApplyBoostEffects();
 		}
+		else if(typeOfEffect == Effects.Tagged){
+			ApplyTaggedEffects();
+		}
 
 		while(Time.time < startTime + duration){
 
@@ -132,15 +135,29 @@ public class Player : MonoBehaviour {
 		else if(typeOfEffect == Effects.Boost){
 			ReverseBoostEffects();
 		}
+		else if(typeOfEffect == Effects.Tagged){
+			ReverseTaggedEffects();
+		}
 	}
 
 	public enum Effects{
 		Burn,
 		Blind,
 
-		Boost
+		Boost,
+
+		Tagged
+
 	}
 	List<Effects> effects = new List<Effects>();
+
+	void ApplyTaggedEffects(){
+		effects.Add(Effects.Tagged);
+	}
+
+	void ReverseTaggedEffects(){
+		effects.Remove(Effects.Tagged);
+	}
 	void ApplyBoostEffects(){
 		effects.Add(Effects.Boost);
 		Debug.Log("Boosted!");

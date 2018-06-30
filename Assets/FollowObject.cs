@@ -29,12 +29,14 @@ public class FollowObject : MonoBehaviour
         ourSystem = GetComponentInParent<ParticleSystems>();
         ScreamFollowObject.ScreamObjectMoving += SetObjectWereFollowing;
         PromptPlayerHit.PlayerFailed += ScreamSucceeded;
+        PromptPlayerHit.PlayerParried += StopFollowing;
     }
     
     void ScreamSucceeded(){
         Debug.Log("Our scream succeeded, now we're going to follow the player");
         //TODO: This will follow the player around for a while and then fade?
         SetObjectWereFollowing(GameHandler.playerGO.transform);
+        GameHandler.player.EffectCountDown(14, Player.Effects.Tagged);
         infectedPlayerStartTime = Time.time;
         followingPlayer = true;
     }

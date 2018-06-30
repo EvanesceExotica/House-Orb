@@ -8,6 +8,7 @@ using MirzaBeig.ParticleSystems;
 public class Memory : MonoBehaviour, iInteractable
 {
 
+    AudioClip music;
     public string promptString;
 
     Speech speechGiven;

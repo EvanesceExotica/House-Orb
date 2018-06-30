@@ -3797,8 +3797,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c5eb4a8628c28c43a9e8287b8607e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbInSconceSound: {fileID: 8300000, guid: a0f6850537db82941ab2ec9752c2cfd5, type: 3}
-  orbOutOfSconceSound: {fileID: 8300000, guid: 3c50b25bb4c3f884dbd8b983e20d2e8a, type: 3}
+  orbInSconceSound: {fileID: 8300000, guid: 78a9ff8ec3ae7ca44a1c0fe57a34a842, type: 3}
+  orbOutOfSconceSound: {fileID: 8300000, guid: e21cac5c72915ef4a945b5aaa93a23ed, type: 3}
   sconceRevealedSound: {fileID: 8300000, guid: fccb0f50b5cdadf44b2168edee1a5c38, type: 3}
   audioSource: {fileID: 0}
   parentRoom: {fileID: 0}

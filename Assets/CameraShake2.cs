@@ -25,7 +25,7 @@ public class CameraShake2 : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		shaker = GetComponent<ProCamera2DShake>();
-		duration = 1.0f;
+		duration = 2.0f;
 		strength = new Vector2(2, 2);
 		vibrato = 10;
 		randomness = 0.1f;
