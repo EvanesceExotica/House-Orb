@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class 2sdf : MonoBehaviour {
+public class FailClass : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
