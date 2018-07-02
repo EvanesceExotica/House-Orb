@@ -18,6 +18,11 @@ MonoBehaviour:
     path: Assets/Train1.unity
     additional_guid: []
     additional_path: []
+  - guid: 6926961d2ff1f8c478c10f8f396a7015
+    pin: 0
+    path: Assets/ShaderoSprite/Examples/Example.unity
+    additional_guid: []
+    additional_path: []
   - guid: e8e233d3e71a0a7489de2b295b3742cf
     pin: 0
     path: Assets/Mirza Beig/Particle Systems/Ultimate VFX/Scenes/1 - Ultimate VFX

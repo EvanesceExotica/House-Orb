@@ -208,6 +208,7 @@ public class Room : MonoBehaviour
         roomLights = gameObject.GetComponentsInChildren<Light>().ToList();
         sconce = GetComponentInChildren<Sconce>(true);
         scentParticles = GetComponentInChildren<ParticleSystems>();
+        scentParticles.SetPrewarm(false);
         foreach (Room adjacentRoom in adjacentRooms)
         {
             adjacentRoom.EnemyEntered += EnemyEnteredAdjacentRoomWrapper;
@@ -223,13 +224,13 @@ public class Room : MonoBehaviour
 
     public void PlayScentParticleSystem()
     {
-        scentParticles.transform.DOLocalMoveY(-2, 4.0f, false);
+        //scentParticles.transform.DOLocalMoveY(-2, 4.0f, false);
         scentParticles.Play();
     }
 
     public void StopScentParticleSystem()
     {
-        scentParticles.transform.DOLocalMoveY(-6, 4.0f, false);
+        //scentParticles.transform.DOLocalMoveY(-6, 4.0f, false);
         //TODO: Attach this and the above method to the player entering/leaving the room aciton
         scentParticles.Stop();
     }

@@ -206,6 +206,21 @@ namespace MirzaBeig
 
             // ...
 
+            public void SetPrewarm(bool isPrewarm){
+                if (particleSystems.Length == 0)
+                {
+                    return;
+                }
+                else{ 
+                    for (int i = 0; i < 0; i++)
+                    {
+                        ParticleSystem.MainModule m = particleSystems[i].main;
+                        m.prewarm = isPrewarm;
+                    }
+
+                }
+            }
+
             public int GetParticleCount()
             {
                 int pcount = 0;
