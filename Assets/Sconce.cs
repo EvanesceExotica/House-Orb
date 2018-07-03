@@ -73,7 +73,7 @@ public class Sconce : PooledObject, iInteractable
     }
 
     float countdownStartTime;
-    float countdownDuration = 10.0f;
+    float countdownDuration = 50.0f;
     public IEnumerator CountdownToEmpty()
     {
 
@@ -86,7 +86,7 @@ public class Sconce : PooledObject, iInteractable
             }
             yield return null;
         }
-        Extinguished(this);
+        ExtinguishedWrapper(this);
     }
     public enum Status
     {
@@ -172,6 +172,7 @@ public class Sconce : PooledObject, iInteractable
     }
 
     void PlayEnteredSconceSound(){
+        float audioScale = ScaleAudio.ScaleAudioByRoomDistance(GameHandler.roomManager.DetermineHowCloseRoomIsToPlayer(parentRoom));
         audioSource.time = 1.0f;
         audioSource.PlayOneShot(orbInSconceSound);
     }

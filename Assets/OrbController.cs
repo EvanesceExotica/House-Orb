@@ -6,6 +6,8 @@ using DG.Tweening;
 
 public class OrbController : MonoBehaviour
 {
+
+    public bool flipped;
     public static event Action<MonoBehaviour> ChannelingOrb;
     void ChannelingOrbWrapper(MonoBehaviour orb)
     {
@@ -17,8 +19,10 @@ public class OrbController : MonoBehaviour
 
     public static event Action<MonoBehaviour> SconceRevealedStoppedChannelingOrb;
 
-    void SconceRevealedStoppedChannelingOrbWrapper(MonoBehaviour mono){
-        if(SconceRevealedStoppedChannelingOrb != null){
+    void SconceRevealedStoppedChannelingOrbWrapper(MonoBehaviour mono)
+    {
+        if (SconceRevealedStoppedChannelingOrb != null)
+        {
             SconceRevealedStoppedChannelingOrb(mono);
         }
     }
@@ -94,7 +98,8 @@ public class OrbController : MonoBehaviour
             //if it's not in the sconce, then we manually recalled it
             ManuallyStoppedChannelingOrbWrapper(this);
         }
-        else{
+        else
+        {
             SconceRevealedStoppedChannelingOrbWrapper(this);
         }
         orbRigidBody.bodyType = RigidbodyType2D.Kinematic;
@@ -112,24 +117,53 @@ public class OrbController : MonoBehaviour
 
             if (moveHorizontal > 0)
             {
+                if (!flipped){
 
-                transform.Translate(Vector3.right * speed * Time.deltaTime);
+                }
+              //      orbRigidBody.AddForce(Vector3.right * speed);
+              //transform.Translate(Vector3.right * speed * Time.deltaTime);
+                else
+                {
+                    //       orbRigidBody.AddForce(-Vector3.right * speed);
+                    //transform.Translate(-Vector3.right * speed * Time.deltaTime);
+                }
+
             }
             if (moveHorizontal < 0)
             {
+                if (!flipped)
+                {
 
-                transform.Translate(-Vector3.right * speed * Time.deltaTime);
+                }
+            //        orbRigidBody.AddForce(-Vector3.right * speed);
+            //transform.Translate(-Vector3.right * speed * Time.deltaTime);
+                else
+                {
+
+                    //         orbRigidBody.AddForce(Vector3.right * speed);
+                    //transform.Translate(Vector3.right * speed * Time.deltaTime);
+                }
             }
             if (moveVertical > 0)
             {
-                transform.Translate(Vector3.up * speed * Time.deltaTime);
+                //          orbRigidBody.AddForce(Vector3.up * speed);
+                //transform.Translate(Vector3.up * speed * Time.deltaTime);
 
             }
             if (moveVertical < 0)
             {
-                transform.Translate(-Vector3.up * speed * Time.deltaTime);
+                //         orbRigidBody.AddForce(Vector3.down * speed);
+                //transform.Translate(-Vector3.up * speed * Time.deltaTime);
             }
-            Vector2 movement = new Vector2(moveHorizontal, moveVertical);
+            Vector2 movement;
+            if (!flipped)
+            {
+                movement = new Vector2(moveHorizontal, moveVertical);
+            }
+            else
+            {
+                movement = new Vector2(-moveHorizontal, moveVertical);
+            }
             orbRigidBody.velocity = movement * speed;
         }
 
@@ -157,7 +191,7 @@ public class OrbController : MonoBehaviour
             else if (channelingOrb)
             {
                 StopOrbBeingChanneled();
-                ReturnToPlayer();
+                //ReturnToPlayer();
             }
         }
     }

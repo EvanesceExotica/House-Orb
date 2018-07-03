@@ -122,7 +122,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         //  transform.DOLocalMoveY(transform.localPosition.y + flip,);
     }
 
-   
+
 
     void Awake()
     {
@@ -153,11 +153,13 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         //SetInSconce(transform.parent.gameObject);
     }
 
-    void FailureDelayWrapper(){
+    void FailureDelayWrapper()
+    {
         StartCoroutine(FailureDelay());
     }
 
-    public IEnumerator FailureDelay(){
+    public IEnumerator FailureDelay()
+    {
         yield return new WaitForSeconds(1);
         ReturnToLastSconceEarlyWrapper();
     }
@@ -233,8 +235,10 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     {
         heldStatus = HeldStatuses.Carried;
         inSconce = false;
-        previousSconce = currentSconce;
-        currentSconce = null;
+        if(ourObject.GetComponent<Sconce>() != null){
+            previousSconce = currentSconce;
+            currentSconce = null;
+        }
         instabilityStatus = InstabilityStatus.FreshPickedUp;
         StartCoroutine(MoveUs(transform.position, GameHandler.fatherOrbHoldTransform.position));
         transform.parent = player.transform;
@@ -392,8 +396,10 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         renderer.sortingOrder = sortingOrder;
     }
 
-    void Update(){
-        if(inSconce && !movingToObject){
+    void Update()
+    {
+        if (inSconce && !movingToObject)
+        {
             FloatMe();
         }
     }

@@ -13,6 +13,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pluginID: 0
   last_scenesV2:
+  - guid: 4ba2fd1e5b539a64e818f7a492e668f9
+    pin: 0
+    path: Assets/Jungle_01/Scene/location_01.unity
+    additional_guid: []
+    additional_path: []
+  - guid: 454f88beea2228a47bf7604cbca53d2a
+    pin: 0
+    path: Assets/Jungle_01/Scene/location_02.unity
+    additional_guid: []
+    additional_path: []
+  - guid: beeea3ae7dba7a64b96e6ff8a5ffa7d3
+    pin: 0
+    path: Assets/Jungle_01/Scene/location_04.unity
+    additional_guid: []
+    additional_path: []
+  - guid: 6e57405104dd4cf4ab2b69991a5dd913
+    pin: 0
+    path: Assets/Jungle_01/Scene/location_03.unity
+    additional_guid: []
+    additional_path: []
+  - guid: 8049d8f33092a344cbe682027ddb3efd
+    pin: 0
+    path: Assets/UanScenes.unity
+    additional_guid: []
+    additional_path: []
   - guid: 27369b64eb68a3b4e98a3be2a20cf27c
     pin: 0
     path: Assets/Train1.unity

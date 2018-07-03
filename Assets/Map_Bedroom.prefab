@@ -233,6 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4327217841033580}
   - component: {fileID: 61071348489537248}
+  - component: {fileID: 114991148282025828}
   m_Layer: 12
   m_Name: Floor
   m_TagString: Untagged
@@ -660,7 +661,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1414656306466366}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.077915, y: -14.039999, z: 1.3095934}
+  m_LocalPosition: {x: -14.364119, y: -6.639717, z: 1.3095934}
   m_LocalScale: {x: 0.93535, y: 0.9156, z: 1}
   m_Children:
   - {fileID: 4327217841033580}
@@ -1060,6 +1061,19 @@ MonoBehaviour:
   adjacentRooms: []
   playerLocation: 0
   enemyLocation: 0
+--- !u!114 &114991148282025828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1581601973588632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b797b352c9c4e4d912c935823f103a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ourColor: {r: 1, g: 0, b: 0, a: 1}
+  OurColliderType: 1
 --- !u!198 &198515783133125302
 ParticleSystem:
   m_ObjectHideFlags: 1

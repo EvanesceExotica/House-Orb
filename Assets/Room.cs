@@ -34,7 +34,8 @@ public class Room : MonoBehaviour
 
 
 
-    public enum RoomType{
+    public enum RoomType
+    {
         Bedroom,
         Kitchen,
         EdgeRoomLeft,
@@ -46,9 +47,12 @@ public class Room : MonoBehaviour
     }
 
     public RoomType ourRoomType;
-    public void EnemyExitedAdjacentRoomWrapper(Room room){
-        if(playerLocation == PlayerStatus.InRoom){
-            if(EnemyExitedAdjacentRoom != null){
+    public void EnemyExitedAdjacentRoomWrapper(Room room)
+    {
+        if (playerLocation == PlayerStatus.InRoom)
+        {
+            if (EnemyExitedAdjacentRoom != null)
+            {
                 EnemyExitedAdjacentRoom(room);
             }
         }
@@ -68,37 +72,46 @@ public class Room : MonoBehaviour
         }
     }
 
-    float ScaleAudio(int distance){
+    float ScaleAudio(int distance)
+    {
         float ourAudioScale = 1.0f;
         int maxDistance = 0;
-        if(GameHandler.roomManager.numberOfRooms%2 == 0){
-            maxDistance = GameHandler.roomManager.numberOfRooms/2;
+        if (GameHandler.roomManager.numberOfRooms % 2 == 0)
+        {
+            maxDistance = GameHandler.roomManager.numberOfRooms / 2;
         }
-        else if(GameHandler.roomManager.numberOfRooms%2 != 0){
-            maxDistance = (int)(GameHandler.roomManager.numberOfRooms/2 + 0.5f);
+        else if (GameHandler.roomManager.numberOfRooms % 2 != 0)
+        {
+            maxDistance = (int)(GameHandler.roomManager.numberOfRooms / 2 + 0.5f);
         }
 
-        if(distance == maxDistance){
+        if (distance == maxDistance)
+        {
             ourAudioScale = 0.5f;
         }
-        else if(distance == (int)(maxDistance * 0.75)){
+        else if (distance == (int)(maxDistance * 0.75))
+        {
             ourAudioScale = 0.625f;
         }
-        else if(distance == (maxDistance * 0.5)){
+        else if (distance == (maxDistance * 0.5))
+        {
             ourAudioScale = 0.75f;
         }
-        else if(distance == (maxDistance * 0.25)){
+        else if (distance == (maxDistance * 0.25))
+        {
             ourAudioScale = 0.875f;
         }
-        else if(distance == 1){
+        else if (distance == 1)
+        {
             ourAudioScale = 1;
         }
         return ourAudioScale;
 
     }
-    void PlayBoom(){
+    void PlayBoom()
+    {
         //TODO: Add something to calculate the distance from player
-        float audioScale =  ScaleAudio(GameHandler.roomManager.DetermineHowCloseRoomIsToPlayer(this));
+        float audioScale = ScaleAudio(GameHandler.roomManager.DetermineHowCloseRoomIsToPlayer(this));
         ourSource.PlayOneShot(boom, audioScale);
     }
 
@@ -182,7 +195,7 @@ public class Room : MonoBehaviour
     void PlayShakeAnimation()
     {
         transform.DOShakePosition(1.0f, 0.5f, 1, 45, false, true);
-        
+
         //  transform.DOShakePosition(1.0f, 0.5f, 1, 1, true, true);
         //todo: Have a shake animation played when the enemy's scouting call passes through this room
     }
@@ -208,7 +221,10 @@ public class Room : MonoBehaviour
         roomLights = gameObject.GetComponentsInChildren<Light>().ToList();
         sconce = GetComponentInChildren<Sconce>(true);
         scentParticles = GetComponentInChildren<ParticleSystems>();
-        scentParticles.SetPrewarm(false);
+        if (scentParticles != null)
+        {
+            scentParticles.SetPrewarm(false);
+        }
         foreach (Room adjacentRoom in adjacentRooms)
         {
             adjacentRoom.EnemyEntered += EnemyEnteredAdjacentRoomWrapper;
@@ -225,14 +241,20 @@ public class Room : MonoBehaviour
     public void PlayScentParticleSystem()
     {
         //scentParticles.transform.DOLocalMoveY(-2, 4.0f, false);
-        scentParticles.Play();
+        if (scentParticles != null)
+        {
+            scentParticles.Play();
+        }
     }
 
     public void StopScentParticleSystem()
     {
         //scentParticles.transform.DOLocalMoveY(-6, 4.0f, false);
         //TODO: Attach this and the above method to the player entering/leaving the room aciton
-        scentParticles.Stop();
+        if (scentParticles != null)
+        {
+            scentParticles.Stop();
+        }
     }
 
     public EnemyStatus enemyLocation;
@@ -263,6 +285,9 @@ public class Room : MonoBehaviour
     public event Action<Room> EnemyExited;
     public void EnemyEnteredRoom(Room room)
     {
+        ourSource.pitch /= 2;
+        PlayBoom();
+        ourSource.pitch *= 2;
         PlayShakeAnimation();
         if (EnemyEntered != null)
         {

@@ -20,9 +20,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] bool cantMove = false;
 
 
+    SpriteRenderer spriteRenderer;
     // Use this for initialization
     void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         // anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         OrbController.ChannelingOrb += SetCantMove;
@@ -133,17 +135,19 @@ public class PlayerMovement : MonoBehaviour
 
     void Flip()
     {
+        GameHandler.orbController.flipped = facingRight;
+        //spriteRenderer.flipX = facingRight;
         facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+         Vector3 theScale = transform.localScale;
+         theScale.x *= -1;
+         transform.localScale = theScale;
 
-        foreach (Transform child in transform)
-        {
-            Vector3 childScale = transform.localScale;
-            childScale.x *= -1;
-            transform.localScale = theScale;
-        }
+        // foreach (Transform child in transform)
+        // {
+        //     Vector3 childScale = transform.localScale;
+        //     childScale.x *= -1;
+        //     transform.localScale = theScale;
+        // }
     }
 
     public void ChangeSpeed(float value)

@@ -9,6 +9,8 @@ public class SconceManager : MonoBehaviour
     [SerializeField] int numberOfSconcesOnLevel;
 
    [SerializeField] bool allRevealed = false;
+
+   [SerializeField] bool allLit = false;
     int TallySconceNumber()
     {
         int talliedSconces = revealedSconces.Count + unrevealedSconces.Count;
@@ -31,6 +33,7 @@ public class SconceManager : MonoBehaviour
         {
             if (CheckIfAllSconcesLit())
             {
+                allLit = true;
                 //if all of the sconces are lit
                 AllSconcesLitWrapper();
             }
