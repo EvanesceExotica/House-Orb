@@ -64,7 +64,7 @@ public class Sconce : PooledObject, iInteractable
     {
         PlayExitedSconceSound();
         fillStatus = Status.FreshlyLit;
-       // ChangeRevealedParticleColor(new Color32(0, 116, 255, 25));
+        // ChangeRevealedParticleColor(new Color32(0, 116, 255, 25));
         StartCoroutine(CountdownToEmpty());
         if (OrbRemovedFromSconce != null)
         {
@@ -168,21 +168,27 @@ public class Sconce : PooledObject, iInteractable
 
         orbAcceptedParticleSystem.Play();
         orbOccupiedParticles.Play();
-       // ChangeRevealedParticleColor(new Color32(255, 215, 0, 25));
+        // ChangeRevealedParticleColor(new Color32(255, 215, 0, 25));
     }
 
-    void PlayEnteredSconceSound(){
-        float audioScale = ScaleAudio.ScaleAudioByRoomDistance(GameHandler.roomManager.DetermineHowCloseRoomIsToPlayer(parentRoom));
+    void PlayEnteredSconceSound()
+    {
+        if (parentRoom != null)
+        {
+            float audioScale = ScaleAudio.ScaleAudioByRoomDistance(GameHandler.roomManager.DetermineHowCloseRoomIsToPlayer(parentRoom));
+        }
         audioSource.time = 1.0f;
         audioSource.PlayOneShot(orbInSconceSound);
     }
 
-    void PlayExitedSconceSound(){
+    void PlayExitedSconceSound()
+    {
         audioSource.time = 1.0f;
         audioSource.PlayOneShot(orbOutOfSconceSound);
-    } 
+    }
 
-    void PlayRevealedSound(){
+    void PlayRevealedSound()
+    {
         audioSource.PlayOneShot(sconceRevealedSound);
     }
 
