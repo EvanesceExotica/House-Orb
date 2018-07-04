@@ -21,7 +21,13 @@ public class MusicHandler : MonoBehaviour
         musicSource = GetComponent<AudioSource>();
         //SetNormalMood();
 		ChangeClip(Mood.Normal);
+		PromptPlayerHit.PlayerFailed += SetChasedMood;
     }
+
+
+	void SetChasedMood(){
+		ChangeClip(Mood.Chased);
+	}
 
     // void SetNormalMood(){
     // 	ourMood = Mood.Normal;
@@ -74,12 +80,12 @@ public class MusicHandler : MonoBehaviour
 
     void FadeOutMusic()
     {
-
         musicSource.DOFade(0f, fadeDuration);
     }
 
     void FadeInMusic()
     {
+		musicSource.Play();
         musicSource.DOFade(1.0f, fadeDuration);
 
     }

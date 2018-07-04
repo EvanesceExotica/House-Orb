@@ -87,19 +87,19 @@ public class Room : MonoBehaviour
 
         if (distance == maxDistance)
         {
-            ourAudioScale = 0.5f;
+            ourAudioScale = 0.25f;
         }
-        else if (distance == (int)(maxDistance * 0.75))
+        else if (distance >= (int)(maxDistance * 0.75) && distance < (maxDistance))
         {
-            ourAudioScale = 0.625f;
+            ourAudioScale = 0.40f;
         }
-        else if (distance == (maxDistance * 0.5))
+        else if (distance >= (maxDistance * 0.5) && distance < (maxDistance * 0.75))
         {
-            ourAudioScale = 0.75f;
+            ourAudioScale = 0.65f;
         }
-        else if (distance == (maxDistance * 0.25))
+        else if (distance >= (maxDistance * 0.25) && distance < (maxDistance * 0.5f))
         {
-            ourAudioScale = 0.875f;
+            ourAudioScale = 0.80f;
         }
         else if (distance == 1)
         {
@@ -111,7 +111,18 @@ public class Room : MonoBehaviour
     void PlayBoom()
     {
         //TODO: Add something to calculate the distance from player
-        float audioScale = ScaleAudio(GameHandler.roomManager.DetermineHowCloseRoomIsToPlayer(this));
+//       float maxDistance = 0;
+        // if (GameHandler.roomManager.numberOfRooms % 2 == 0)
+        // {
+        //     maxDistance = GameHandler.roomManager.numberOfRooms / 2;
+        // }
+        // else if (GameHandler.roomManager.numberOfRooms % 2 != 0)
+        // {
+        //     maxDistance = (int)(GameHandler.roomManager.numberOfRooms / 2 + 0.5f);
+        // }
+        int distance = GameHandler.roomManager.DetermineHowCloseRoomIsToPlayer(this);
+        float audioScale = ScaleAudio(distance);
+	//	Debug.Log("Max distance " + maxDistance +  "Distance: " + distance + " and Audio Scale: " + audioScale);
         ourSource.PlayOneShot(boom, audioScale);
     }
 

@@ -6,7 +6,7 @@ public static class ScaleAudio {
  public static float ScaleAudioByRoomDistance(int distance)
     {
         float ourAudioScale = 1.0f;
-        int maxDistance = 0;
+        float maxDistance = 0;
         if (GameHandler.roomManager.numberOfRooms % 2 == 0)
         {
             maxDistance = GameHandler.roomManager.numberOfRooms / 2;
