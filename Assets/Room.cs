@@ -110,19 +110,9 @@ public class Room : MonoBehaviour
     }
     void PlayBoom()
     {
-        //TODO: Add something to calculate the distance from player
-//       float maxDistance = 0;
-        // if (GameHandler.roomManager.numberOfRooms % 2 == 0)
-        // {
-        //     maxDistance = GameHandler.roomManager.numberOfRooms / 2;
-        // }
-        // else if (GameHandler.roomManager.numberOfRooms % 2 != 0)
-        // {
-        //     maxDistance = (int)(GameHandler.roomManager.numberOfRooms / 2 + 0.5f);
-        // }
+       
         int distance = GameHandler.roomManager.DetermineHowCloseRoomIsToPlayer(this);
         float audioScale = ScaleAudio(distance);
-	//	Debug.Log("Max distance " + maxDistance +  "Distance: " + distance + " and Audio Scale: " + audioScale);
         ourSource.PlayOneShot(boom, audioScale);
     }
 

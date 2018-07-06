@@ -31,15 +31,16 @@ public class HidingSpace : MonoBehaviour, iInteractable
     void Awake(){
         boundsGenerator = GetComponent<GenerateNewBounds>();
         //TODO: put the above back in after testing
-        // spriteRenderer = GetComponent<SpriteRenderer>();
+         spriteRenderer = GetComponent<SpriteRenderer>();
         // for(int i = 0; i < sprites.Count; i++){
         //     if((int)ourSpriteVariation == i){
         //         spriteRenderer.sprite = sprites[i];
         //     }
         // }
-        // if(spriteRenderer.sprite != null){
-        //     boundsGenerator.GenerateNewColliderSize();
-        // }
+        if(spriteRenderer.sprite != null){
+            gameObject.AddComponent<PolygonCollider2D>();
+           // boundsGenerator.GenerateNewColliderSize();
+        }
         
     }
     public void PlayerHidingWrapper()

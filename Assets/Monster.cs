@@ -209,8 +209,10 @@ public class Monster : MonoBehaviour
 
     }
 
-    void Update(){
-        if(Input.GetKeyDown(KeyCode.L)){
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
             ScreamReady();
         }
     }
@@ -246,13 +248,39 @@ public class Monster : MonoBehaviour
         PlayLocatedPlayerChord();
         StartCoroutine(HuntPlayer(/*direction*/));
     }
+
+    public IEnumerator WaitForHidingPlayer()
+    {
+        bool detectedPlayer = false;
+        float startTime = Time.time;
+        while (Time.time < startTime + hidingWaitDuration)
+        {
+            if (!playerHiding)
+            {
+                detectedPlayer = true;
+                break;
+            }
+            yield return null;
+        }
+        if (detectedPlayer)
+        {
+            MonsterReachedPlayerWrapper();
+            //TODO: Maybe have player manage their hyperventilation?
+        }
+        else
+        {
+            //go back to moving between rooms like normal
+            StartCoroutine(MoveBetweenRooms(GameHandler.roomManager.GetEnemyCurrentRoomIndex()));
+        }
+    }
+    float hidingWaitDuration = 10;
     public IEnumerator HuntPlayer(/*int direction*/)
     {
         int currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex();
         int playerRoomIndex = roomManager.GetPlayerCurrentRoomIndex();
         while (currentRoomIndex != playerRoomIndex)
         {
-
+            //GO to the room the player is currently in until the player stops hiding and you eat them or the timer runs out
             playerRoomIndex = roomManager.GetPlayerCurrentRoomIndex();
             currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex() + starScreamDirection;
 
@@ -269,9 +297,10 @@ public class Monster : MonoBehaviour
             transform.position = roomManager.roomList[currentRoomIndex].gameObject.transform.position;
             yield return new WaitForSeconds(2.0f);
         }
+        float startTime = Time.time;
         if (playerHiding)
         {
-
+            StartCoroutine(WaitForHidingPlayer());
         }
         else
         {
