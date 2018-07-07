@@ -11,6 +11,9 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     [SerializeField] Sconce previousSconce;
     [SerializeField] Sconce currentSconce;
 
+    float corruptionMeter = 0;
+
+    float maxCorruption = 20.0f;
     public static event Action<MonoBehaviour> MovingBetweenPlayerAndObject;
 
     void MovingBetweenPlayerAndObjectWrapper(MonoBehaviour mono)
@@ -151,6 +154,22 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         }
         //posOffset = transform.position;
         //SetInSconce(transform.parent.gameObject);
+    }
+
+    bool beingCorrupted;
+    void SetBeingCorrupted(bool corrupted){
+        beingCorrupted = corrupted;
+    }
+    public IEnumerator IncraseCorruptionMeter(){
+       while(true) {
+           if(!beingCorrupted){
+               break;
+           }
+           corruptionMeter += 1.0f;
+           GameHandler.orbEffects.PlayCorruptionSound();
+           yield return new WaitForSeconds(0.5f);
+       }
+
     }
 
     void FailureDelayWrapper()

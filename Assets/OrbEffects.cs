@@ -10,7 +10,7 @@ public class OrbEffects : MonoBehaviour
 
     List<ParticleSystems> parryParticles = new List<ParticleSystems>();
     AudioSource source;
-
+    public AudioClip corruptionSound;
     public AudioClip failClip;
 
     public AudioClip succeedClip;
@@ -83,6 +83,9 @@ public class OrbEffects : MonoBehaviour
         parryParticles.Add(baseParticleSystem);
         parryParticles.Add(parryParticleSystem);
         parryParticles.Add(failureSystem);
+
+        CorruptedObject.Corrupting += PlayCorruptionEffect;
+        CorruptedObject.StoppedCorrupting += StopCorruptionEffect;
     }
 
     void StopAllButFizz()
@@ -131,6 +134,34 @@ public class OrbEffects : MonoBehaviour
     void Shake()
     {
         transform.DOShakePosition(1.0f, 0.5f, 3, 90, false, true);
+    }
+
+    public void ResetCorruptionSound(){
+        source.clip = null;
+        source.pitch = 1.0f;
+        source.volume = 0.2f; 
+    }
+
+    public void PlayCorruptionSound(){
+        source.clip = corruptionSound;
+        source.volume = 0.5f;
+        source.DOPitch(source.pitch + 0.5f, 0.5f);
+        source.DOFade(source.volume + 0.15f, 0.5f);
+    }
+    void PlayCorruptionEffect(){
+        baseParticleSystem.Stop();
+        if(failureSystem != null){
+            failureSystem.SetLoop(true);
+            failureSystem.Play();
+        }
+    }
+
+    void StopCorruptionEffect(){
+        if(failureSystem != null){
+            failureSystem.SetLoop(false);
+            failureSystem.Stop();
+        }
+        baseParticleSystem.Play();
     }
 
     void PlayFailureEffect()

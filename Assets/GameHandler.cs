@@ -24,6 +24,8 @@ public class GameHandler : MonoBehaviour
     public static Transform fatherOrbHoldTransform;
 
 	public static OrbController orbController;
+
+    public static OrbEffects orbEffects;
     public static Transform bubbleLineStartTransform;
     void Awake()
     {
@@ -40,6 +42,7 @@ public class GameHandler : MonoBehaviour
         fatherOrb = fatherOrbGO.GetComponent<FatherOrb>();
         monsterGO = GameObject.Find("Monster");
 		orbController = fatherOrbGO.GetComponent<OrbController>();
+        orbEffects = fatherOrbGO.GetComponent<OrbEffects>();
         if (monsterGO != null)
         {
             monster = monsterGO.GetComponent<Monster>();

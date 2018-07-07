@@ -33,6 +33,8 @@ public class PromptPlayerHit : MonoBehaviour
         }
 
     }
+
+    Image playerBreathImage;
     Image promptTimeImage;
     TextMeshProUGUI textComponent;
     CanvasGroup ourCanvasGroup;
@@ -364,6 +366,8 @@ public class PromptPlayerHit : MonoBehaviour
         }
 
     }
+
+   
 
     public IEnumerator RecoveryDelay(){
 

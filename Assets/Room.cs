@@ -58,6 +58,7 @@ public class Room : MonoBehaviour
         }
     }
 
+
     public void EnemyEnteredAdjacentRoomWrapper(Room room)
     {
         //this event can trigger a dialogue for if the player
@@ -229,7 +230,7 @@ public class Room : MonoBehaviour
         foreach (Room adjacentRoom in adjacentRooms)
         {
             adjacentRoom.EnemyEntered += EnemyEnteredAdjacentRoomWrapper;
-            adjacentRoom.EnemyExited += EnemyExitedAdjacentRoomWrapper;
+            adjacentRoom.EnemyExited += CheckIfEnemyEnteredCurrentRoom;//EnemyExitedAdjacentRoomWrapper;
         }
     }
     public enum EnemyStatus
@@ -237,6 +238,13 @@ public class Room : MonoBehaviour
         InRoom,
 
         OutOfRoom
+    }
+
+    void CheckIfEnemyEnteredCurrentRoom(Room room){
+        if(enemyLocation != EnemyStatus.InRoom){
+            //the enemy left the adjacent room and went in the other direction rather than entering the current room
+            EnemyExitedAdjacentRoomWrapper(room);
+        }
     }
 
     public void PlayScentParticleSystem()
