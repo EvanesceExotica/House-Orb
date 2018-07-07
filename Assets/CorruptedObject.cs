@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-[RequireComponent(typeof(CircleCollider2D))]
-[RequireComponent(typeof(VisibleCollider))]
-public class CorruptedObject : MonoBehaviour
+using DG.Tweening;
+public class CorruptedObject : ParentTrigger
 {
 
+	Transform corruptionEffect;
     CircleCollider2D ourCollider;
     VisibleCollider ourVisibleCollider;
 
     float cooldownInterval;
     void Awake()
     {
-        ourCollider = GetComponent<CircleCollider2D>();
-        ourVisibleCollider = GetComponent<VisibleCollider>();
-        ourVisibleCollider.OurColliderType = VisibleCollider.ColliderTypes.Circle;
+		corruptionEffect = transform.GetChild(0);
+        ourCollider = GetComponentInChildren<CircleCollider2D>();
+ //       ourVisibleCollider = GetComponentInChildren<VisibleCollider>();
+//        ourVisibleCollider.OurColliderType = VisibleCollider.ColliderTypes.Circle;
         OrbController.ChannelingOrb += SetCanGrowCorruption;
 		Sconce.OrbInSconce += SetOrbInSconce;
 		Sconce.OrbRemovedFromSconce += SetOrbOutOfSconce;
@@ -36,6 +37,7 @@ public class CorruptedObject : MonoBehaviour
     void StoppedCorruptingWrapper()
     {
 		corrupting = false;
+		StartCoroutine(Cooldown());
         if (StoppedCorrupting != null)
         {
             StoppedCorrupting();
@@ -43,7 +45,7 @@ public class CorruptedObject : MonoBehaviour
     }
 
     bool canGrowCorruption = false;
-	bool corrupting = false;
+	public bool corrupting = false;
     void SetCanGrowCorruption(MonoBehaviour mono)
     {
         canGrowCorruption = true;
@@ -51,12 +53,19 @@ public class CorruptedObject : MonoBehaviour
 
     public IEnumerator GrowCollider()
     {
+		Vector2 newVector = Vector2.zero;
         while (true)
         {
 			if(!corrupting){
 				break;
 			}
-            ourCollider.radius += 0.5f;
+			newVector = new Vector2(corruptionEffect.localScale.x + 0.5f, corruptionEffect.localScale.y + 0.5f);
+			//Debug.Log("We should be growing to New vector: "  + newVector);
+			corruptionEffect.DOScale(newVector, 0.5f);
+
+		//	ourCollider.radius = Mathf.Lerp(ourCollider.radius, ourCollider.radius + 0.5f, 0.5f);
+   //         ourCollider.radius += 0.5f;
+
 			yield return new WaitForSeconds(0.5f);
         }
     }
@@ -86,7 +95,12 @@ public class CorruptedObject : MonoBehaviour
 			}
 		}
 	}
-    void OnTriggerEnter2D(Collider2D hit)
+
+	void ClearCorruption(){
+		corruptionEffect.DOScale(Vector2.zero, 1.0f);
+		corruptionEffect.gameObject.SetActive(false);
+	}
+    public override void OnChildTriggerEnter2D(Collider2D hit, GameObject child)
     {
         if (hit.gameObject == GameHandler.fatherOrbGO && canGrowCorruption)
         {
@@ -94,7 +108,7 @@ public class CorruptedObject : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D hit)
+    public override void OnChildTriggerExit2D(Collider2D hit, GameObject child)
     {
         if (hit.gameObject == GameHandler.fatherOrbGO && canGrowCorruption)
         {

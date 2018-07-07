@@ -44,6 +44,7 @@ public class Monster : MonoBehaviour
         HidingSpace.PlayerHiding += PlayerHid;
         PromptPlayerHit.PlayerFailed += HuntPlayerWrapper;
         StarScream.ScreamHitPlayerCurrentRoom += SetStarScreamDirection;
+        FatherOrb.OrbScream += HurryToRoomOfScreamWrapper;
     }
 
     void PlayScoutingScream()
@@ -274,6 +275,47 @@ public class Monster : MonoBehaviour
         }
     }
     float hidingWaitDuration = 10;
+
+    public void HurryToRoomOfScreamWrapper(){
+        Debug.Log("Heard scream, hurrying over");
+        //this will cause the enemy to hurry to the room where it heard the father orb scream
+        StartCoroutine(HurryToRoomOfScream());
+    }
+    public IEnumerator HurryToRoomOfScream()
+    {
+        int screamSourceIndex = roomManager.GetPlayerCurrentRoomIndex();
+        int currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex();
+        while (currentRoomIndex != screamSourceIndex)
+        {
+            //GO to the room the player is currently in until the player stops hiding and you eat them or the timer runs out
+            currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex() + starScreamDirection;
+
+            if (currentRoomIndex == -1)
+            {
+                //if it equals the first index
+                currentRoomIndex = roomManager.roomList.Count - 1;
+            }
+            else if (currentRoomIndex == roomManager.roomList.Count)
+            {
+                //if it equals the last index
+                currentRoomIndex = 0;
+            }
+            transform.position = roomManager.roomList[currentRoomIndex].gameObject.transform.position;
+            yield return new WaitForSeconds(2.0f);
+        }
+        if (screamSourceIndex == roomManager.GetEnemyCurrentRoomIndex())
+        {
+            if (playerHiding)
+            {
+                StartCoroutine(WaitForHidingPlayer());
+            }
+
+            else
+            {
+                MonsterReachedPlayerWrapper();
+            }
+        }
+    }
     public IEnumerator HuntPlayer(/*int direction*/)
     {
         int currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex();

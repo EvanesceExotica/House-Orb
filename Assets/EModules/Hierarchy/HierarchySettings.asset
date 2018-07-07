@@ -13,14 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pluginID: 0
   last_scenesV2:
-  - guid: 6926961d2ff1f8c478c10f8f396a7015
-    pin: 0
-    path: Assets/ShaderoSprite/Examples/Example.unity
-    additional_guid: []
-    additional_path: []
   - guid: 27369b64eb68a3b4e98a3be2a20cf27c
     pin: 0
     path: Assets/Train1.unity
+    additional_guid: []
+    additional_path: []
+  - guid: 6926961d2ff1f8c478c10f8f396a7015
+    pin: 0
+    path: Assets/ShaderoSprite/Examples/Example.unity
     additional_guid: []
     additional_path: []
   - guid: 4ba2fd1e5b539a64e818f7a492e668f9

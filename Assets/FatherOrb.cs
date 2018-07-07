@@ -11,9 +11,9 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     [SerializeField] Sconce previousSconce;
     [SerializeField] Sconce currentSconce;
 
-    float corruptionMeter = 0;
+    [SerializeField] float corruptionMeter = 0;
 
-    float maxCorruption = 20.0f;
+    [SerializeField] float maxCorruption = 21.0f;
     public static event Action<MonoBehaviour> MovingBetweenPlayerAndObject;
 
     void MovingBetweenPlayerAndObjectWrapper(MonoBehaviour mono)
@@ -152,24 +152,38 @@ public class FatherOrb : MonoBehaviour//, iInteractable
             sconce.OrbPlacedInUs(sconce);
             SetZToNegative2();
         }
+        CorruptedObject.Corrupting += BeCorrupted;
+        CorruptedObject.StoppedCorrupting += SetCorruptionRemoved;
         //posOffset = transform.position;
         //SetInSconce(transform.parent.gameObject);
     }
 
     bool beingCorrupted;
-    void SetBeingCorrupted(bool corrupted){
-        beingCorrupted = corrupted;
+    void SetCorruptionRemoved()
+    {
+        beingCorrupted = false;
     }
-    public IEnumerator IncraseCorruptionMeter(){
-       while(true) {
-           if(!beingCorrupted){
-               break;
-           }
-           corruptionMeter += 1.0f;
-           GameHandler.orbEffects.PlayCorruptionSound();
-           yield return new WaitForSeconds(0.5f);
-       }
 
+    void BeCorrupted()
+    {
+        StartCoroutine(IncreaseCorruptionMeter());
+    }
+
+    public IEnumerator IncreaseCorruptionMeter()
+    {
+        Debug.Log("This corruption meter is increasing");
+        beingCorrupted = true;
+        while (corruptionMeter < maxCorruption)
+        {
+            if (!beingCorrupted)
+            {
+                break;
+            }
+            corruptionMeter += 3.0f;
+            GameHandler.orbEffects.PlayCorruptionSound();
+            yield return new WaitForSeconds(0.5f);
+        }
+        OrbScreamWrapper();
     }
 
     void FailureDelayWrapper()
@@ -254,7 +268,8 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     {
         heldStatus = HeldStatuses.Carried;
         inSconce = false;
-        if(ourObject.GetComponent<Sconce>() != null){
+        if (ourObject.GetComponent<Sconce>() != null)
+        {
             previousSconce = currentSconce;
             currentSconce = null;
         }
