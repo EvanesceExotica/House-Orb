@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Name: Distortion UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -1162.4999
     y: -364.50027
     width: 172
@@ -112,6 +113,7 @@ MonoBehaviour:
   m_Name: Sprite Sheet Animation UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 69.30005
     y: 398.49994
     width: 172
@@ -158,6 +160,7 @@ MonoBehaviour:
   m_Name: Zoom UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -1747.7997
     y: 293.39978
     width: 172
@@ -278,6 +281,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 61.99999
     y: -223.70004
     width: 150
@@ -356,6 +360,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 590
     y: 340
     width: 150
@@ -419,6 +424,7 @@ MonoBehaviour:
   m_Name: SpriteSheet UV Anim Pack
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -867.39886
     y: -402.40002
     width: 342
@@ -451,6 +457,7 @@ MonoBehaviour:
   m_Name: Resize UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -1162.0004
     y: 116.89986
     width: 172
@@ -625,6 +632,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 340.0002
     y: 188.79979
     width: 150
@@ -650,6 +658,7 @@ MonoBehaviour:
   m_Name: Color HSV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 822.3988
     y: -88.10025
     width: 172
@@ -714,6 +723,7 @@ MonoBehaviour:
   m_Name: Add = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 570.2001
     y: -8.000118
     width: 172
@@ -884,6 +894,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -604.6
     y: 287.90002
     width: 150
@@ -926,6 +937,7 @@ MonoBehaviour:
   m_Name: Simple Displacement UV FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -448.8001
     y: -9.399986
     width: 172
@@ -1169,6 +1181,7 @@ MonoBehaviour:
   m_Name: Rotation UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -271.09995
     y: 303.29993
     width: 172
@@ -1198,6 +1211,7 @@ MonoBehaviour:
   m_Name: Animated Movement UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -891
     y: 55.60001
     width: 172
@@ -1226,6 +1240,7 @@ MonoBehaviour:
   m_Name: Distortion UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -1468.3013
     y: 190.29974
     width: 172
@@ -1275,6 +1290,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1055.5988
     y: 141.49976
     width: 172
@@ -1343,6 +1359,7 @@ MonoBehaviour:
   m_Name: Automatic Lerp
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 314.2
     y: -57.199993
     width: 172
@@ -1371,6 +1388,7 @@ MonoBehaviour:
   m_Name: 4 Gradients
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1302.2001
     y: 0.5997753
     width: 172
@@ -1384,26 +1402,10 @@ MonoBehaviour:
   - {fileID: 114197758798276226}
   Outputs:
   - {fileID: 114852596297302898}
-  Variable:
-    r: 1
-    g: 0
-    b: 0
-    a: 0
-  Variable2:
-    r: 0
-    g: 1
-    b: 0
-    a: 0
-  Variable3:
-    r: 1
-    g: 0.616
-    b: 0
-    a: 0.172
-  Variable4:
-    r: 1
-    g: 0.48529413
-    b: 0
-    a: 0.316
+  Variable: {r: 1, g: 0, b: 0, a: 0}
+  Variable2: {r: 0, g: 1, b: 0, a: 0}
+  Variable3: {r: 1, g: 0.616, b: 0, a: 0.172}
+  Variable4: {r: 1, g: 0.48529413, b: 0, a: 0.316}
   parametersOK: 1
   MemoCount: 1
 --- !u!114 &114959296107615502
@@ -1418,6 +1420,7 @@ MonoBehaviour:
   m_Name: Build Shader
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1554.7998
     y: -54.300007
     width: 300
@@ -1441,6 +1444,7 @@ MonoBehaviour:
   m_Name: Fix Sides UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -186.19986
     y: -45.600067
     width: 172
@@ -1467,6 +1471,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 80.59996
     y: 105.700005
     width: 150

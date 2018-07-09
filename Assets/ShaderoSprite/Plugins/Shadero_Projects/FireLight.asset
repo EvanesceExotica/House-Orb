@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: Source New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 141.3
     y: -991.201
     width: 148
@@ -123,6 +124,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114418727957022556}
   tex: {fileID: 2800000, guid: 380bd29db7fb34b4a8b2e55a0d259b33, type: 3}
+  MemoCount: -1
 --- !u!114 &114111320411449126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -155,6 +157,7 @@ MonoBehaviour:
   m_Name: Premade Gradients
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 851.3999
     y: -619.8001
     width: 172
@@ -166,32 +169,17 @@ MonoBehaviour:
   - {fileID: 114703709592565820}
   Outputs:
   - {fileID: 114637765604556076}
-  Variable:
-    r: 1
-    g: 0
-    b: 0.13
-    a: 1
-  Variable2:
-    r: 0.42
-    g: 0.95
-    b: 0
-    a: 1
-  Variable3:
-    r: 0.99
-    g: 0.68
-    b: 0.99
-    a: 1
-  Variable4:
-    r: 0.39
-    g: 0.39
-    b: 1
-    a: 1
+  Variable: {r: 1, g: 0, b: 0.13, a: 1}
+  Variable2: {r: 0.42, g: 0.95, b: 0, a: 1}
+  Variable3: {r: 0.99, g: 0.68, b: 0.99, a: 1}
+  Variable4: {r: 0.39, g: 0.39, b: 1, a: 1}
   Variable5: -0.2564071
   Variable6: 1
   Variable7: 0
   AddParameters: 0
   CurrentPremade: 0
   CurrentTexture: Textures/previews/nid_grd_fireflame.jpg
+  MemoCount: -1
 --- !u!114 &114161378151077114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,6 +192,7 @@ MonoBehaviour:
   m_Name: Generate RGBA Fire
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 350.39957
     y: -704.70044
     width: 172
@@ -222,11 +211,7 @@ MonoBehaviour:
   Variable5: 1.3333396
   AddParameters: 0
   NoAlphaBlack: 0
-  MemoVariable: 0.013467649
-  MemoVariable2: 0.019230178
-  MemoVariable3: 0.05801372
-  MemoVariable4: 0.21987386
-  MemoVariable5: 1.3333396
+  MemoCount: -1
 --- !u!114 &114174062686219906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -275,6 +260,7 @@ MonoBehaviour:
   m_Name: RGBA Add value
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 851.3003
     y: -922.2014
     width: 172
@@ -292,6 +278,7 @@ MonoBehaviour:
   G: 1
   B: 0
   A: 0
+  MemoCount: -1
 --- !u!114 &114305669837239162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -355,6 +342,7 @@ MonoBehaviour:
   m_Name: Build Shader
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1612.7001
     y: -868.09985
     width: 260
@@ -365,6 +353,7 @@ MonoBehaviour:
   - {fileID: 114716225410792852}
   Outputs: []
   BuildErrorFlag: 0
+  BuildLightningSupport: 0
 --- !u!114 &114358335828940544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -450,6 +439,7 @@ MonoBehaviour:
   m_Name: Source RGBA
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 410.09985
     y: -840.001
     width: 110
@@ -463,6 +453,7 @@ MonoBehaviour:
   - {fileID: 114183407475887664}
   Outputs:
   - {fileID: 114174062686219906}
+  MemoCount: -1
 --- !u!114 &114502410322820298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -549,6 +540,7 @@ MonoBehaviour:
   m_Name: Blend 2 RGBA with Mask
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1116.3
     y: -723.6012
     width: 172
@@ -565,9 +557,9 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114522717492557130}
   Variable: 1
-  MemoVariable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114612885416470658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -616,6 +608,7 @@ MonoBehaviour:
   m_Name: Distortion UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 115.60002
     y: -754.2019
     width: 172
@@ -633,6 +626,7 @@ MonoBehaviour:
   Variable4: 0.6089746
   Variable5: -2
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114664835688006138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -662,6 +656,7 @@ MonoBehaviour:
   m_Name: Pattern Movement Mask
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 608.39966
     y: -1067.4011
     width: 172
@@ -683,6 +678,7 @@ MonoBehaviour:
   Variable2: -0.415363
   Variable3: 2.1230843
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114703709592565820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -780,6 +776,7 @@ MonoBehaviour:
   m_Name: Circle Fade FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1369.8999
     y: -836.20123
     width: 172
@@ -797,11 +794,9 @@ MonoBehaviour:
   Variable2: 1.2384479
   Variable3: 0.97563213
   Variable4: 0.26473883
-  MemoVariable: 0.5
-  MemoVariable2: 1.2384479
-  MemoVariable3: 0.97563213
-  MemoVariable4: 0.26473883
+  Variable5: 0.2
   parametersOK: 1
+  MemoCount: -1
 --- !u!114 &114829998104453944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -867,6 +862,7 @@ MonoBehaviour:
   m_Name: Distortion UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -185.39996
     y: -973.60205
     width: 172
@@ -884,6 +880,7 @@ MonoBehaviour:
   Variable4: 0.5801282
   Variable5: 0.45381987
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114927344875247338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -913,6 +910,7 @@ MonoBehaviour:
   m_Name: Circle Fade FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 603.39984
     y: -682.4005
     width: 172
@@ -930,11 +928,9 @@ MonoBehaviour:
   Variable2: 0.4288342
   Variable3: 0.35512757
   Variable4: 0.2
-  MemoVariable: 0.5
-  MemoVariable2: 0.4288342
-  MemoVariable3: 0.35512757
-  MemoVariable4: 0.2
+  Variable5: 0.2
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114992565791360902
 MonoBehaviour:
   m_ObjectHideFlags: 1

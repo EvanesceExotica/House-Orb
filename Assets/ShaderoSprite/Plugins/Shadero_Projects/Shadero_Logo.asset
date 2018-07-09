@@ -33,6 +33,7 @@ MonoBehaviour:
   m_Name: Build Shader
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 99.29999
     y: -12.300003
     width: 260
@@ -43,6 +44,7 @@ MonoBehaviour:
   - {fileID: 114911609298214288}
   Outputs: []
   BuildErrorFlag: 0
+  BuildLightningSupport: 0
 --- !u!114 &114028038674675820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -72,6 +74,7 @@ MonoBehaviour:
   m_Name: Add = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -175.89996
     y: 171.30002
     width: 172
@@ -85,11 +88,11 @@ MonoBehaviour:
   - {fileID: 114102799642714800}
   Outputs:
   - {fileID: 114348841400336120}
-  tex: {fileID: 0}
   Variable: 0.34359193
   parametersOK: 1
   Include_RGBA_Alpha: 1
   Include_RGBA_Alpha2: 0
+  MemoCount: -1
 --- !u!114 &114045784082729740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -283,6 +286,7 @@ MonoBehaviour:
   m_Name: Plasma FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -406.5
     y: -269.7
     width: 172
@@ -298,9 +302,8 @@ MonoBehaviour:
   - {fileID: 114159379346899404}
   Variable: 0.3525641
   Variable2: 0.5961538
-  MemoVariable: 0.3525641
-  MemoVariable2: 0.5961538
   parametersOK: 1
+  MemoCount: -1
 --- !u!114 &114596348735581796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -330,6 +333,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -688.7
     y: -81.3
     width: 150
@@ -342,6 +346,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114903914139661668}
   tex: {fileID: 2800000, guid: 0ede4dd9f608c624dbad92592914686e, type: 3}
+  MemoCount: -1
 --- !u!114 &114903914139661668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -391,6 +396,7 @@ MonoBehaviour:
   m_Name: Generate RGBA Shape
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -439.50006
     y: 375.3
     width: 172
@@ -410,12 +416,7 @@ MonoBehaviour:
   Variable6: 36
   AddParameters: 1
   NoAlphaBlack: 0
-  MemoVariable: -1
-  MemoVariable2: 0.50000125
-  MemoVariable3: 0.025641805
-  MemoVariable4: 0.515385
-  MemoVariable5: 2
-  MemoVariable6: 36
+  MemoCount: -1
 --- !u!114 &114955438372066358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -428,6 +429,7 @@ MonoBehaviour:
   m_Name: Add = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -438.5
     y: 42.9
     width: 172
@@ -441,11 +443,11 @@ MonoBehaviour:
   - {fileID: 114596348735581796}
   Outputs:
   - {fileID: 114378332312792000}
-  tex: {fileID: 0}
   Variable: 0
   parametersOK: 1
   Include_RGBA_Alpha: 0
   Include_RGBA_Alpha2: 0
+  MemoCount: -1
 --- !u!114 &114955495265315882
 MonoBehaviour:
   m_ObjectHideFlags: 1

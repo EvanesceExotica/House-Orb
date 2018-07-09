@@ -32,6 +32,7 @@ MonoBehaviour:
   m_Name: Premade Gradients
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 220
     y: -260
     width: 172
@@ -43,32 +44,17 @@ MonoBehaviour:
   - {fileID: 114965483233546114}
   Outputs:
   - {fileID: 114931984525911044}
-  Variable:
-    r: 0.5
-    g: 0.5
-    b: 0.5
-    a: 1
-  Variable2:
-    r: 0.5
-    g: 0.5
-    b: 0.5
-    a: 1
-  Variable3:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
-  Variable4:
-    r: 0
-    g: 0.33
-    b: 0.67
-    a: 1
+  Variable: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  Variable2: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  Variable3: {r: 1, g: 1, b: 1, a: 1}
+  Variable4: {r: 0, g: 0.33, b: 0.67, a: 1}
   Variable5: 0
   Variable6: 0.18141058
   Variable7: 0.13077016
   AddParameters: 0
   CurrentPremade: 0
   CurrentTexture: Textures/previews/nid_grd_rainbowhard.jpg
+  MemoCount: -1
 --- !u!114 &114039794668530542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -81,6 +67,7 @@ MonoBehaviour:
   m_Name: Generate RGBA Checker
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -249.89996
     y: -185.70001
     width: 172
@@ -97,6 +84,7 @@ MonoBehaviour:
   Variable3: 8
   AddParameters: 0
   NoAlphaBlack: 1
+  MemoCount: -1
 --- !u!114 &114073487525059744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -128,6 +116,7 @@ MonoBehaviour:
   m_Name: Build Shader
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 457
     y: -18.399994
     width: 260
@@ -138,6 +127,7 @@ MonoBehaviour:
   - {fileID: 114461280338431766}
   Outputs: []
   BuildErrorFlag: 0
+  BuildLightningSupport: 0
 --- !u!114 &114166741298845964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,6 +178,7 @@ MonoBehaviour:
   m_Name: Fill Color
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -11.799965
     y: -112.20001
     width: 172
@@ -200,13 +191,10 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114166741298845964}
   AddParameters: 0
-  Variable:
-    r: 0.25
-    g: 0.216
-    b: 0.247
-    a: 0.922
+  Variable: {r: 0.25, g: 0.216, b: 0.247, a: 0.922}
   MoreOption: 0
   MoreOptionAnm: 0
+  MemoCount: -1
 --- !u!114 &114261863939855924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,6 +261,7 @@ MonoBehaviour:
   m_Name: Animated Offset UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -506.99997
     y: -62.800022
     width: 172
@@ -289,12 +278,8 @@ MonoBehaviour:
   Variable3: 10
   Variable4: 10
   Variable5: -0.034615934
-  MemoVariable: -0.36153314
-  MemoVariable2: -0.42307144
-  MemoVariable3: 10
-  MemoVariable4: 10
-  MemoVariable5: -0.034615934
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114896617466508740
 MonoBehaviour:
   m_ObjectHideFlags: 1

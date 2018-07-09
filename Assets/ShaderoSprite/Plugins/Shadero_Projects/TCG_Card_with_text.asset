@@ -87,6 +87,7 @@ MonoBehaviour:
   m_Name: Zoom UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -994.6
     y: 870.6
     width: 172
@@ -102,6 +103,7 @@ MonoBehaviour:
   Variable2: 1.3461539
   Variable3: -0.038461562
   AddParameters: 1
+  MemoCount: -1
 --- !u!114 &114011392864512408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,6 +116,7 @@ MonoBehaviour:
   m_Name: Sprite Sheet Frame UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 89.600006
     y: 1625.4
     width: 172
@@ -128,6 +131,7 @@ MonoBehaviour:
   Variable: 4
   Variable2: 10
   AddParameters: 1
+  MemoCount: -1
 --- !u!114 &114017257342183348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -140,6 +144,7 @@ MonoBehaviour:
   m_Name: Destroyer
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1791
     y: 983.6
     width: 172
@@ -159,6 +164,7 @@ MonoBehaviour:
   HDR: 1
   HDRvalue: 0.9154201
   parametersOK: 1
+  MemoCount: -1
 --- !u!114 &114019762890791652
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,6 +194,7 @@ MonoBehaviour:
   m_Name: Source New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -153.09998
     y: 190.6
     width: 148
@@ -198,6 +205,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114486206267082946}
   tex: {fileID: 2800000, guid: 1d865dfce22fdf74885d0c0da6a4ac13, type: 3}
+  MemoCount: -1
 --- !u!114 &114038599923469880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,6 +218,7 @@ MonoBehaviour:
   m_Name: Render Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 773.5999
     y: 1443.2
     width: 150
@@ -222,6 +231,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114452482405094240}
   tex: {fileID: 8400000, guid: 57ebe8324f455fe48834b7520c4c2ce9, type: 2}
+  MemoCount: -1
 --- !u!114 &114043568289123260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -268,6 +278,7 @@ MonoBehaviour:
   m_Name: Mask With 2 RGBA
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 427.40018
     y: 426.40033
     width: 172
@@ -285,6 +296,7 @@ MonoBehaviour:
   - {fileID: 114208726451453374}
   Variable: 0.016661424
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114059224261470622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -552,6 +564,7 @@ MonoBehaviour:
   m_Name: Mask with RGBA
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 915.4996
     y: 136.99745
     width: 172
@@ -568,6 +581,7 @@ MonoBehaviour:
   Variable: 0
   parametersOK: 0
   Include_RGBA_Alpha: 1
+  MemoCount: -1
 --- !u!114 &114184840188792130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -580,6 +594,7 @@ MonoBehaviour:
   m_Name: Source RGBA
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 535.80194
     y: 1902.5991
     width: 110
@@ -593,6 +608,7 @@ MonoBehaviour:
   - {fileID: 114694277981850022}
   Outputs:
   - {fileID: 114301933631829214}
+  MemoCount: -1
 --- !u!114 &114187481970594542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -885,6 +901,7 @@ MonoBehaviour:
   m_Name: Offset UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -1299.6003
     y: 647.19977
     width: 172
@@ -902,6 +919,7 @@ MonoBehaviour:
   Variable4: 1.837692
   ActiveClamp: 0
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114268176315773764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -914,6 +932,7 @@ MonoBehaviour:
   m_Name: Displacement Plus UV FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 162.20001
     y: 1096.2001
     width: 172
@@ -935,6 +954,7 @@ MonoBehaviour:
   Variable2: -0.86922437
   Variable3: 0.33077455
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114270255218420228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1089,6 +1109,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1000.8009
     y: 1716.9968
     width: 172
@@ -1105,6 +1126,7 @@ MonoBehaviour:
   Variable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114355149472956596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1154,6 +1176,7 @@ MonoBehaviour:
   m_Name: Mask With 2 RGBA
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1044.1997
     y: 939.20013
     width: 172
@@ -1171,6 +1194,7 @@ MonoBehaviour:
   - {fileID: 114945268664553346}
   Variable: 1
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114367641562694044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1200,6 +1224,7 @@ MonoBehaviour:
   m_Name: Source RGBA
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -298.60028
     y: 457.3999
     width: 110
@@ -1213,6 +1238,7 @@ MonoBehaviour:
   - {fileID: 114664395419006924}
   Outputs:
   - {fileID: 114153589945894728}
+  MemoCount: -1
 --- !u!114 &114371521051790244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1225,6 +1251,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1245.2018
     y: 1851.3998
     width: 172
@@ -1241,6 +1268,7 @@ MonoBehaviour:
   Variable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114376042071424452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1287,6 +1315,7 @@ MonoBehaviour:
   m_Name: RGBA Add value
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1159.2997
     y: 220.19748
     width: 172
@@ -1304,6 +1333,7 @@ MonoBehaviour:
   G: 0
   B: 0
   A: 0
+  MemoCount: -1
 --- !u!114 &114386440993704500
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1335,6 +1365,7 @@ MonoBehaviour:
   m_Name: Source RGBA
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -295.90002
     y: 965.00006
     width: 110
@@ -1348,6 +1379,7 @@ MonoBehaviour:
   - {fileID: 114962322482438006}
   Outputs:
   - {fileID: 114355149472956596}
+  MemoCount: -1
 --- !u!114 &114397297899661960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1377,6 +1409,7 @@ MonoBehaviour:
   m_Name: Burn
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1278.9996
     y: 1446.2001
     width: 172
@@ -1396,6 +1429,7 @@ MonoBehaviour:
   HDR: 1
   HDRvalue: 2
   parametersOK: 1
+  MemoCount: -1
 --- !u!114 &114409744201200318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1408,6 +1442,7 @@ MonoBehaviour:
   m_Name: Displacement Plus UV FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 119.200005
     y: 228
     width: 172
@@ -1429,6 +1464,7 @@ MonoBehaviour:
   Variable2: 0.038461532
   Variable3: 0.41794997
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114424196741192646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1515,6 +1551,7 @@ MonoBehaviour:
   m_Name: Color HSV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 353.39978
     y: 60.798756
     width: 172
@@ -1530,6 +1567,7 @@ MonoBehaviour:
   Variable2: 1
   Variable3: 1
   parametersOK: 1
+  MemoCount: -1
 --- !u!114 &114452482405094240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1580,6 +1618,7 @@ MonoBehaviour:
   m_Name: Resize UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -175.89824
     y: 1530.9993
     width: 172
@@ -1597,6 +1636,7 @@ MonoBehaviour:
   Variable4: 2.8326924
   ActiveClamp: 1
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114479287799895632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1645,6 +1685,7 @@ MonoBehaviour:
   m_Name: Generate RGBA Fire
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -78.799866
     y: 524.7999
     width: 172
@@ -1663,6 +1704,7 @@ MonoBehaviour:
   Variable5: 1
   AddParameters: 0
   NoAlphaBlack: 1
+  MemoCount: -1
 --- !u!114 &114507390770196534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1711,6 +1753,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -229.4
     y: 1260.6
     width: 150
@@ -1723,6 +1766,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114587140451629252}
   tex: {fileID: 2800000, guid: ecb05761374765d43a93f1d0dd1c8172, type: 3}
+  MemoCount: -1
 --- !u!114 &114544236609533340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1735,6 +1779,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 789.1997
     y: 893.4
     width: 150
@@ -1747,6 +1792,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114386440993704500}
   tex: {fileID: 2800000, guid: dc2333e30d803f84ea78aae652212b8e, type: 3}
+  MemoCount: -1
 --- !u!114 &114547884728018630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1815,6 +1861,7 @@ MonoBehaviour:
   m_Name: Source New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -699.7
     y: 1019.4001
     width: 148
@@ -1825,6 +1872,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114926724646006120}
   tex: {fileID: 2800000, guid: b6ef11c6140bcec499e753562140faa4, type: 3}
+  MemoCount: -1
 --- !u!114 &114574301247481706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1891,6 +1939,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 758.19977
     y: 1170.4003
     width: 150
@@ -1903,6 +1952,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114345875719909154}
   tex: {fileID: 2800000, guid: a781840386908a140a521bec4c11a0ba, type: 3}
+  MemoCount: -1
 --- !u!114 &114594061790363868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1915,6 +1965,7 @@ MonoBehaviour:
   m_Name: Source New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 270.40186
     y: 2021.3987
     width: 148
@@ -1925,6 +1976,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114547884728018630}
   tex: {fileID: 2800000, guid: 785e2f10cde81dc4794aaafccb47cbba, type: 3}
+  MemoCount: -1
 --- !u!114 &114600286429327058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1937,6 +1989,7 @@ MonoBehaviour:
   m_Name: Pattern Movement
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -590.79974
     y: 418.99948
     width: 172
@@ -1956,6 +2009,7 @@ MonoBehaviour:
   Variable2: -0.39999938
   Variable3: 0.97435427
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114616600746485182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1968,6 +2022,7 @@ MonoBehaviour:
   m_Name: Resize UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -373.80002
     y: 1957.4
     width: 172
@@ -1985,6 +2040,7 @@ MonoBehaviour:
   Variable4: 2.8589745
   ActiveClamp: 1
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114637478450741406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2021,6 +2077,7 @@ MonoBehaviour:
   m_Name: Turn Black To Alpha
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 987
     y: 1237
     width: 172
@@ -2035,6 +2092,7 @@ MonoBehaviour:
   parametersOK: 0
   ForceColorBlack: 1
   Variable: 1
+  MemoCount: -1
 --- !u!114 &114650770692906946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2227,6 +2285,7 @@ MonoBehaviour:
   m_Name: Resize UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 481.6
     y: 1426.4
     width: 172
@@ -2244,6 +2303,7 @@ MonoBehaviour:
   Variable4: 1.6559691
   ActiveClamp: 1
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114703636706724762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2400,6 +2460,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 799.00006
     y: 499.19998
     width: 172
@@ -2416,6 +2477,7 @@ MonoBehaviour:
   Variable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114778978364155540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2462,6 +2524,7 @@ MonoBehaviour:
   m_Name: Pattern Movement
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 620.59937
     y: 49.99787
     width: 172
@@ -2481,6 +2544,7 @@ MonoBehaviour:
   Variable2: -0.09230707
   Variable3: 0.97949064
   parametersOK: 1
+  MemoCount: -1
 --- !u!114 &114789310614098054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2544,6 +2608,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 718.40094
     y: 1679.997
     width: 150
@@ -2556,6 +2621,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114650770692906946}
   tex: {fileID: 2800000, guid: f0213cf5d9034b4448fe62e75b024e6d, type: 3}
+  MemoCount: -1
 --- !u!114 &114810459064115562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2604,6 +2670,7 @@ MonoBehaviour:
   m_Name: Sprite Sheet Frame UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -12
     y: 2003.2
     width: 172
@@ -2618,6 +2685,7 @@ MonoBehaviour:
   Variable: 4
   Variable2: 8
   AddParameters: 1
+  MemoCount: -1
 --- !u!114 &114822660571084168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2700,6 +2768,7 @@ MonoBehaviour:
   m_Name: Add = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1053.1997
     y: 587.59735
     width: 172
@@ -2717,6 +2786,7 @@ MonoBehaviour:
   parametersOK: 0
   Include_RGBA_Alpha: 1
   Include_RGBA_Alpha2: 1
+  MemoCount: -1
 --- !u!114 &114868237423818570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2746,6 +2816,7 @@ MonoBehaviour:
   m_Name: Source RGBA
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 510.40173
     y: 2167.799
     width: 110
@@ -2759,6 +2830,7 @@ MonoBehaviour:
   - {fileID: 114823196914397200}
   Outputs:
   - {fileID: 114462911358811242}
+  MemoCount: -1
 --- !u!114 &114876783553293600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2805,6 +2877,7 @@ MonoBehaviour:
   m_Name: Turn Alpha To Black
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -337.49988
     y: 602.3998
     width: 172
@@ -2818,6 +2891,7 @@ MonoBehaviour:
   - {fileID: 114554855840282568}
   parametersOK: 0
   Variable: 1
+  MemoCount: -1
 --- !u!114 &114926724646006120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2941,6 +3015,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1516
     y: 1102
     width: 172
@@ -2957,6 +3032,7 @@ MonoBehaviour:
   Variable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114960370153078236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2969,6 +3045,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 768.50165
     y: 1988.298
     width: 172
@@ -2985,6 +3062,7 @@ MonoBehaviour:
   Variable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114962322482438006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3031,6 +3109,7 @@ MonoBehaviour:
   m_Name: Source New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -494.79993
     y: 75.999985
     width: 148
@@ -3041,6 +3120,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114744943298506080}
   tex: {fileID: 2800000, guid: 380bd29db7fb34b4a8b2e55a0d259b33, type: 3}
+  MemoCount: -1
 --- !u!114 &114976408462549306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3072,6 +3152,7 @@ MonoBehaviour:
   m_Name: Build Shader
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 2088.8
     y: 1207.8
     width: 260
@@ -3082,6 +3163,7 @@ MonoBehaviour:
   - {fileID: 114363166968632272}
   Outputs: []
   BuildErrorFlag: 0
+  BuildLightningSupport: 0
 --- !u!114 &114981768423672720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3147,6 +3229,7 @@ MonoBehaviour:
   m_Name: RGBA Mul value
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 171.69969
     y: 641.99866
     width: 172
@@ -3164,6 +3247,7 @@ MonoBehaviour:
   G: 0
   B: 0
   A: 0
+  MemoCount: -1
 --- !u!114 &114993528712573030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3176,6 +3260,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 484.40002
     y: 832.5999
     width: 172
@@ -3192,3 +3277,4 @@ MonoBehaviour:
   Variable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1

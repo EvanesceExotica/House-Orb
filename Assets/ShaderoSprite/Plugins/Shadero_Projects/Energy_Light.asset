@@ -55,6 +55,7 @@ MonoBehaviour:
   m_Name: Animated Twist UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -136.8005
     y: -1093.6005
     width: 172
@@ -71,12 +72,8 @@ MonoBehaviour:
   Variable3: 0.5
   Variable4: 0.69871795
   Variable5: -2.4358976
-  MemoVariable: 0.42307693
-  MemoVariable2: 0.5
-  MemoVariable3: -2.4358976
-  MemoVariable4: 0
-  MemoVariable5: 0
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114102233574330610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,6 +86,7 @@ MonoBehaviour:
   m_Name: Circle Fade FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 360.19983
     y: -313.60052
     width: 172
@@ -106,11 +104,9 @@ MonoBehaviour:
   Variable2: 0.5
   Variable3: 0.22307692
   Variable4: 0.2
-  MemoVariable: 0.5
-  MemoVariable2: 0.5
-  MemoVariable3: 0.22307692
-  MemoVariable4: 0.2
+  Variable5: 0.2
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114128963545945388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -352,6 +348,7 @@ MonoBehaviour:
   m_Name: Premade Gradients
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 640.3999
     y: -366.0001
     width: 172
@@ -363,32 +360,17 @@ MonoBehaviour:
   - {fileID: 114376077501752774}
   Outputs:
   - {fileID: 114897043006373182}
-  Variable:
-    r: 0.55
-    g: 0.55
-    b: 0.55
-    a: 1
-  Variable2:
-    r: 0.8
-    g: 0.8
-    b: 0.8
-    a: 1
-  Variable3:
-    r: 0.29
-    g: 0.29
-    b: 0.29
-    a: 1
-  Variable4:
-    r: 0.54
-    g: 0.59000003
-    b: 0.69000006
-    a: 1
+  Variable: {r: 0.55, g: 0.55, b: 0.55, a: 1}
+  Variable2: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  Variable3: {r: 0.29, g: 0.29, b: 0.29, a: 1}
+  Variable4: {r: 0.54, g: 0.59000003, b: 0.69000006, a: 1}
   Variable5: 0
   Variable6: 1
   Variable7: 0
   AddParameters: 0
   CurrentPremade: 0
   CurrentTexture: Textures/previews/nid_grd_bluewater.jpg
+  MemoCount: -1
 --- !u!114 &114550727428806488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -401,6 +383,7 @@ MonoBehaviour:
   m_Name: Source Grabpass
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 394.00015
     y: -621.3999
     width: 148
@@ -458,6 +441,7 @@ MonoBehaviour:
   m_Name: Generate RGBA Fire
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 73.99957
     y: -366.90042
     width: 172
@@ -476,11 +460,7 @@ MonoBehaviour:
   Variable5: 1
   AddParameters: 1
   NoAlphaBlack: 0
-  MemoVariable: 0.11153824
-  MemoVariable2: 0
-  MemoVariable3: 0.05
-  MemoVariable4: 0.34999946
-  MemoVariable5: 1
+  MemoCount: -1
 --- !u!114 &114617826265872452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -549,6 +529,7 @@ MonoBehaviour:
   m_Name: Circle Fade FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 372.7995
     y: -1033.2003
     width: 172
@@ -566,11 +547,9 @@ MonoBehaviour:
   Variable2: 0.5
   Variable3: 0.34615386
   Variable4: 0.2
-  MemoVariable: 0.5
-  MemoVariable2: 0.5
-  MemoVariable3: 0.34615386
-  MemoVariable4: 0.2
+  Variable5: 0.2
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114715522621012582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -583,6 +562,7 @@ MonoBehaviour:
   m_Name: Displacement Plus UV FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 635.1994
     y: -927.60065
     width: 172
@@ -603,10 +583,8 @@ MonoBehaviour:
   Variable: 0.26923078
   Variable2: 0.14102563
   Variable3: 0.16153815
-  MemoVariable: 0.26923078
-  MemoVariable2: 0.14102563
-  MemoVariable3: 0.16153815
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114731752201800954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -747,6 +725,7 @@ MonoBehaviour:
   m_Name: Add = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 880.7998
     y: -558.60016
     width: 172
@@ -760,12 +739,11 @@ MonoBehaviour:
   - {fileID: 114464385806863382}
   Outputs:
   - {fileID: 114579179289255828}
-  tex: {fileID: 0}
   Variable: 1
-  MemoVariable: 1
   parametersOK: 0
   Include_RGBA_Alpha: 1
   Include_RGBA_Alpha2: 1
+  MemoCount: -1
 --- !u!114 &114966111476953170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -778,6 +756,7 @@ MonoBehaviour:
   m_Name: Generate RGBA Fire
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 107.99997
     y: -1067.6
     width: 172
@@ -796,11 +775,7 @@ MonoBehaviour:
   Variable5: 0.98461837
   AddParameters: 0
   NoAlphaBlack: 0
-  MemoVariable: 0
-  MemoVariable2: -0.29038152
-  MemoVariable3: 0.039101038
-  MemoVariable4: 0.5653816
-  MemoVariable5: 0.98461837
+  MemoCount: -1
 --- !u!114 &114967905218726374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -830,6 +805,7 @@ MonoBehaviour:
   m_Name: Animated Twist UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -160.40045
     y: -457.50043
     width: 172
@@ -846,12 +822,8 @@ MonoBehaviour:
   Variable3: 0.5
   Variable4: 1
   Variable5: 4.8974295
-  MemoVariable: 0.6307698
-  MemoVariable2: 0.5
-  MemoVariable3: 4.8974295
-  MemoVariable4: 0
-  MemoVariable5: 0
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114998953168400986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -864,6 +836,7 @@ MonoBehaviour:
   m_Name: Build Shader
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1135.5
     y: -704.5
     width: 260
@@ -874,3 +847,4 @@ MonoBehaviour:
   - {fileID: 114183395666189700}
   Outputs: []
   BuildErrorFlag: 0
+  BuildLightningSupport: 0

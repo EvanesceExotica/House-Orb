@@ -11,53 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0c2324a9ab1224ebe3edad393e3544, type: 3}
   m_Name: LastSession
   m_EditorClassIdentifier: 
-  nodes:
-  - {fileID: 114166343462511618}
+  nodes: []
   editorStates:
-  - {fileID: 114404825830714680}
+  - {fileID: 114737336011943118}
   livesInScene: 0
---- !u!114 &114166343462511618
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da0a24bab1293f04d997dae2ec51c468, type: 3}
-  m_Name: Build Shader
-  m_EditorClassIdentifier: 
-  rect:
-    serializedVersion: 2
-    x: 101
-    y: 54
-    width: 300
-    height: 400
-  nodeKnobs:
-  - {fileID: 114193974600123442}
-  Inputs:
-  - {fileID: 114193974600123442}
-  Outputs: []
-  BuildErrorFlag: 1
-  BuildLightningSupport: 0
---- !u!114 &114193974600123442
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4caff27366054dd44a30ddb5be369acc, type: 3}
-  m_Name: RGBA
-  m_EditorClassIdentifier: 
-  body: {fileID: 114166343462511618}
-  side: 4
-  sidePosition: 50.5
-  sideOffset: 0
-  connection: {fileID: 0}
-  typeID: SuperFloat4
---- !u!114 &114404825830714680
+--- !u!114 &114737336011943118
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -71,9 +29,9 @@ MonoBehaviour:
   canvas: {fileID: 11400000}
   parentEditor: {fileID: 0}
   drawing: 1
-  selectedNode: {fileID: 114166343462511618}
-  LivePreviewShaderPath: Assets/ShaderoSprite/Examples/Shaders/FireCircle.shader
-  ShaderName: FireCircle
-  ShaderInMemory: {fileID: 4800000, guid: 2ae2dbf865da8ec4cac436c182c67e7d, type: 3}
-  panOffset: {x: -148.60004, y: -191.60005}
-  zoom: 1
+  selectedNode: {fileID: 0}
+  LivePreviewShaderPath: 
+  ShaderName: 
+  ShaderInMemory: {fileID: 0}
+  panOffset: {x: 0, y: 0}
+  zoom: 3.8

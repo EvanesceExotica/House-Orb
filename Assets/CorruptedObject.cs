@@ -6,13 +6,18 @@ using DG.Tweening;
 public class CorruptedObject : ParentTrigger
 {
 
+	MaterialPropertyBlock ourMaterialProperties;
+
 	Transform corruptionEffect;
     CircleCollider2D ourCollider;
     VisibleCollider ourVisibleCollider;
-
+	SpriteRenderer ourSpriteRenderer;
     float cooldownInterval;
     void Awake()
     {
+		ourSpriteRenderer = GetComponent<SpriteRenderer>();
+		ourMaterialProperties = new MaterialPropertyBlock();
+		//ourMaterialProperties = GetComponent<SpriteRenderer>().GetPropertyBlock(0);
 		corruptionEffect = transform.GetChild(0);
         ourCollider = GetComponentInChildren<CircleCollider2D>();
  //       ourVisibleCollider = GetComponentInChildren<VisibleCollider>();
@@ -43,6 +48,23 @@ public class CorruptedObject : ParentTrigger
             StoppedCorrupting();
         }
     }
+
+	void SpriteFadeWrapper(float startValue, float duration, float endValue){
+		StartCoroutine(SpriteFade(startValue, duration, endValue));
+	}
+
+	IEnumerator SpriteFade(float startValue, float duration, float endValue){
+		float increment = startValue;
+		float elapsedTime = 0;
+		while(elapsedTime < duration){
+			ourSpriteRenderer.GetPropertyBlock(ourMaterialProperties);
+			increment = Mathf.Lerp(startValue, endValue, elapsedTime/duration);
+			ourMaterialProperties.SetFloat("SpriteFade", increment);
+			ourSpriteRenderer.SetPropertyBlock(ourMaterialProperties);
+			elapsedTime += Time.deltaTime;
+			yield return null;
+		}
+	}
 
     bool canGrowCorruption = false;
 	public bool corrupting = false;

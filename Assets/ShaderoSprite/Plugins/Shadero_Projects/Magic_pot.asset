@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: Blend 2 RGBA with Mask
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -127.59967
     y: -10.59903
     width: 172
@@ -91,9 +92,9 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114534397037494162}
   Variable: 1
-  MemoVariable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114037588904650228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -106,6 +107,7 @@ MonoBehaviour:
   m_Name: Displacement UV FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -411.8981
     y: 125.00058
     width: 172
@@ -125,6 +127,7 @@ MonoBehaviour:
   DisplacementX: 1
   DisplacementY: 1
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114041744996934830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,6 +211,7 @@ MonoBehaviour:
   m_Name: Source New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -261.5989
     y: -421.59915
     width: 148
@@ -218,6 +222,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114919874606988212}
   tex: {fileID: 2800000, guid: 380bd29db7fb34b4a8b2e55a0d259b33, type: 3}
+  MemoCount: -1
 --- !u!114 &114097842680007522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -249,6 +254,7 @@ MonoBehaviour:
   m_Name: FlipUV_V
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -360.70337
     y: -860.99884
     width: 120
@@ -383,6 +389,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -710.2988
     y: 219.20056
     width: 150
@@ -395,6 +402,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114126731675674196}
   tex: {fileID: 2800000, guid: 019b38fc1935ba94d80927dafebbcc42, type: 3}
+  MemoCount: -1
 --- !u!114 &114131693829632718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -424,6 +432,7 @@ MonoBehaviour:
   m_Name: Animated Mouvement UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -957.5989
     y: -169.19926
     width: 172
@@ -439,6 +448,7 @@ MonoBehaviour:
   Variable2: -0.3153843
   Variable3: 0.38205191
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114152328439379292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -577,6 +587,7 @@ MonoBehaviour:
   m_Name: Add = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1012.40076
     y: -426.1988
     width: 172
@@ -590,12 +601,11 @@ MonoBehaviour:
   - {fileID: 114386649311685498}
   Outputs:
   - {fileID: 114097842680007522}
-  tex: {fileID: 0}
   Variable: 1.4998968
-  MemoVariable: 1.4998968
   parametersOK: 0
   Include_RGBA_Alpha: 0
   Include_RGBA_Alpha2: 0
+  MemoCount: -1
 --- !u!114 &114257172930719214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -608,6 +618,7 @@ MonoBehaviour:
   m_Name: Source New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -718.3997
     y: -146.19992
     width: 148
@@ -618,6 +629,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114058167125934396}
   tex: {fileID: 2800000, guid: d7c9b49185d965449bdc6e25a75301eb, type: 3}
+  MemoCount: -1
 --- !u!114 &114271868574608610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -685,6 +697,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 660.5013
     y: 49.001015
     width: 172
@@ -701,6 +714,7 @@ MonoBehaviour:
   Variable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114285907040831888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -874,6 +888,7 @@ MonoBehaviour:
   m_Name: Source RGBA
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -51.59904
     y: -236.99905
     width: 110
@@ -887,6 +902,7 @@ MonoBehaviour:
   - {fileID: 114521162086764796}
   Outputs:
   - {fileID: 114855939237451260}
+  MemoCount: -1
 --- !u!114 &114368513915945044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -916,6 +932,7 @@ MonoBehaviour:
   m_Name: Fill Color
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 143.30122
     y: 242.40097
     width: 172
@@ -928,18 +945,10 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114924212806781196}
   AddParameters: 1
-  Variable:
-    r: 0.058823526
-    g: 0.22109559
-    b: 1
-    a: 1
-  MemoVariable:
-    r: 0.058823526
-    g: 0.22109559
-    b: 1
-    a: 1
+  Variable: {r: 0.058823526, g: 0.22109559, b: 1, a: 1}
   MoreOption: 0
   MoreOptionAnm: 0
+  MemoCount: -1
 --- !u!114 &114386649311685498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -986,6 +995,7 @@ MonoBehaviour:
   m_Name: Animated Ping Pong Offset UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -1290.8995
     y: -334.79962
     width: 172
@@ -1002,12 +1012,8 @@ MonoBehaviour:
   Variable3: 1.0693063
   Variable4: 1
   Variable5: 0.08585064
-  MemoVariable: -0.2563993
-  MemoVariable2: -0.86799544
-  MemoVariable3: 1.0693063
-  MemoVariable4: 1
-  MemoVariable5: 0.08585064
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114417344123406454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1074,6 +1080,7 @@ MonoBehaviour:
   m_Name: Build Shader
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1552.1
     y: -88.300125
     width: 260
@@ -1084,6 +1091,7 @@ MonoBehaviour:
   - {fileID: 114338649946682906}
   Outputs: []
   BuildErrorFlag: 0
+  BuildLightningSupport: 0
 --- !u!114 &114523565151559888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1149,6 +1157,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 1222.4
     y: -262
     width: 172
@@ -1165,6 +1174,7 @@ MonoBehaviour:
   Variable: 1
   SwapRGBA: 0
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114560988903437236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1177,6 +1187,7 @@ MonoBehaviour:
   m_Name: Zoom UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 387.90094
     y: -824.79895
     width: 172
@@ -1191,10 +1202,8 @@ MonoBehaviour:
   Variable: 0.5239452
   Variable2: 0.5
   Variable3: 0.5
-  MemoVariable: 0.5239452
-  MemoVariable2: 0.5
-  MemoVariable3: 0.5
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114564748310214540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1260,6 +1269,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -114.50011
     y: 421.49988
     width: 150
@@ -1272,6 +1282,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114289116707384182}
   tex: {fileID: 2800000, guid: eae6a90d87b312641a6e595a9e50ae73, type: 3}
+  MemoCount: -1
 --- !u!114 &114596970721104718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1374,6 +1385,7 @@ MonoBehaviour:
   m_Name: Premade Gradients
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 396.39832
     y: 158.4011
     width: 172
@@ -1385,32 +1397,17 @@ MonoBehaviour:
   - {fileID: 114041744996934830}
   Outputs:
   - {fileID: 114322256711083036}
-  Variable:
-    r: 0.55
-    g: 0.4
-    b: 0.3
-    a: 1
-  Variable2:
-    r: 0.5
-    g: 0.51
-    b: 0.35
-    a: 1
-  Variable3:
-    r: 0.8
-    g: 0.75
-    b: 0.8
-    a: 1
-  Variable4:
-    r: 0.075
-    g: 0.33
-    b: 0.67
-    a: 1
+  Variable: {r: 0.55, g: 0.4, b: 0.3, a: 1}
+  Variable2: {r: 0.5, g: 0.51, b: 0.35, a: 1}
+  Variable3: {r: 0.8, g: 0.75, b: 0.8, a: 1}
+  Variable4: {r: 0.075, g: 0.33, b: 0.67, a: 1}
   Variable5: 0
   Variable6: 0.38076234
   Variable7: 1.0256426
   AddParameters: 0
   CurrentPremade: 0
   CurrentTexture: Textures/previews/nid_grd_rainbow2.jpg
+  MemoCount: -1
 --- !u!114 &114651422071438070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1423,6 +1420,7 @@ MonoBehaviour:
   m_Name: Twist UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 121.900246
     y: -898.59894
     width: 172
@@ -1438,11 +1436,8 @@ MonoBehaviour:
   Variable2: 0.5
   Variable3: 0.7179495
   Variable4: 0.5121561
-  MemoVariable: -1
-  MemoVariable2: 0.5
-  MemoVariable3: 0.5121561
-  MemoVariable4: 0
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114655661964775906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1472,6 +1467,7 @@ MonoBehaviour:
   m_Name: Twist UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -575.0983
     y: -716.7994
     width: 172
@@ -1487,11 +1483,8 @@ MonoBehaviour:
   Variable2: 0.5
   Variable3: 0.5
   Variable4: 0.5
-  MemoVariable: 0
-  MemoVariable2: 0.5
-  MemoVariable3: 0.5
-  MemoVariable4: 0
   AddParameters: 1
+  MemoCount: -1
 --- !u!114 &114668391988066616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1538,6 +1531,7 @@ MonoBehaviour:
   m_Name: Distortion UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -156.19962
     y: -849.79913
     width: 172
@@ -1555,6 +1549,7 @@ MonoBehaviour:
   Variable4: 1
   Variable5: 1
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114696139421079808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1567,6 +1562,7 @@ MonoBehaviour:
   m_Name: RGBA Add value
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 399.3012
     y: -148.59892
     width: 172
@@ -1584,6 +1580,7 @@ MonoBehaviour:
   G: 1
   B: 1
   A: 0
+  MemoCount: -1
 --- !u!114 &114706523548088858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1632,6 +1629,7 @@ MonoBehaviour:
   m_Name: Source New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 209.3009
     y: -450.59897
     width: 148
@@ -1642,6 +1640,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114954482331632076}
   tex: {fileID: 2800000, guid: 07f25df34d509a7428922c0c019a1788, type: 3}
+  MemoCount: -1
 --- !u!114 &114738275863137232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1690,6 +1689,7 @@ MonoBehaviour:
   m_Name: FlipUV_H
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -651.79956
     y: 103.000015
     width: 120
@@ -1713,6 +1713,7 @@ MonoBehaviour:
   m_Name: Distortion UV
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -997.1002
     y: 202.9
     width: 172
@@ -1730,6 +1731,7 @@ MonoBehaviour:
   Variable4: 0.44678086
   Variable5: 0.54608
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114786128691083462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1742,6 +1744,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 417.19998
     y: -404.00003
     width: 150
@@ -1754,6 +1757,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114564748310214540}
   tex: {fileID: 2800000, guid: f5a455c8493d9dd4ead4de1977877df2, type: 3}
+  MemoCount: -1
 --- !u!114 &114829638592070970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1892,6 +1896,7 @@ MonoBehaviour:
   m_Name: Pattern Movement Mask
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 149.40054
     y: -181.59894
     width: 172
@@ -1913,6 +1918,7 @@ MonoBehaviour:
   Variable2: -0.612818
   Variable3: 0.40513262
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114889658363517298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1942,6 +1948,7 @@ MonoBehaviour:
   m_Name: New Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 664.30005
     y: -237.30006
     width: 150
@@ -1954,6 +1961,7 @@ MonoBehaviour:
   Outputs:
   - {fileID: 114471085594870700}
   tex: {fileID: 2800000, guid: a723c4ece330bf34981f0b9ff19655ec, type: 3}
+  MemoCount: -1
 --- !u!114 &114901867870967764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2058,6 +2066,7 @@ MonoBehaviour:
   m_Name: Pattern Movement
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 740.1009
     y: -774.99884
     width: 172
@@ -2077,6 +2086,7 @@ MonoBehaviour:
   Variable2: 0.589742
   Variable3: 0.7433456
   parametersOK: 0
+  MemoCount: -1
 --- !u!114 &114942813550266434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2144,6 +2154,7 @@ MonoBehaviour:
   m_Name: Displacement UV FX
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: -478.8986
     y: -255.99936
     width: 172
@@ -2163,6 +2174,7 @@ MonoBehaviour:
   DisplacementX: 0
   DisplacementY: 1
   AddParameters: 0
+  MemoCount: -1
 --- !u!114 &114972168746073804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2194,6 +2206,7 @@ MonoBehaviour:
   m_Name: Preview Texture
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 363.19794
     y: -1103.3989
     width: 168
@@ -2322,6 +2335,7 @@ MonoBehaviour:
   m_Name: Blend = A with B
   m_EditorClassIdentifier: 
   rect:
+    serializedVersion: 2
     x: 939.70123
     y: -105.59889
     width: 172
@@ -2338,3 +2352,4 @@ MonoBehaviour:
   Variable: 0.70060927
   SwapRGBA: 1
   parametersOK: 0
+  MemoCount: -1
