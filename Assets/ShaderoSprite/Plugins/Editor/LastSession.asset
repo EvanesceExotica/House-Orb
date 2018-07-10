@@ -33,5 +33,5 @@ MonoBehaviour:
   LivePreviewShaderPath: 
   ShaderName: 
   ShaderInMemory: {fileID: 0}
-  panOffset: {x: 0, y: 0}
-  zoom: 3.8
+  panOffset: {x: 4954.8003, y: 880.79987}
+  zoom: 5.6

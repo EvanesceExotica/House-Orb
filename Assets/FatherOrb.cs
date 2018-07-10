@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -13,7 +14,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     [SerializeField] float corruptionMeter = 0;
 
-    [SerializeField] float maxCorruption = 21.0f;
+    [SerializeField] float maxCorruption = 19.0f;
     public static event Action<MonoBehaviour> MovingBetweenPlayerAndObject;
 
     void MovingBetweenPlayerAndObjectWrapper(MonoBehaviour mono)
@@ -153,13 +154,13 @@ public class FatherOrb : MonoBehaviour//, iInteractable
             SetZToNegative2();
         }
         CorruptedObject.Corrupting += BeCorrupted;
-        CorruptedObject.StoppedCorrupting += SetCorruptionRemoved;
+        CorruptedObject.StoppedCorrupting += SetCorruptionSourceRemoved;
         //posOffset = transform.position;
         //SetInSconce(transform.parent.gameObject);
     }
 
     bool beingCorrupted;
-    void SetCorruptionRemoved()
+    void SetCorruptionSourceRemoved()
     {
         beingCorrupted = false;
     }
@@ -169,21 +170,45 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         StartCoroutine(IncreaseCorruptionMeter());
     }
 
+    Image corruptionImage;
+
     public IEnumerator IncreaseCorruptionMeter()
     {
         Debug.Log("This corruption meter is increasing");
         beingCorrupted = true;
-        while (corruptionMeter < maxCorruption)
+        while (corruptionMeter <= maxCorruption && corruptionMeter >= 0)
         {
+            //this should only end if the corruption meter has had time to return to zero, or hits max 
             if (!beingCorrupted)
             {
-                break;
+                if (inSconce)
+                {
+                    corruptionMeter -= 3.0f;
+                    corruptionImage.fillAmount -= 3.0f;
+                }
+                else{
+                    corruptionMeter -= 1.0f;
+                    corruptionImage.fillAmount -= 1.0f;
+
+                }
             }
-            corruptionMeter += 3.0f;
-            GameHandler.orbEffects.PlayCorruptionSound();
+            else
+            {
+                corruptionMeter += 1.0f;
+                corruptionImage.fillAmount += 1.0f;
+            }
+            //corruptionMeter += 3.0f;
+            GameHandler.orbEffects.PlayCorruptionSound(corruptionMeter);
             yield return new WaitForSeconds(0.5f);
         }
-        OrbScreamWrapper();
+        if (corruptionMeter == maxCorruption)
+        {
+            OrbScreamWrapper();
+        }
+        else if (corruptionMeter == 0)
+        {
+
+        }
     }
 
     void FailureDelayWrapper()

@@ -6,6 +6,13 @@ using DG.Tweening;
 public class StarScream : MonoBehaviour
 {
 
+    public static event Action ScreamBegun;
+
+    void ScreamBegunWrapper()
+    {
+        if (ScreamBegun != null)
+            ScreamBegun();
+    }
     public static event Action<int> ScreamHitPlayerCurrentRoom;
 
     void ScreamHitPlayerRoom(int direction)
@@ -69,6 +76,7 @@ public class StarScream : MonoBehaviour
     }
     IEnumerator SendScream()
     {
+        ScreamBegunWrapper();
         //TODO: for some reason I don't think this is ending after screaming is set to false :( FIX IT
 
         //this int determines which direction it will go in
@@ -184,7 +192,7 @@ public class StarScream : MonoBehaviour
 
     }
 
-   
+
     void Start()
     {
 
@@ -195,7 +203,7 @@ public class StarScream : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-           // StartCoroutine(SendScream());
+            // StartCoroutine(SendScream());
         }
     }
 }

@@ -7,6 +7,8 @@ public class MusicHandler : MonoBehaviour
 {
 
     public float fadeDuration = 1.0f;
+
+    public AudioClip screamMusic;
     public AudioSource musicSource;
     public AudioClip normalMusic;
 
@@ -22,8 +24,13 @@ public class MusicHandler : MonoBehaviour
         //SetNormalMood();
 		ChangeClip(Mood.Normal);
 		PromptPlayerHit.PlayerFailed += SetChasedMood;
+        StarScream.ScreamBegun += PlayScreamDrone;
     }
 
+    void PlayScreamDrone(){
+        GameHandler.screamSoundObjectSource.PlayOneShot(screamMusic);
+        //musicSource.PlayOneShot(screamMusic);
+    }
 
 	void SetChasedMood(){
 		ChangeClip(Mood.Chased);
@@ -61,7 +68,7 @@ public class MusicHandler : MonoBehaviour
         Normal,
         Chased,
         Memory,
-
+        ScreamComing,
         Channeling,
         AllSconcesLit
     }

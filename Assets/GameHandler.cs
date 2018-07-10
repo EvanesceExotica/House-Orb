@@ -27,8 +27,11 @@ public class GameHandler : MonoBehaviour
 
     public static OrbEffects orbEffects;
     public static Transform bubbleLineStartTransform;
+
+    public static AudioSource screamSoundObjectSource; 
     void Awake()
     {
+        screamSoundObjectSource = GameObject.Find("ScreamSound").GetComponent<AudioSource>();
         screamFollowObject = GameObject.Find("ScreamFollowObject").GetComponent<ScreamFollowObject>();
         fatherOrbHoldTransform = GameObject.Find("FatherOrbPos").transform;
         bubbleLineStartTransform = GameObject.Find("LineStartPosition").transform;
