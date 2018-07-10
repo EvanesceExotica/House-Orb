@@ -145,12 +145,17 @@ public class OrbEffects : MonoBehaviour
     public void PlayCorruptionSound(float corruptionLevel){
         source.clip = corruptionSound;
         source.time = corruptionLevel;
+        Debug.Log(source.time);
         source.Play();
         //source.volume = 0.5f;
         //source.pitch = corruptionLevel/maxCorruption;
         //source.volume = corruptionLevel/maxCorruption;
         //source.DOPitch(source.pitch + 0.5f, 0.5f);
         //source.DOFade(source.volume + 0.15f, 0.5f);
+    }
+
+    public void StopCorruptionSound(){
+        source.Stop();
     }
     void PlayCorruptionEffect(){
         baseParticleSystem.Stop();

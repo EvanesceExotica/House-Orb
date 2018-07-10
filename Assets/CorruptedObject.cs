@@ -81,7 +81,7 @@ public class CorruptedObject : ParentTrigger
 			if(!corrupting){
 				break;
 			}
-			newVector = new Vector2(corruptionEffect.localScale.x + 0.5f, corruptionEffect.localScale.y + 0.5f);
+			newVector = new Vector2(corruptionEffect.localScale.x + 0.2f, corruptionEffect.localScale.y + 0.2f);
 			//Debug.Log("We should be growing to New vector: "  + newVector);
 			corruptionEffect.DOScale(newVector, 0.5f);
 
@@ -103,12 +103,14 @@ public class CorruptedObject : ParentTrigger
 	}
 
 	public IEnumerator Cooldown(){
+		Vector2 newVector = Vector2.zero;
 		while(true){
 			if(corrupting){
 				break;
 			}
-			ourCollider.radius -= 0.5f;
-			if(orbInSconce){
+			newVector = new Vector2(corruptionEffect.localScale.x - 0.2f, corruptionEffect.localScale.y - 0.2f);
+			corruptionEffect.DOScale(newVector, 0.5f);
+			if(orbInSconce || GameHandler.fatherOrb.coolingDownFromCorruption){
 				//the orb being in the sconce should drastically reduce the uncorruption time
 				yield return new WaitForSeconds(1.0f);
 			}

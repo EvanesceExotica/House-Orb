@@ -167,48 +167,89 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     void BeCorrupted()
     {
-        StartCoroutine(IncreaseCorruptionMeter());
+        if (!beingCorrupted && !coolingDownFromCorruption)
+        {
+            StartCoroutine(IncreaseCorruptionMeter());
+        }
     }
 
-    Image corruptionImage;
+    public Image corruptionImage;
 
     public IEnumerator IncreaseCorruptionMeter()
     {
         Debug.Log("This corruption meter is increasing");
         beingCorrupted = true;
+        GameHandler.orbEffects.PlayCorruptionSound(corruptionMeter);
+        bool buildUpStopped = false;
         while (corruptionMeter <= maxCorruption && corruptionMeter >= 0)
         {
             //this should only end if the corruption meter has had time to return to zero, or hits max 
             if (!beingCorrupted)
             {
+
+                if (!buildUpStopped)
+                {
+                    Debug.Log("Stopped being corrupted");
+                    GameHandler.orbEffects.StopCorruptionSound();
+                    buildUpStopped = true;
+                }
                 if (inSconce)
                 {
                     corruptionMeter -= 3.0f;
-                    corruptionImage.fillAmount -= 3.0f;
+                    //corruptionImage.fillAmount -= 3.0f;
                 }
-                else{
+                else
+                {
                     corruptionMeter -= 1.0f;
-                    corruptionImage.fillAmount -= 1.0f;
+                    //corruptionImage.fillAmount -= 1.0f;
 
+                }
+                if(corruptionMeter >= 0){
+                    break;
                 }
             }
             else
             {
+                if (buildUpStopped)
+                {
+                    Debug.Log("Started being corrupted again");
+                    GameHandler.orbEffects.PlayCorruptionSound(corruptionMeter);
+                    buildUpStopped = false;
+                }
                 corruptionMeter += 1.0f;
-                corruptionImage.fillAmount += 1.0f;
+                if(corruptionMeter >= maxCorruption){
+                    break;
+                }
+                //corruptionImage.fillAmount += 1.0f;
             }
             //corruptionMeter += 3.0f;
-            GameHandler.orbEffects.PlayCorruptionSound(corruptionMeter);
+            //GameHandler.orbEffects.PlayCorruptionSound(corruptionMeter);
             yield return new WaitForSeconds(0.5f);
         }
-        if (corruptionMeter == maxCorruption)
+        if (corruptionMeter >= maxCorruption)
         {
+            corruptionMeter = maxCorruption;
             OrbScreamWrapper();
+            beingCorrupted = false;
         }
-        else if (corruptionMeter == 0)
+        else if (corruptionMeter <= 0)
         {
-
+            corruptionMeter = 0;
+            beingCorrupted = false;
         }
+        StartCoroutine(CooldownFromCorruption());
+        GameHandler.orbEffects.StopCorruptionSound();
+    }
+
+    public bool coolingDownFromCorruption;
+
+    IEnumerator CooldownFromCorruption()
+    {
+        corruptionMeter = 0;
+        coolingDownFromCorruption = true;
+        yield return new WaitForSeconds(10.0f);
+        coolingDownFromCorruption = false;
+
     }
 
     void FailureDelayWrapper()
@@ -399,6 +440,11 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     public void MoveUsWrapper(Vector2 startingPosition, Vector2 destination)
     {
         StartCoroutine(MoveUs(startingPosition, destination));
+    }
+
+    public void ChangeHoldDuration(float addedDuration){
+       durationHeld += addedDuration; 
+       Debug.Log("New orb held duration " + durationHeld);
     }
 
     public IEnumerator MoveUs(Vector2 startingPosition, Vector2 destination)

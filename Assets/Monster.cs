@@ -15,7 +15,7 @@ public class Monster : MonoBehaviour
 
     public AudioClip scareChord;
 
-    int starScreamDirection;
+    int starScreamDirection = 1;
 
     public GameObject ourLightObject;
     public static event Action MonsterReachedPlayer;
@@ -59,6 +59,7 @@ public class Monster : MonoBehaviour
 
     void Start()
     {
+        timeSpentInRooms = 20.0f;
         StartCoroutine(MonsterInitializationCoroutine());
     }
 
@@ -136,15 +137,29 @@ public class Monster : MonoBehaviour
     public int roomsWeveMovedThroughBeforeFrustrationScream = 10;
 
     bool orbScreamed;
+
+    public void ChangeStandardTimeBetweenRooms(float time)
+    {
+        timeSpentInRooms += time;
+        Debug.Log("Time in room changed to " + timeSpentInRooms);
+    }
+
+    int travelingDirection;
     public IEnumerator MoveBetweenRooms(int startingRoomIndex)
     {
         bool readyToScream = false;
         int positiveOrNegative = UnityEngine.Random.Range(0, 2) * 2 - 1;
+        travelingDirection = positiveOrNegative;
         int currentRoomIndex = startingRoomIndex;
         //TODO: change this value to "timeSpentInRooms"
         yield return new WaitForSeconds(5.0f);
         while (true)
         {
+            if (hunting)
+            {
+                //if a failed orb hit or the orb being heard screamingn somewhere, run to it and stop this
+                break;
+            }
             if (orbScreamed)
             {
                 //if the orb was channeled for too long, it'll scream, and you scream back
@@ -169,6 +184,7 @@ public class Monster : MonoBehaviour
                 //this will randomly see if the monster continues in the same direction or switches depending on how many rooms we want it  to progress in a single direction before going back the other way
                 positiveOrNegative *= UnityEngine.Random.Range(0, 2) * 2 - 1;
                 roomsBeforeSwitch = 0;
+                travelingDirection = positiveOrNegative;
             }
 
             currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex() + positiveOrNegative;
@@ -186,7 +202,8 @@ public class Monster : MonoBehaviour
             transform.position = roomManager.roomList[currentRoomIndex].gameObject.transform.position;
             roomsWeveMovedThroughBeforeSwitch++;
             //TODO: Change this value to "TimeSpentInRooms
-            yield return new WaitForSeconds(5.0f);
+            //TODO: CHANGE THIS BACK TO A LOWER VALUE
+            yield return new WaitForSeconds(timeSpentInRooms);
         }
         if (readyToScream)
         {
@@ -276,19 +293,26 @@ public class Monster : MonoBehaviour
     }
     float hidingWaitDuration = 10;
 
-    public void HurryToRoomOfScreamWrapper(){
-        Debug.Log("Heard scream, hurrying over");
+    bool hunting = false;
+    public void HurryToRoomOfScreamWrapper()
+    {
         //this will cause the enemy to hurry to the room where it heard the father orb scream
-        StartCoroutine(HurryToRoomOfScream());
+        if (!hunting)
+        {
+            Debug.Log("Heard scream, hurrying over");
+            StartCoroutine(HurryToRoomOfScream());
+        }
     }
     public IEnumerator HurryToRoomOfScream()
     {
         int screamSourceIndex = roomManager.GetPlayerCurrentRoomIndex();
         int currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex();
+        hunting = true;
         while (currentRoomIndex != screamSourceIndex)
         {
             //GO to the room the player is currently in until the player stops hiding and you eat them or the timer runs out
-            currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex() + starScreamDirection;
+            Debug.Log(travelingDirection);
+            currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex() + travelingDirection;
 
             if (currentRoomIndex == -1)
             {
@@ -303,6 +327,7 @@ public class Monster : MonoBehaviour
             transform.position = roomManager.roomList[currentRoomIndex].gameObject.transform.position;
             yield return new WaitForSeconds(2.0f);
         }
+
         if (screamSourceIndex == roomManager.GetEnemyCurrentRoomIndex())
         {
             if (playerHiding)
@@ -315,11 +340,13 @@ public class Monster : MonoBehaviour
                 MonsterReachedPlayerWrapper();
             }
         }
+        hunting = false;
     }
     public IEnumerator HuntPlayer(/*int direction*/)
     {
         int currentRoomIndex = roomManager.GetEnemyCurrentRoomIndex();
         int playerRoomIndex = roomManager.GetPlayerCurrentRoomIndex();
+        hunting = true;
         while (currentRoomIndex != playerRoomIndex)
         {
             //GO to the room the player is currently in until the player stops hiding and you eat them or the timer runs out
@@ -348,6 +375,7 @@ public class Monster : MonoBehaviour
         {
             MonsterReachedPlayerWrapper();
         }
+        hunting = false;
     }
     // Update is called once per frame
 
