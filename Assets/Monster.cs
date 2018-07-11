@@ -42,6 +42,8 @@ public class Monster : MonoBehaviour
         ourSource = GetComponent<AudioSource>();
         roomManager = GameObject.Find("Managers").GetComponent<RoomManager>();
         HidingSpace.PlayerHiding += PlayerHid;
+        HidingSpace.PlayerNoLongerHiding += PlayerCameOutOfHiding;
+        HidingSpace.BreathedTooLoud += HeardPlayerBreathing;
         PromptPlayerHit.PlayerFailed += HuntPlayerWrapper;
         StarScream.ScreamHitPlayerCurrentRoom += SetStarScreamDirection;
         FatherOrb.OrbScream += HurryToRoomOfScreamWrapper;
@@ -217,14 +219,20 @@ public class Monster : MonoBehaviour
         starScreamDirection = direction;
     }
     bool playerHiding = false;
-    void PlayerHid(UnityEngine.Object ourObject)
+
+    bool heardPlayer = false;
+    void PlayerHid(MonoBehaviour mono)
+    {
+        playerHiding = true;
+    }
+
+    void PlayerCameOutOfHiding(MonoBehaviour mono)
     {
         playerHiding = false;
     }
 
-    void PlayerCameOutOfHiding()
-    {
-
+    void HeardPlayerBreathing(){
+        heardPlayer = true;
     }
 
     void Update()
@@ -273,9 +281,14 @@ public class Monster : MonoBehaviour
         float startTime = Time.time;
         while (Time.time < startTime + hidingWaitDuration)
         {
-            if (!playerHiding)
+            if (!playerHiding )
             {
                 detectedPlayer = true;
+                break;
+            }
+            if(heardPlayer){
+                detectedPlayer = true;
+                heardPlayer = false;
                 break;
             }
             yield return null;

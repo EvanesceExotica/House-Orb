@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class HidingSpace : MonoBehaviour, iInteractable
 {
 
-    CanvasGroup ourCanvasGroup;
+    CanvasGroup upCanvasGroup;
+    CanvasGroup downCanvasGroup;
 
     Image playerBreathImage;
     AudioSource audioSource;
@@ -51,21 +52,20 @@ public class HidingSpace : MonoBehaviour, iInteractable
     void Awake()
     {
         boundsGenerator = GetComponent<GenerateNewBounds>();
-        parentRoom.EnemyEnteredAdjacentRoom += HyperventilationHandlerWrapper; 
-        parentRoom.EnemyExitedAdjacentRoom += StopHyperventilating;
+        Debug.Log(parentRoom);
         //TODO: put the above back in after testing
         spriteRenderer = GetComponent<SpriteRenderer>();
-        // for(int i = 0; i < sprites.Count; i++){
-        //     if((int)ourSpriteVariation == i){
-        //         spriteRenderer.sprite = sprites[i];
-        //     }
-        // }
         if (spriteRenderer.sprite != null)
         {
             gameObject.AddComponent<PolygonCollider2D>();
             // boundsGenerator.GenerateNewColliderSize();
         }
 
+    }
+
+    public void SetParentRoomDependencies(){
+        parentRoom.EnemyEnteredAdjacentRoom += HyperventilationHandlerWrapper; 
+        parentRoom.EnemyExitedAdjacentRoom += StopHyperventilating;
     }
     public void PlayerHidingWrapper()
     {
@@ -95,14 +95,14 @@ public class HidingSpace : MonoBehaviour, iInteractable
         int hyperventilationInterval = 0;
         hyperventilationInterval = UnityEngine.Random.Range(minHyperventilationInterval, maxHyperventilationInterval);
         yield return new WaitForSeconds(hyperventilationInterval);
+            audioSource.clip = hyperventilationSound;
+            audioSource.volume = 0.3f;
+            audioSource.Play();
         while (alreadyHiding)
         {
             if(enemyNearby == false){
                 break;
             }
-            audioSource.clip = hyperventilationSound;
-            audioSource.Play();
-            audioSource.volume = 0.3f;
             audioSource.DOFade(1.0f, hyperventilationDuration);
             audioSource.DOPitch(2.0f, hyperventilationDuration);
             yield return StartCoroutine(PromptCalm());

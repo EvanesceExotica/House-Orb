@@ -204,7 +204,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
                     //corruptionImage.fillAmount -= 1.0f;
 
                 }
-                if(corruptionMeter >= 0){
+                if(corruptionMeter <= 0){
                     break;
                 }
             }
@@ -421,7 +421,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         else if (heldStatus == HeldStatuses.Channeled)
         {
             //if the player was channeling the orb when time ran out
-            OrbScreamWrapper();
+            //OrbScreamWrapper();
         }
 
     }

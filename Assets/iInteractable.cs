@@ -8,4 +8,6 @@ public interface iInteractable {
 
 	void OnStopHoverMe(Player player);
 	void OnInteractWithMe(Player player);	
+
+	//void SetParentRoomDependencies();
 }

@@ -18,6 +18,7 @@ public class RoomTrigger : MonoBehaviour {
 		else if (hit.gameObject.tag == "Enemy"){
 			room.EnemyEnteredRoom(room);
 		}
+
 		Sconce sconce = hit.GetComponent<Sconce>();
 		if(sconce != null){
 			hit.gameObject.transform.parent = gameObject.transform;
@@ -28,6 +29,7 @@ public class RoomTrigger : MonoBehaviour {
 		if(space != null){
 			hit.transform.parent = gameObject.transform;
 			space.parentRoom = room;
+			space.SetParentRoomDependencies();
 		}
 		Memory memory = hit.GetComponent<Memory>();
 		if(memory != null){
