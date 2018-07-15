@@ -275,6 +275,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2a8649304619b9b46abadecf327f9e07, type: 3}
   - {fileID: 21300000, guid: 1e97cfc6167f61b41a13e364ac5f6bb6, type: 3}
   ourSpriteVariation: 0
+  thisHidingPlaceStatus: 0
 --- !u!212 &212807404327005550
 SpriteRenderer:
   m_ObjectHideFlags: 1

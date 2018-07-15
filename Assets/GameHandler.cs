@@ -29,8 +29,11 @@ public class GameHandler : MonoBehaviour
     public static Transform bubbleLineStartTransform;
 
     public static AudioSource screamSoundObjectSource; 
+
+    public static Transform breathCanvas;
     void Awake()
     {
+
         screamSoundObjectSource = GameObject.Find("ScreamSound").GetComponent<AudioSource>();
         screamFollowObject = GameObject.Find("ScreamFollowObject").GetComponent<ScreamFollowObject>();
         fatherOrbHoldTransform = GameObject.Find("FatherOrbPos").transform;
@@ -50,6 +53,7 @@ public class GameHandler : MonoBehaviour
         {
             monster = monsterGO.GetComponent<Monster>();
         }
+        breathCanvas = playerGO.transform.Find("BreathCanvas");
         Monster.MonsterReachedPlayer += GameOver;
     }
     // Use this for initialization
