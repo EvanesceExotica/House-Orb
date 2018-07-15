@@ -18,6 +18,16 @@ MonoBehaviour:
     path: Assets/Train1.unity
     additional_guid: []
     additional_path: []
+  - guid: 270d9838ea45b2f49b6034c5c81ce993
+    pin: 0
+    path: Assets/Train2.unity
+    additional_guid: []
+    additional_path: []
+  - guid: fc28fa90421f945a4b7137a124443795
+    pin: 0
+    path: Assets/Angie Sprite/_SCENE.unity
+    additional_guid: []
+    additional_path: []
   - guid: 6926961d2ff1f8c478c10f8f396a7015
     pin: 0
     path: Assets/ShaderoSprite/Examples/Example.unity

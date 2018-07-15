@@ -245,7 +245,7 @@ namespace AppAdvisory.Angie
 			EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
 
 			bool returnValue = false;
-			if (Event.current.type == EventType.mouseDown && rect.Contains(Event.current.mousePosition)){
+			if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition)){
 				returnValue = true;
 			}
 
@@ -271,7 +271,7 @@ namespace AppAdvisory.Angie
 			EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
 
 			bool returnValue = false;
-			if (Event.current.type == EventType.mouseDown && rect.Contains(Event.current.mousePosition)){
+			if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition)){
 				returnValue = true;
 			}
 
