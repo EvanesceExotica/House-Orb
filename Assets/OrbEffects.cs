@@ -8,6 +8,7 @@ public class OrbEffects : MonoBehaviour
 
     [Header("Assign in Inspector")]
 
+    //TODO: Add light changer
     List<ParticleSystems> parryParticles = new List<ParticleSystems>();
     AudioSource source;
     public AudioClip corruptionSound;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Com.LuisPedroFonseca.ProCamera2D;
+using TMPro;
 public class GameHandler : MonoBehaviour
 {
 
@@ -35,9 +36,11 @@ public class GameHandler : MonoBehaviour
     public static AudioSource screamSoundObjectSource;
 
     public static Transform breathCanvas;
+
+    public static DialogueDisplayer dialogueDisplayer;    
     void Awake()
     {
-
+        dialogueDisplayer = GameObject.Find("DialogueDisplayer").GetComponent<DialogueDisplayer>();
         screamSoundObjectSource = GameObject.Find("ScreamSound").GetComponent<AudioSource>();
         screamFollowObject = GameObject.Find("ScreamFollowObject").GetComponent<ScreamFollowObject>();
 

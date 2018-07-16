@@ -100,6 +100,30 @@ public class DialogueDisplayer : MonoBehaviour
         }
     }
 
+    public void TypeMemoryTextWrapper(Speech speech, TextMeshProUGUI textObject, int speechIndex){
+        StartCoroutine(TypeMemoryText(speech, textObject, speechIndex));
+    }
+    public IEnumerator TypeMemoryText(Speech speech, TextMeshProUGUI textObject, int speechIndex){
+        string speechText = speech.GrabTextChoiceAtIndex(speechIndex);
+        speech.SetSpeakerToIndex(speechIndex);
+        textObject.color = speech.bubbleColor; 
+        float delayTime = 0.1f;
+        foreach (char letter in speechText)
+        {
+            if (letter == '^')
+            {
+                //we put this character before ellipses to add pause
+                delayTime = 0.3f;
+            }
+            else
+            {
+                delayTime = 0.1f;
+                textObject.text += letter;
+            }
+            yield return new WaitForSeconds(delayTime/*speech.textSpeed*/);
+        }
+    }
+
     IEnumerator Converse(float delay, Conversation conversation){
         yield return new WaitForSeconds(delay);
         

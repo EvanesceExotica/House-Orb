@@ -47,6 +47,17 @@ public class Monster : MonoBehaviour
         PromptPlayerHit.PlayerFailed += HuntPlayerWrapper;
         StarScream.ScreamHitPlayerCurrentRoom += SetStarScreamDirection;
         FatherOrb.OrbScream += HurryToRoomOfScreamWrapper;
+
+        //Memory.LookingAtMemory += PauseProgression;
+    }
+
+    bool pause = false;
+    void PauseProgression(MonoBehaviour mono){
+        pause = true;
+    }
+
+    void ContinueProgression(MonoBehaviour mono){
+        pause = false;
     }
 
     void PlayScoutingScream()

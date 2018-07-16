@@ -252,14 +252,13 @@ public class Room : MonoBehaviour
         //scentParticles.transform.DOLocalMoveY(-2, 4.0f, false);
         if (scentParticles != null)
         {
-            scentParticles.Play();
+            //TODO: Put this back in
+            //scentParticles.Play();
         }
     }
 
     public void StopScentParticleSystem()
     {
-        //scentParticles.transform.DOLocalMoveY(-6, 4.0f, false);
-        //TODO: Attach this and the above method to the player entering/leaving the room aciton
         if (scentParticles != null)
         {
             scentParticles.Stop();

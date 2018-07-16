@@ -17,6 +17,8 @@ public class Speech : ScriptableObject {
 	}
 	public OurSpeaker speaker;
 
+	public List<OurSpeaker> speakers;
+
 	public List<string> textChoices;
 	public string text;
 	void Start(){
@@ -41,7 +43,22 @@ public class Speech : ScriptableObject {
 		}
 	}
 
+	public void SetSpeakerToIndex(int index){
+		speaker = speakers[index];
+		SetTextColor();
+	}
+	public string GrabTextChoiceAtIndex(int index){
+		//use this if the speech is a conversation	
+		if(index < 0 || index > textChoices.Count - 1){
+			return " ";
+		}
+		else{
+			return textChoices[index];
+		}
+
+	}
 	public string GrabRandomTextChoice(){
+		//use this if you wish to pull random line from a group of options
 		string ourTextChoice = null;
 		int randomIndex = UnityEngine.Random.Range(0, textChoices.Count);
 		ourTextChoice = textChoices[randomIndex];

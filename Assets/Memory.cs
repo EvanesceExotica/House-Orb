@@ -8,10 +8,14 @@ using MirzaBeig.ParticleSystems;
 public class Memory : MonoBehaviour, iInteractable
 {
 
+
+
     AudioClip music;
     public string promptString;
 
-    Speech speechGiven;
+    Speech reaction;
+
+    public Speech inMemoryConversation;
     public Speech hintGivenComment;
     public Speech previousSconceTeleportGivenComment;
     public Speech autoRepelComment;
@@ -135,6 +139,8 @@ public class Memory : MonoBehaviour, iInteractable
         OrbController.ChannelingOrb += SetCantLookAtMemory;
         FatherOrb.PickedUp += SetCanLookAtMemory;
         FatherOrb.Dropped += SetCantLookAtMemory;
+        Conversation.FinishedDisplayingMemory += ApplyMemoryEffectsWrapper;        
+
         ourLight = GetComponent<Light>();
         ourLight.intensity = 0;
         promptString = " show object to house-father";
@@ -156,15 +162,22 @@ public class Memory : MonoBehaviour, iInteractable
         }
     }
 
-    public IEnumerator ApplyMemoryEffects()
-    {
-        LookingAtMemoryWrapper();
+    public IEnumerator InitializeMemory(){
         while (Vector2.Distance(GameHandler.fatherOrbGO.transform.position, transform.position) > 0.1f)
         {
             yield return null;
         }
-        yield return StartCoroutine(PlayMemory());
+        Time.timeScale = 0;
+        LookingAtMemoryWrapper();
+    }
 
+    public void ApplyMemoryEffectsWrapper(){
+        Time.timeScale = 1;
+        StartCoroutine(ApplyMemoryEffects());
+    }
+    public IEnumerator ApplyMemoryEffects()
+    {
+       
         if (RefreshGiven != null)
         {
             //have the time refresh be every time you see a memory since they're rare enough
@@ -176,7 +189,7 @@ public class Memory : MonoBehaviour, iInteractable
             if (HintGiven != null)
             {
                 HintGiven(ourConnectedHiddenSconce);
-                speechGiven = hintGivenComment;
+                reaction = hintGivenComment;
             }
 
         }
@@ -186,7 +199,7 @@ public class Memory : MonoBehaviour, iInteractable
             if (AutoReflectGiven != null)
             {
                 AutoReflectGiven();
-                speechGiven = autoRepelComment;
+                reaction = autoRepelComment;
             }
         }
         else if (givenBuff == BuffGiven.PrevSconceTeleport)
@@ -195,7 +208,7 @@ public class Memory : MonoBehaviour, iInteractable
             if (PrevSconceTeleportGiven != null)
             {
                 PrevSconceTeleportGiven();
-                speechGiven = previousSconceTeleportGivenComment;
+                reaction = previousSconceTeleportGivenComment;
             }
         }
         MoveBack();
@@ -204,7 +217,7 @@ public class Memory : MonoBehaviour, iInteractable
             yield return null;
         }
         StoppedLookingAtMemoryWrapper();
-        SpeechTrigger.SpeechTriggeredWrapper(speechGiven);
+        SpeechTrigger.SpeechTriggeredWrapper(reaction);
 
     }
 
@@ -212,8 +225,8 @@ public class Memory : MonoBehaviour, iInteractable
     {
         if (canLookAtMemory)
         {
+            LookingAtMemoryWrapper();
             MoveToMemory();
-            StartCoroutine(ApplyMemoryEffects());
         }
 
     }
