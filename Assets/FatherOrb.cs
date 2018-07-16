@@ -459,9 +459,10 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
         movingToObject = true;
         MovingBetweenPlayerAndObjectWrapper(this);
-        if(destinationObject.GetType() == typeof(Sconce)){
-            transform.parent = destinationObject.transform;
-        }
+        transform.parent = destinationObject.transform;
+        // if(destinationObject.GetType() == typeof(Sconce)){
+        //     transform.parent = destinationObject.transform;
+        // }
         while (Vector2.Distance(transform.position, destination) > 0.1f)
         {
             Debug.Log("Destination " + destination);
