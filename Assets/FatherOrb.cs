@@ -205,7 +205,8 @@ public class FatherOrb : MonoBehaviour//, iInteractable
                     //corruptionImage.fillAmount -= 1.0f;
 
                 }
-                if(corruptionMeter <= 0){
+                if (corruptionMeter <= 0)
+                {
                     break;
                 }
             }
@@ -218,7 +219,8 @@ public class FatherOrb : MonoBehaviour//, iInteractable
                     buildUpStopped = false;
                 }
                 corruptionMeter += 1.0f;
-                if(corruptionMeter >= maxCorruption){
+                if (corruptionMeter >= maxCorruption)
+                {
                     break;
                 }
                 //corruptionImage.fillAmount += 1.0f;
@@ -440,28 +442,38 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     public void MoveUsWrapper(Vector2 startingPosition, Vector2 destination, MonoBehaviour destinationObject)
     {
-        StartCoroutine(MoveUs(startingPosition, destination, destinationObject));
+        if (!movingToObject)
+        {
+            StartCoroutine(MoveUs(startingPosition, destination, destinationObject));
+        }
     }
 
-    public void ChangeHoldDuration(float addedDuration){
-       durationHeld += addedDuration; 
-       Debug.Log("New orb held duration " + durationHeld);
+    public void ChangeHoldDuration(float addedDuration)
+    {
+        durationHeld += addedDuration;
+        Debug.Log("New orb held duration " + durationHeld);
     }
 
     public IEnumerator MoveUs(Vector2 startingPosition, Vector2 destination, MonoBehaviour destinationObject)
     {
+
         movingToObject = true;
         MovingBetweenPlayerAndObjectWrapper(this);
+        if(destinationObject.GetType() == typeof(Sconce)){
+            transform.parent = destinationObject.transform;
+        }
         while (Vector2.Distance(transform.position, destination) > 0.1f)
         {
-            //TODO: uncomment the below and fix it
+            Debug.Log("Destination " + destination);
             transform.position = Vector2.MoveTowards(transform.position, destination, 5 * Time.deltaTime);
             yield return null;
+
         }
         //TODO: Add a flag to decide whether it's moving to the player or to the sconce
         posOffset = transform.localPosition;
-        StoppedMovingBetweenPlayerAndObjectWrapper(this);
+        Debug.Log(transform.position + " vs " + transform.localPosition);
         movingToObject = false;
+        StoppedMovingBetweenPlayerAndObjectWrapper(this);
         SetZToNegative2();
     }
 
