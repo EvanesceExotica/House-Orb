@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Name: MemoryConversationText
   m_EditorClassIdentifier: 
   textSpeed: 0
-  bubbleColor: {r: 0.7137255, g: 0.4, b: 0.8235294, a: 1}
+  speechBlip: {fileID: 8300000, guid: 563880b333634564d905f09e0b65fa7c, type: 3}
+  bubbleColor: {r: 0.9411765, g: 0.9019608, b: 0.54901963, a: 1}
   playerColor: {r: 0.7137255, g: 0.4, b: 0.8235294, a: 1}
   orbColor: {r: 0.2509804, g: 0.8784314, b: 0.8156863, a: 1}
   friendColor: {r: 0.9411765, g: 0.9019608, b: 0.54901963, a: 1}
-  speaker: 0
+  speaker: 2
   speakers: 02000000
   textChoices:
   - Hey, did we get any new glue? ^I'm building a dollhouse.

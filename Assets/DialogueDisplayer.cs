@@ -93,9 +93,10 @@ public class DialogueDisplayer : MonoBehaviour
             }
             else
             {
-                delayTime = 0.1f;
+                delayTime = 0.06f;
                 ourText.text += letter;
             }
+            
             yield return new WaitForSeconds(delayTime/*speech.textSpeed*/);
         }
     }

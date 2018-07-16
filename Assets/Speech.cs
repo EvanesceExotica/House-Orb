@@ -6,6 +6,7 @@ public class Speech : ScriptableObject {
 
 	public float textSpeed;
 
+	public AudioClip speechBlip;
 	public Color bubbleColor;
 	public Color playerColor;
 	public Color orbColor;

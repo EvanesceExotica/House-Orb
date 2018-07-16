@@ -21,6 +21,14 @@ public class Monster : MonoBehaviour
     public static event Action MonsterReachedPlayer;
     public static event Action ReadyToScream;
 
+    public static event Action BackToSearching;
+
+    void BackToSearchingWrapper(){
+        if(BackToSearching != null){
+            BackToSearching();
+        }
+    }
+
     void ScreamReady()
     {
         PlayScoutingScream();
@@ -62,6 +70,7 @@ public class Monster : MonoBehaviour
 
     void PlayScoutingScream()
     {
+        float volume = ScaleAudio.ScaleAudioByRoomDistance(roomManager.DetermineHowCloseRoomIsToPlayer(roomManager.GetEnemyCurrentRoom()));
         ourSource.PlayOneShot(scoutingScream);
     }
 
@@ -72,7 +81,7 @@ public class Monster : MonoBehaviour
 
     void Start()
     {
-        timeSpentInRooms = 20.0f;
+        timeSpentInRooms = 10.0f;
         StartCoroutine(MonsterInitializationCoroutine());
     }
 
@@ -312,6 +321,7 @@ public class Monster : MonoBehaviour
         else
         {
             //go back to moving between rooms like normal
+            BackToSearchingWrapper();
             StartCoroutine(MoveBetweenRooms(GameHandler.roomManager.GetEnemyCurrentRoomIndex()));
         }
     }

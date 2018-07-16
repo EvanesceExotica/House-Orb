@@ -225,7 +225,7 @@ public class Memory : MonoBehaviour, iInteractable
     {
         if (canLookAtMemory)
         {
-            LookingAtMemoryWrapper();
+            StartCoroutine(InitializeMemory());
             MoveToMemory();
         }
 

@@ -6,6 +6,7 @@ using DG.Tweening;
 using System;
 public class Conversation : MonoBehaviour
 {
+	AudioSource blipSource;
 
     CanvasGroup FadeToBlackGroup;
 
@@ -32,6 +33,7 @@ public class Conversation : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
+		blipSource = GetComponent<AudioSource>();
         Memory.LookingAtMemory += FadeIn;
         // Memory.StoppedLookingAtMemory += FadeOut;
         FadeToBlackGroup = GetComponent<CanvasGroup>();
@@ -90,6 +92,7 @@ public class Conversation : MonoBehaviour
                 delayTime = 0.1f;
                 textObject.text += letter;
             }
+			blipSource.PlayOneShot(speech.speechBlip);
             yield return new WaitForSecondsRealtime(delayTime/*speech.textSpeed*/);
         }
     }

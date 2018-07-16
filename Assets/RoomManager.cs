@@ -133,6 +133,10 @@ public class RoomManager : MonoBehaviour
         return roomList.IndexOf(enemyCurrentRoom);
     }
 
+    public Room GetEnemyCurrentRoom(){
+        return enemyCurrentRoom;
+    }
+
     public int GetReverseIndexOfRoom(Room room){
         int reverseIndex = BackwardIndex[room];
         return reverseIndex;

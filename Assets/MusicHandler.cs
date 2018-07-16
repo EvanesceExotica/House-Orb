@@ -24,7 +24,10 @@ public class MusicHandler : MonoBehaviour
         //SetNormalMood();
 		ChangeClip(Mood.Normal);
 		PromptPlayerHit.PlayerFailed += SetChasedMood;
+        PromptPlayerHit.PlayerParried += SetNormalMood;
+        Monster.BackToSearching += SetNormalMood;
         StarScream.ScreamBegun += PlayScreamDrone;
+
     }
 
     void PlayScreamDrone(){
@@ -35,6 +38,10 @@ public class MusicHandler : MonoBehaviour
 	void SetChasedMood(){
 		ChangeClip(Mood.Chased);
 	}
+
+    void SetNormalMood(){
+        ChangeClip(Mood.Normal);
+    }
 
     // void SetNormalMood(){
     // 	ourMood = Mood.Normal;
