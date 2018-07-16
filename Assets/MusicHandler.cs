@@ -24,15 +24,24 @@ public class MusicHandler : MonoBehaviour
         //SetNormalMood();
 		ChangeClip(Mood.Normal);
 		PromptPlayerHit.PlayerFailed += SetChasedMood;
+        PromptPlayerHit.PlayerFailed += StopScreamDrone;
+
         PromptPlayerHit.PlayerParried += SetNormalMood;
+        PromptPlayerHit.PlayerParried += StopScreamDrone;
+
         Monster.BackToSearching += SetNormalMood;
         StarScream.ScreamBegun += PlayScreamDrone;
 
     }
 
     void PlayScreamDrone(){
-        GameHandler.screamSoundObjectSource.PlayOneShot(screamMusic);
+        GameHandler.screamSoundObjectSource.clip = screamMusic;
+        GameHandler.screamSoundObjectSource.Play();
         //musicSource.PlayOneShot(screamMusic);
+    }
+
+    void StopScreamDrone(){
+        GameHandler.screamSoundObjectSource.Stop();
     }
 
 	void SetChasedMood(){
@@ -40,6 +49,7 @@ public class MusicHandler : MonoBehaviour
 	}
 
     void SetNormalMood(){
+        Debug.Log("Should be back to normal");
         ChangeClip(Mood.Normal);
     }
 

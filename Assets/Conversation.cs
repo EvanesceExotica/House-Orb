@@ -89,7 +89,7 @@ public class Conversation : MonoBehaviour
             }
             else
             {
-                delayTime = 0.1f;
+                delayTime = 0.07f;
                 textObject.text += letter;
             }
 			blipSource.PlayOneShot(speech.speechBlip);
