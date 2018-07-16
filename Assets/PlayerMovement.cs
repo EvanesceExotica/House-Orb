@@ -136,34 +136,12 @@ public class PlayerMovement : MonoBehaviour
     void Flip()
     {
         flipping = true;
-        //GameHandler.orbController.flipped = facingRight;
         spriteRenderer.flipX = facingRight;
 
-        //flip the orb hold spot rather than the entireity of the player's children
-        // Vector3 holdSpotScale = GameHandler.fatherOrbHoldTransform.localScale;
-        // holdSpotScale.x *= -1;
-        // GameHandler.fatherOrbHoldTransform.localScale = holdSpotScale;
         facingRight = !facingRight;
         GameHandler.SwitchOrbHoldPositions(facingRight);
         GameHandler.fatherOrb.HandleFlip();
-        // if (GameHandler.fatherOrb.heldStatus == FatherOrb.HeldStatuses.Carried)
-        // {
-        //     float newX = GameHandler.fatherOrbHoldTransform.localPosition.x;
-        //     Vector2 newPosition = new Vector2(newX, GameHandler.fatherOrbGO.transform.localPosition.y);
-        //     //Debug.Log(newPosition);
-        //     GameHandler.fatherOrbGO.transform.localPosition = newPosition;
-        //     GameHandler.fatherOrb.posOffset = GameHandler.fatherOrbGO.transform.localPosition;
-        // }
-        //  Vector3 theScale = transform.localScale;
-        //  theScale.x *= -1;
-        //  transform.localScale = theScale;
-
-        // foreach (Transform child in transform)
-        // {
-        //     Vector3 childScale = transform.localScale;
-        //     childScale.x *= -1;
-        //     transform.localScale = theScale;
-        // }
+        
     }
 
     public void ChangeSpeed(float value)
@@ -172,17 +150,3 @@ public class PlayerMovement : MonoBehaviour
     }
 }
 
-// 	LayerMask floor;
-// 	bool grounded;
-// 	Transform groundCheck;
-// 	// Use this for initialization
-// 	void Start () {
-
-// 	}
-
-// 	// Update is called once per frame
-// 	void Update () {
-// 		grounded = Physics2D.OverlapCircle(groundCheck.transform.position, 0.5f);
-// 		if(grounded && )
-// 	}
-// }

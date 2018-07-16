@@ -55,7 +55,13 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     //     heldStatus = HeldStatuses.InSconce;
     //     if(sconce)
     // }
-
+    void PlayerPlacedOrb(MonoBehaviour mono)
+    {
+        if (Dropped != null)
+        {
+            Dropped(this);
+        }
+    }
     void PlayerDroppedOrb(MonoBehaviour mono)
     {
         heldStatus = HeldStatuses.Travelling;
@@ -131,14 +137,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
                 flipping = false;
             }
         }
-        // if (GameHandler.player.movement.flipping)
-        // {
-        //     if (transform.localPosition.x == GameHandler.fatherOrbHoldTransform.localPosition.x)
-        //     {
-        //         GameHandler.player.movement.flipping = false;
-        //     }
-        // }
-        //  transform.DOLocalMoveY(transform.localPosition.y + flip,);
+
     }
 
     bool flipping;
@@ -304,7 +303,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         currentSconce = sconce;
         inSconce = true;
         transform.parent = sconce.transform;
-        transform.localPosition = Vector3.zero;
+        //transform.localPosition = Vector3.zero;
         SetZToNegative2();
         instabilityStatus = InstabilityStatus.NotPickedUp;
     }
@@ -344,7 +343,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         if (Vector2.Distance(transform.position, mono.transform.position) > 0.1f)
         {
             //TODO: Put this back in
-            //StartCoroutine(MoveUs(transform.position, sconce.transform.position));
+            StartCoroutine(MoveUs(transform.position, sconce.transform.position, sconce));
         }
     }
 
@@ -498,20 +497,20 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         // }
         while (Vector2.Distance(transform.position, destination) > 0.1f)
         {
-            Debug.Log("Destination " + destination);
             transform.position = Vector2.MoveTowards(transform.position, destination, 5 * Time.deltaTime);
             yield return null;
 
         }
-        //TODO: Add a flag to decide whether it's moving to the player or to the sconce
+        if (destinationObject.GetType() == typeof(Sconce))
+        {
+            transform.localPosition = Vector2.zero;
+        }
         posOffset = transform.localPosition;
-        Debug.Log(transform.position + " vs " + transform.localPosition);
         movingToObject = false;
         StoppedMovingBetweenPlayerAndObjectWrapper(this);
         SetZToNegative2();
     }
 
-    //TODO: Make sure this only applies to the automatic cancel travel vvvv
     bool cancelCarryCoroutineEarly;
     public void ReturnToLastSconceEarlyWrapper()
     {
