@@ -23,12 +23,16 @@ public class GameHandler : MonoBehaviour
 
     public static Transform fatherOrbHoldTransform;
 
-	public static OrbController orbController;
+    public static Transform rightFacingFatherOrbTransform;
+
+    public static Transform leftFacingFatherOrbTransform;
+
+    public static OrbController orbController;
 
     public static OrbEffects orbEffects;
     public static Transform bubbleLineStartTransform;
 
-    public static AudioSource screamSoundObjectSource; 
+    public static AudioSource screamSoundObjectSource;
 
     public static Transform breathCanvas;
     void Awake()
@@ -36,7 +40,12 @@ public class GameHandler : MonoBehaviour
 
         screamSoundObjectSource = GameObject.Find("ScreamSound").GetComponent<AudioSource>();
         screamFollowObject = GameObject.Find("ScreamFollowObject").GetComponent<ScreamFollowObject>();
-        fatherOrbHoldTransform = GameObject.Find("FatherOrbPos").transform;
+
+        rightFacingFatherOrbTransform = GameObject.Find("RightFaceFatherOrbPos").transform;
+        leftFacingFatherOrbTransform = GameObject.Find("LeftFaceFatherOrbPos").transform;
+
+        fatherOrbHoldTransform = GameObject.Find("RightFaceFatherOrbPos").transform;
+
         bubbleLineStartTransform = GameObject.Find("LineStartPosition").transform;
         proCamera = Camera.main.GetComponent<ProCamera2D>();
         mainCamera = Camera.main;
@@ -47,7 +56,7 @@ public class GameHandler : MonoBehaviour
         fatherOrbGO = GameObject.Find("FatherOrb");
         fatherOrb = fatherOrbGO.GetComponent<FatherOrb>();
         monsterGO = GameObject.Find("Monster");
-		orbController = fatherOrbGO.GetComponent<OrbController>();
+        orbController = fatherOrbGO.GetComponent<OrbController>();
         orbEffects = fatherOrbGO.GetComponent<OrbEffects>();
         if (monsterGO != null)
         {
@@ -56,11 +65,25 @@ public class GameHandler : MonoBehaviour
         breathCanvas = playerGO.transform.Find("BreathCanvas");
         Monster.MonsterReachedPlayer += GameOver;
     }
+
+    public static void SwitchOrbHoldPositions(bool facingRight)
+    {
+        if (facingRight == true)
+        {
+            fatherOrbHoldTransform = rightFacingFatherOrbTransform;
+            Debug.Log("We're switching positions to right! " + fatherOrbHoldTransform.name);
+        }
+        else
+        {
+            fatherOrbHoldTransform = leftFacingFatherOrbTransform;
+            Debug.Log("We're switching positions to left! " + fatherOrbHoldTransform.name);
+        }
+    }
     // Use this for initialization
 
     void GameOver()
     {
-		Debug.Log("GAme over :O");
+        Debug.Log("GAme over :O");
     }
 
 }

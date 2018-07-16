@@ -109,7 +109,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     [SerializeField] bool movingToObject;
 
     Vector2 tempPos = new Vector2();
-    Vector2 posOffset = new Vector2();
+    public Vector2 posOffset = new Vector2();
 
     float frequency = 1.0f;
 
@@ -117,16 +117,43 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     void FloatMe()
     {
-        if ((heldStatus == HeldStatuses.Carried && !movingToObject) || (inSconce && !movingToObject))
+        if ((heldStatus == HeldStatuses.Carried && !movingToObject && !flipping /*GameHandler.player.movement.flipping*/) || (inSconce && !movingToObject) /*||  /*!GameHandler.player.movement.flipping*/ )
         {
             tempPos = posOffset;
             tempPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
 
             transform.localPosition = tempPos;
         }
+        if (flipping)
+        {
+            if (transform.localPosition.x == GameHandler.fatherOrbHoldTransform.localPosition.x)
+            {
+                flipping = false;
+            }
+        }
+        // if (GameHandler.player.movement.flipping)
+        // {
+        //     if (transform.localPosition.x == GameHandler.fatherOrbHoldTransform.localPosition.x)
+        //     {
+        //         GameHandler.player.movement.flipping = false;
+        //     }
+        // }
         //  transform.DOLocalMoveY(transform.localPosition.y + flip,);
     }
 
+    bool flipping;
+    public void HandleFlip()
+    {
+        flipping = true;
+        if (heldStatus == HeldStatuses.Carried)
+        {
+            float newX = GameHandler.fatherOrbHoldTransform.localPosition.x;
+            Vector2 newPosition = new Vector2(newX, transform.localPosition.y);
+            transform.localPosition = newPosition;
+            posOffset = transform.localPosition;
+        }
+        // 
+    }
 
 
     void Awake()
@@ -134,10 +161,9 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         renderer = GetComponent<MeshRenderer>();
         player = GameHandler.playerGO;
         FatherOrbPos = player.transform.Find("FatherOrbPos");
-        durationHeld = 22.0f;
+        durationHeld = 35.0f;
         durationBeforeFizzing = 10.0f;
         durationBeforeRedHot = 17.0f;
-        durationAtBurn = 22.0f;
         Memory.RefreshGiven += RefreshTime;
         Sconce.OrbInSconce += this.PlayerDroppedOrb;
         Sconce.OrbInSconce += this.EnteredSconce;
@@ -297,7 +323,6 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     float durationBeforeFizzing;
     float durationBeforeRedHot;
 
-    float durationAtBurn;
     public enum InstabilityStatus
     {
         NotPickedUp,
@@ -372,6 +397,14 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         while (elapsedTime < durationHeld)
         {
             FloatMe();
+            // if (!GameHandler.player.movement.flipping)
+            // {
+            //     FloatMe();
+            // }
+            // else
+            // {
+            //     Debug.Log("Flipped this frame");
+            // }
 
             if (timeRefreshed)
             {

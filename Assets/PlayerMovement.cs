@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         OrbController.SconceRevealedStoppedChannelingOrb += SetYesCanMove;
 
         FatherOrb.MovingBetweenPlayerAndObject += SetCantMove;
-        FatherOrb.StoppedMovingBetweenPlayerAndObject +=SetYesCanMove;
+        FatherOrb.StoppedMovingBetweenPlayerAndObject += SetYesCanMove;
 
         Memory.LookingAtMemory += SetCantMove;
         Memory.StoppedLookingAtMemory += SetYesCanMove;
@@ -105,8 +105,8 @@ public class PlayerMovement : MonoBehaviour
     {
         float h = Input.GetAxisRaw("Horizontal");
 
-            Vector2 currentVelocity = rb.velocity;
-            currentVelocity.x = Input.GetAxisRaw("Horizontal") * maxSpeed;
+        Vector2 currentVelocity = rb.velocity;
+        currentVelocity.x = Input.GetAxisRaw("Horizontal") * maxSpeed;
         // anim.SetFloat("Speed", Mathf.Abs(h));
 
         if (!cantMove)
@@ -132,15 +132,31 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
+    public bool flipping = false;
     void Flip()
     {
-        GameHandler.orbController.flipped = facingRight;
-        //spriteRenderer.flipX = facingRight;
+        flipping = true;
+        //GameHandler.orbController.flipped = facingRight;
+        spriteRenderer.flipX = facingRight;
+
+        //flip the orb hold spot rather than the entireity of the player's children
+        // Vector3 holdSpotScale = GameHandler.fatherOrbHoldTransform.localScale;
+        // holdSpotScale.x *= -1;
+        // GameHandler.fatherOrbHoldTransform.localScale = holdSpotScale;
         facingRight = !facingRight;
-         Vector3 theScale = transform.localScale;
-         theScale.x *= -1;
-         transform.localScale = theScale;
+        GameHandler.SwitchOrbHoldPositions(facingRight);
+        GameHandler.fatherOrb.HandleFlip();
+        // if (GameHandler.fatherOrb.heldStatus == FatherOrb.HeldStatuses.Carried)
+        // {
+        //     float newX = GameHandler.fatherOrbHoldTransform.localPosition.x;
+        //     Vector2 newPosition = new Vector2(newX, GameHandler.fatherOrbGO.transform.localPosition.y);
+        //     //Debug.Log(newPosition);
+        //     GameHandler.fatherOrbGO.transform.localPosition = newPosition;
+        //     GameHandler.fatherOrb.posOffset = GameHandler.fatherOrbGO.transform.localPosition;
+        // }
+        //  Vector3 theScale = transform.localScale;
+        //  theScale.x *= -1;
+        //  transform.localScale = theScale;
 
         // foreach (Transform child in transform)
         // {
