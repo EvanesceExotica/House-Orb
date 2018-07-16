@@ -36,6 +36,7 @@ public class Sconce : PooledObject, iInteractable
 
     public void ExtinguishedWrapper(Sconce sconce)
     {
+        Debug.Log("This is being triggered somehow");
         StopOccupiedParticles();
         fillStatus = Status.Empty;
         if (Extinguished != null)
@@ -50,6 +51,7 @@ public class Sconce : PooledObject, iInteractable
 
     public void OrbPlacedInUs(MonoBehaviour ourObject)
     {
+        Debug.Log("The orb is placed in us");
         PlayOccupiedParticles();
         PlayEnteredSconceSound();
         fillStatus = Status.HoldingOrb;
@@ -82,7 +84,7 @@ public class Sconce : PooledObject, iInteractable
         {
             if (fillStatus == Status.HoldingOrb)
             {
-                break;
+                yield break;
             }
             yield return null;
         }

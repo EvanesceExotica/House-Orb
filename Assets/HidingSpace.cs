@@ -57,7 +57,7 @@ public class HidingSpace : MonoBehaviour, iInteractable
         //newVector.x = spriteRenderer.bounds.size.x / ourInteriorBackgroundSprite.transform.localScale.x;
         //newVector.y = spriteRenderer.bounds.size.y / ourInteriorBackgroundSprite.transform.localScale.y;
        // Debug.Log(spriteRenderer.bounds.size);
-        ourInteriorBackgroundSprite.transform.localScale = spriteRenderer.bounds.size/3; 
+//        ourInteriorBackgroundSprite.transform.localScale = spriteRenderer.bounds.size/3; 
         //ourInteriorBackgroundSprite.GetComponent<SpriteRenderer>().bounds.extents.x = newVector;
         
     }
@@ -70,7 +70,7 @@ public class HidingSpace : MonoBehaviour, iInteractable
     }
     void Awake()
     {
-        ourInteriorBackgroundSprite = GetComponentsInChildren<SpriteRenderer>()[1].gameObject; 
+//        ourInteriorBackgroundSprite = GetComponentsInChildren<SpriteRenderer>()[1].gameObject; 
         upCanvasGroup = GameHandler.breathCanvas.Find("Up").GetComponent<CanvasGroup>();
         downCanvasGroup = GameHandler.breathCanvas.Find("Down").GetComponent<CanvasGroup>();
         upBar = upCanvasGroup.GetComponentsInChildren<Image>()[0];
@@ -86,7 +86,7 @@ public class HidingSpace : MonoBehaviour, iInteractable
         }
         ourKeyCodes.Add(KeyCode.I);
         ourKeyCodes.Add(KeyCode.K);
-        ScaleInteriorBackground();
+        //ScaleInteriorBackground();
 
     }
 

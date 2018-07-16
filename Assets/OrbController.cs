@@ -171,7 +171,7 @@ public class OrbController : MonoBehaviour
 
     void ReturnToPlayer()
     {
-        orb.MoveUsWrapper(transform.position, GameHandler.fatherOrbHoldTransform.position);
+        orb.MoveUsWrapper(transform.position, GameHandler.fatherOrbHoldTransform.position, GameHandler.player);
     }
 
     void Start()

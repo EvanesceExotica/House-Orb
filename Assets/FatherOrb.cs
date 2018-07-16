@@ -36,7 +36,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     }
     public static event Action<MonoBehaviour> PickedUp;
 
-    public static event Action<MonoBehaviour> Dropped;
+    public static event Action<MonoBehaviour> Dropped; //as soon as the orb burns the player and leaves their hands, this should trigger
 
     public static event Action<MonoBehaviour> Placed;
     public static event Action<MonoBehaviour> ArrivedAtPreviousSconce;
@@ -44,6 +44,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     void ArrivedAtPreviousSconceWrapper(Sconce sconce)
     {
+        Debug.Log("We, the father orb, have arrived at the previous sconce");
         if (ArrivedAtPreviousSconce != null)
         {
             ArrivedAtPreviousSconce(sconce);
@@ -340,7 +341,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
             currentSconce = null;
         }
         instabilityStatus = InstabilityStatus.FreshPickedUp;
-        StartCoroutine(MoveUs(transform.position, GameHandler.fatherOrbHoldTransform.position));
+        StartCoroutine(MoveUs(transform.position, GameHandler.fatherOrbHoldTransform.position, GameHandler.player));
         transform.parent = player.transform;
         //posOffset = transform.localPosition;
         if (PickedUp != null)
@@ -437,9 +438,9 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         }
     }
 
-    public void MoveUsWrapper(Vector2 startingPosition, Vector2 destination)
+    public void MoveUsWrapper(Vector2 startingPosition, Vector2 destination, MonoBehaviour destinationObject)
     {
-        StartCoroutine(MoveUs(startingPosition, destination));
+        StartCoroutine(MoveUs(startingPosition, destination, destinationObject));
     }
 
     public void ChangeHoldDuration(float addedDuration){
@@ -447,7 +448,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
        Debug.Log("New orb held duration " + durationHeld);
     }
 
-    public IEnumerator MoveUs(Vector2 startingPosition, Vector2 destination)
+    public IEnumerator MoveUs(Vector2 startingPosition, Vector2 destination, MonoBehaviour destinationObject)
     {
         movingToObject = true;
         MovingBetweenPlayerAndObjectWrapper(this);
@@ -457,6 +458,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
             transform.position = Vector2.MoveTowards(transform.position, destination, 5 * Time.deltaTime);
             yield return null;
         }
+        //TODO: Add a flag to decide whether it's moving to the player or to the sconce
         posOffset = transform.localPosition;
         StoppedMovingBetweenPlayerAndObjectWrapper(this);
         movingToObject = false;
@@ -483,7 +485,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     public IEnumerator ReturnToLastSconce()
     {
-        yield return StartCoroutine(MoveUs(transform.position, previousSconce.transform.position));
+        yield return StartCoroutine(MoveUs(transform.position, previousSconce.transform.position, previousSconce));
         ArrivedAtPreviousSconceWrapper(previousSconce);
         //SetInSconce(previousSconce);
         // currentSconce = previousSconce;

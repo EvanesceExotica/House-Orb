@@ -230,12 +230,12 @@ public class Memory : MonoBehaviour, iInteractable
     void MoveToMemory()
     {
         //play like "Hands lifted" animation
-        GameHandler.fatherOrb.MoveUsWrapper(GameHandler.fatherOrbHoldTransform.position, transform.position);
+        GameHandler.fatherOrb.MoveUsWrapper(GameHandler.fatherOrbHoldTransform.position, transform.position, this);
     }
 
     void MoveBack()
     {
-        GameHandler.fatherOrb.MoveUsWrapper(this.gameObject.transform.position, GameHandler.fatherOrbHoldTransform.position);
+        GameHandler.fatherOrb.MoveUsWrapper(this.gameObject.transform.position, GameHandler.fatherOrbHoldTransform.position, GameHandler.player);
 
     }
     void Start()
