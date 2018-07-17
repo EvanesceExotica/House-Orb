@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using MirzaBeig.ParticleSystems;
+using DG.Tweening;
 public class Player : MonoBehaviour {
 
+	Light playerLight;
 	public ParticleSystems blinded; //serum2	
 	public PlayerRender playerRenderer;
 	public PlayerMovement movement;
@@ -201,7 +203,19 @@ public class Player : MonoBehaviour {
 		}
 
 	}
+	float defaultLightIntensity;
+
+	void FadeOnPlayerLight(MonoBehaviour mono){
+		playerLight.DOIntensity(defaultLightIntensity, 1.0f);
+
+	}
+
+	void FadeOffPlayerLight(MonoBehaviour mono){
+		playerLight.DOIntensity(0, 1.0f);
+	}
 	void Awake(){
+		playerLight = GetComponentInChildren<Light>();
+		defaultLightIntensity = playerLight.intensity;
 		interactPrompt = GetComponentInChildren<InteractPrompt>();
 		burnDuration = 5.0f;
 
@@ -225,6 +239,10 @@ public class Player : MonoBehaviour {
 		Food.AteFood +=EatingCooldownWrapper;
 
 		PromptPlayerHit.PlayerFailed += SetTagged;
+
+		OrbController.ChannelingOrb += FadeOffPlayerLight;
+		OrbController.ManuallyStoppedChannelingOrb += FadeOnPlayerLight;
+		OrbController.SconceRevealedStoppedChannelingOrb += FadeOnPlayerLight;
 	}
 
 }

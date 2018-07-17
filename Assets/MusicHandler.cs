@@ -32,6 +32,16 @@ public class MusicHandler : MonoBehaviour
         Monster.BackToSearching += SetNormalMood;
         StarScream.ScreamBegun += PlayScreamDrone;
 
+        OrbController.ChannelingOrb += SetChannelingMusic;
+        //TODO: Test that the scream isn't happening before setting back to normal for example
+        OrbController.SconceRevealedStoppedChannelingOrb += SetNormalMood;
+        OrbController.ManuallyStoppedChannelingOrb += SetNormalMood;
+
+    }
+
+    void SetChannelingMusic(MonoBehaviour mono){
+        //different channeling music while being chased
+        ChangeClip(Mood.Channeling);
     }
 
     void PlayScreamDrone(){
@@ -47,6 +57,11 @@ public class MusicHandler : MonoBehaviour
 	void SetChasedMood(){
 		ChangeClip(Mood.Chased);
 	}
+
+    void SetNormalMood(MonoBehaviour mono){
+
+        ChangeClip(Mood.Normal);
+    }
 
     void SetNormalMood(){
         Debug.Log("Should be back to normal");
