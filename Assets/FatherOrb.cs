@@ -44,17 +44,13 @@ public class FatherOrb : MonoBehaviour//, iInteractable
 
     void ArrivedAtPreviousSconceWrapper(Sconce sconce)
     {
-        Debug.Log("We, the father orb, have arrived at the previous sconce");
         if (ArrivedAtPreviousSconce != null)
         {
             ArrivedAtPreviousSconce(sconce);
         }
     }
 
-    // void PlayerPlacedOrb(Sconce sconce){
-    //     heldStatus = HeldStatuses.InSconce;
-    //     if(sconce)
-    // }
+   
     void PlayerPlacedOrb(MonoBehaviour mono)
     {
         if (Dropped != null)
@@ -161,8 +157,8 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         player = GameHandler.playerGO;
         FatherOrbPos = player.transform.Find("FatherOrbPos");
         durationHeld = 35.0f;
-        durationBeforeFizzing = 10.0f;
-        durationBeforeRedHot = 17.0f;
+        durationBeforeFizzing = 25.0f;
+        durationBeforeRedHot = 30.0f;
         Memory.RefreshGiven += RefreshTime;
         Sconce.OrbInSconce += this.PlayerDroppedOrb;
         Sconce.OrbInSconce += this.EnteredSconce;
@@ -492,9 +488,6 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         movingToObject = true;
         MovingBetweenPlayerAndObjectWrapper(this);
         transform.parent = destinationObject.transform;
-        // if(destinationObject.GetType() == typeof(Sconce)){
-        //     transform.parent = destinationObject.transform;
-        // }
         while (Vector2.Distance(transform.position, destination) > 0.1f)
         {
             transform.position = Vector2.MoveTowards(transform.position, destination, 5 * Time.deltaTime);

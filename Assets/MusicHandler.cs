@@ -41,7 +41,8 @@ public class MusicHandler : MonoBehaviour
 
     void SetChannelingMusic(MonoBehaviour mono){
         //different channeling music while being chased
-        ChangeClip(Mood.Channeling);
+        GameHandler.fader.Play(channelingMusic);
+        //ChangeClip(Mood.Channeling);
     }
 
     void PlayScreamDrone(){
@@ -55,12 +56,14 @@ public class MusicHandler : MonoBehaviour
     }
 
 	void SetChasedMood(){
-		ChangeClip(Mood.Chased);
+        GameHandler.fader.Play(chaseMusic);
+		//ChangeClip(Mood.Chased);
 	}
 
     void SetNormalMood(MonoBehaviour mono){
 
-        ChangeClip(Mood.Normal);
+        GameHandler.fader.Play(normalMusic);
+        //ChangeClip(Mood.Normal);
     }
 
     void SetNormalMood(){

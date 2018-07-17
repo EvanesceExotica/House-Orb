@@ -205,7 +205,16 @@ namespace MirzaBeig
             }
 
             // ...
-
+            public void SetSimulate(){
+                if(particleSystems.Length == 0){
+                    return;
+                }
+                else{
+                    for(int i = 0; i < 0; i++){
+                        particleSystems[i].Simulate(1);
+                    }
+                }
+            }
             public void SetPrewarm(bool isPrewarm){
                 if (particleSystems.Length == 0)
                 {

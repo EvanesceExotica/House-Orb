@@ -301,6 +301,7 @@ public class PromptPlayerHit : MonoBehaviour
         {
             PlayerParriedScream();
             AutoRepelUsedWrapper();
+            Time.timeScale *= 2;
             yield break;
         }
         float startTime = Time.time;

@@ -13,6 +13,8 @@ public class GameHandler : MonoBehaviour
     public static GameObject playerGO;
 
     public static FatherOrb fatherOrb;
+
+    public static GameObject managerObject;
     public static GameObject fatherOrbGO;
 
     public static Monster monster;
@@ -38,6 +40,8 @@ public class GameHandler : MonoBehaviour
     public static Transform breathCanvas;
 
     public static DialogueDisplayer dialogueDisplayer;    
+
+    public static CrossFade fader;
     void Awake()
     {
         dialogueDisplayer = GameObject.Find("DialogueDisplayer").GetComponent<DialogueDisplayer>();
@@ -52,6 +56,8 @@ public class GameHandler : MonoBehaviour
         bubbleLineStartTransform = GameObject.Find("LineStartPosition").transform;
         proCamera = Camera.main.GetComponent<ProCamera2D>();
         mainCamera = Camera.main;
+        managerObject = GameObject.Find("Managers");
+       fader = managerObject.GetComponent<CrossFade>(); 
         roomManager = GameObject.Find("Managers").GetComponent<RoomManager>();
         playerGO = GameObject.Find("Player");
         player = playerGO.GetComponent<Player>();

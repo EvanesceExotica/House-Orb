@@ -98,7 +98,7 @@ public class OrbEffects : MonoBehaviour
     {
         foreach (ParticleSystems system in parryParticles)
         {
-            system.SetPlaybackSpeed(2.0f);
+           // system.SetPlaybackSpeed(2.0f);
         }
     }
 

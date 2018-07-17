@@ -47,7 +47,7 @@ public class ScreamFollowObject : MonoBehaviour
                     yield break;
                 }
             }
-            Debug.Log("We are moving the scream object " + destination);
+            Debug.Log("We are moving the scream object in room " + room.name);
             transform.position = Vector2.Lerp(transform.position, destination.position, elapsedTime);
             elapsedTime += Time.deltaTime;
             yield return null;
