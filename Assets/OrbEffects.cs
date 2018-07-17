@@ -89,6 +89,10 @@ public class OrbEffects : MonoBehaviour
         CorruptedObject.StoppedCorrupting += StopCorruptionEffect;
     }
 
+    void CloseInOnOrb(){
+        
+    }
+
     void StopAllButFizz()
     {
 
