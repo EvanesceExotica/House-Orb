@@ -15,6 +15,8 @@ public class FatherOrb : MonoBehaviour//, iInteractable
     [SerializeField] float corruptionMeter = 0;
 
     [SerializeField] float maxCorruption = 19.0f;
+
+    float durationBeforeCritical;
     public static event Action<MonoBehaviour> MovingBetweenPlayerAndObject;
 
     void MovingBetweenPlayerAndObjectWrapper(MonoBehaviour mono)
@@ -84,6 +86,14 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         if (RedHot != null)
         {
             RedHot();
+        }
+    }
+
+    public static event Action Critical;
+
+    void OrbCritical(){
+        if(Critical != null){
+            Critical();
         }
     }
     public static event Action Overheated;
@@ -159,6 +169,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         durationHeld = 35.0f;
         durationBeforeFizzing = 25.0f;
         durationBeforeRedHot = 30.0f;
+        durationBeforeCritical = 33.0f;
         Memory.RefreshGiven += RefreshTime;
         Sconce.OrbInSconce += this.PlayerDroppedOrb;
         Sconce.OrbInSconce += this.EnteredSconce;
@@ -325,6 +336,8 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         Fizzing,
 
         RedHot,
+
+        _Critical,
         Screaming
 
     }
@@ -392,14 +405,7 @@ public class FatherOrb : MonoBehaviour//, iInteractable
         while (elapsedTime < durationHeld)
         {
             FloatMe();
-            // if (!GameHandler.player.movement.flipping)
-            // {
-            //     FloatMe();
-            // }
-            // else
-            // {
-            //     Debug.Log("Flipped this frame");
-            // }
+            
 
             if (timeRefreshed)
             {
@@ -433,6 +439,10 @@ public class FatherOrb : MonoBehaviour//, iInteractable
                 instabilityStatus = InstabilityStatus.RedHot;
                 OrbRedHot();
 
+            }
+            if(elapsedTime >= durationBeforeCritical && instabilityStatus != InstabilityStatus._Critical){
+                instabilityStatus = InstabilityStatus._Critical;
+                OrbCritical();
             }
             if (!movingToObject)
             {

@@ -46,6 +46,12 @@ public class OrbEffects : MonoBehaviour
 
     ParticleSystems mainCurrentPlayingSystem;
 
+    public AudioClip currentWoosh;
+
+    public AudioClip standardWoosh;
+    public AudioClip panicWoosh;
+
+    float wooshInterval = 1.0f;
     public ParticleSystems failureSystem;
     Light ourLight;
     float defaultIntensity;
@@ -72,6 +78,7 @@ public class OrbEffects : MonoBehaviour
 
         FatherOrb.Fizzing += StartFizz;
         FatherOrb.RedHot += IncreaseFizzTempo;
+        FatherOrb.Critical += IncreaseToSuperPanicWoosh;
         //FatherOrb.Overheated += StopFizz;
         FatherOrb.OrbRefreshed += StopFizz;
         FatherOrb.Dropped += StopFizz;
@@ -89,7 +96,9 @@ public class OrbEffects : MonoBehaviour
         CorruptedObject.StoppedCorrupting += StopCorruptionEffect;
     }
 
-    void CloseInOnOrb(){
+
+    void CloseInOnOrb()
+    {
 
     }
 
@@ -100,12 +109,13 @@ public class OrbEffects : MonoBehaviour
 
     void SetParryParticlesToDoubleSpeed(bool held)
     {
-        foreach(ParticleSystems system in parryParticles){
+        foreach (ParticleSystems system in parryParticles)
+        {
             //system.Simulate(1.0f, false);
         }
         foreach (ParticleSystems system in parryParticles)
         {
-           // system.SetPlaybackSpeed(2.0f);
+            // system.SetPlaybackSpeed(2.0f);
         }
     }
 
@@ -138,19 +148,69 @@ public class OrbEffects : MonoBehaviour
         }
     }
 
+    void StartNormalWoosh()
+    {
+        wooshInterval = 1.0f;
+        currentWoosh = panicWoosh;
+        if (!wooshing)
+        {
+            StartCoroutine(Woosh());
+        }
+    }
+    void IncreaseToPanicWoosh()
+    {
+        wooshInterval = 0.5f;
+    }
+
+    void IncreaseToSuperPanicWoosh(){
+        wooshInterval = 0.25f;
+    }
+    bool wooshing = false;
+    public IEnumerator Woosh()
+    {
+        wooshing = true;
+        while (true)
+        {
+            PlayWooshSound(currentWoosh);
+            yield return new WaitForSeconds(wooshInterval);
+        }
+        wooshing = false;
+    }
+
+    void InvokeWoosh(int interval, string methodName)
+    {
+        InvokeRepeating(methodName, 0, 1.0f);
+    }
+
+    void CancelWoosh(string methodName)
+    {
+        CancelInvoke(methodName);
+    }
+
+    void PlayWooshSound(AudioClip wooshClip)
+    {
+        source.PlayOneShot(wooshClip);
+    }
+
+    void PlayPanicWooshSound()
+    {
+        source.PlayOneShot(panicWoosh);
+    }
 
     void Shake()
     {
         transform.DOShakePosition(1.0f, 0.5f, 3, 90, false, true);
     }
 
-    public void ResetCorruptionSound(){
+    public void ResetCorruptionSound()
+    {
         source.clip = null;
         source.pitch = 1.0f;
-        source.volume = 0.2f; 
+        source.volume = 0.2f;
     }
 
-    public void PlayCorruptionSound(float corruptionLevel){
+    public void PlayCorruptionSound(float corruptionLevel)
+    {
         source.clip = corruptionSound;
         source.time = corruptionLevel;
         Debug.Log(source.time);
@@ -162,19 +222,24 @@ public class OrbEffects : MonoBehaviour
         //source.DOFade(source.volume + 0.15f, 0.5f);
     }
 
-    public void StopCorruptionSound(){
+    public void StopCorruptionSound()
+    {
         source.Stop();
     }
-    void PlayCorruptionEffect(){
+    void PlayCorruptionEffect()
+    {
         baseParticleSystem.Stop();
-        if(failureSystem != null){
+        if (failureSystem != null)
+        {
             failureSystem.SetLoop(true);
             failureSystem.Play();
         }
     }
 
-    void StopCorruptionEffect(){
-        if(failureSystem != null){
+    void StopCorruptionEffect()
+    {
+        if (failureSystem != null)
+        {
             failureSystem.SetLoop(false);
             failureSystem.Stop();
         }
@@ -238,6 +303,7 @@ public class OrbEffects : MonoBehaviour
     void StartFizz()
     {
         FizzingParticleSystems.Play();
+        StartNormalWoosh();
 
     }
 
@@ -249,6 +315,7 @@ public class OrbEffects : MonoBehaviour
     void IncreaseFizzTempo()
     {
         FizzingParticleSystems.SetPlaybackSpeed(2.0f);
+        IncreaseToPanicWoosh();
     }
     void ChangeLightIntensity(float intensity, float duration)
     {

@@ -71,6 +71,7 @@ public class HidingSpace : MonoBehaviour, iInteractable
     void Awake()
     {
 //        ourInteriorBackgroundSprite = GetComponentsInChildren<SpriteRenderer>()[1].gameObject; 
+audioSource = GetComponent<AudioSource>();
         upCanvasGroup = GameHandler.breathCanvas.Find("Up").GetComponent<CanvasGroup>();
         downCanvasGroup = GameHandler.breathCanvas.Find("Down").GetComponent<CanvasGroup>();
         upBar = upCanvasGroup.GetComponentsInChildren<Image>()[0];
