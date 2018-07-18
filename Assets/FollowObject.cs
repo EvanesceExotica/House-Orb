@@ -70,6 +70,7 @@ public class FollowObject : MonoBehaviour
 
     void StopFollowing()
     {
+        Debug.Log("Stop following, and fade");
         following = false;
         objectWereFollowing = null;
         if(ourSystem.IsPlaying()){

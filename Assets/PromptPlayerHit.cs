@@ -176,7 +176,7 @@ public class PromptPlayerHit : MonoBehaviour
 
     void FocusOnPlayer()
     {
-       // RemoveOrbAsTarget();
+        // RemoveOrbAsTarget();
         //ZoomOut();
     }
     void AddOrbAsTarget()
@@ -264,16 +264,22 @@ public class PromptPlayerHit : MonoBehaviour
     void PlaySystem()
     {
         Debug.Log("Playing chosen system " + chosenSystem.gameObject.name);
-        chosenSystem.Play();
+        if (!chosenSystem.IsPlaying())
+        {
+            chosenSystem.Simulate(1, false);
+            chosenSystem.Play();
+        }
+        Debug.Log("Is our chosen system playing rn?" + chosenSystem.IsPlaying());
     }
 
     void StopSystem()
     {
-        chosenSystem.Stop();
+          chosenSystem.Stop();
     }
 
     ParticleSystems chosenSuccessfulSystem;
-    void PlaySuccessSystem(){
+    void PlaySuccessSystem()
+    {
         chosenSuccessfulSystem.Play();
     }
 
@@ -291,7 +297,7 @@ public class PromptPlayerHit : MonoBehaviour
     }
     bool hitSuccess = false;
 
-    Color32 gold = new Color32(218,165,32, 255);
+    Color32 gold = new Color32(218, 165, 32, 255);
 
 
     public IEnumerator PromptPlayerHitCoroutine()
@@ -344,13 +350,13 @@ public class PromptPlayerHit : MonoBehaviour
         //TODO: play some cowering animation by the player here
         ScreamPromptPassedWrapper();
         FadeOutPrompt();
-        Time.timeScale *= 2; 
+        Time.timeScale *= 2;
         if (hitSuccess)
         {
             //TODO: Add some particle effect that shows a sheild or something exploding forth from the parried side
             PlayerParriedScream();
             PlaySuccessSystem();
-           // TODO: We still need to add the systems through the inspector
+            // TODO: We still need to add the systems through the inspector
             Debug.Log("Stunned enemy!");
             //TODO: Insert good stuff, stunning the enemy here
         }
@@ -368,9 +374,10 @@ public class PromptPlayerHit : MonoBehaviour
 
     }
 
-   
 
-    public IEnumerator RecoveryDelay(){
+
+    public IEnumerator RecoveryDelay()
+    {
 
         yield return new WaitForSeconds(1.0f);
         PlayerMissedOrFailed();

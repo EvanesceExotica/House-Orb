@@ -26,6 +26,7 @@ public class FadeOutSpriteGroup : MonoBehaviour {
 
 	void FadeAllSpritesInGroup(){
 		foreach(SpriteRenderer sRenderer in allChildSprites){
+			//TODO: Put this back
 			sRenderer.DOFade(0, 1.0f).SetUpdate(true);
 		}
 	}

@@ -178,6 +178,15 @@ namespace MirzaBeig
                 return false;
             }
 
+            public void StartEmissions(){
+                for (int i = 0; i < particleSystems.Length; i++)
+                {
+                    ParticleSystem ps = particleSystems[i];
+                    //ps.emission.enabled = true;
+                }
+
+            }
+
             // ...
 
             public bool IsPlaying(bool checkAll = false)
