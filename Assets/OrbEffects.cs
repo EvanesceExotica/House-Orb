@@ -152,6 +152,7 @@ public class OrbEffects : MonoBehaviour
     {
         wooshInterval = 1.0f;
         currentWoosh = panicWoosh;
+        canWoosh = true;
         if (!wooshing)
         {
             StartCoroutine(Woosh());
@@ -165,11 +166,17 @@ public class OrbEffects : MonoBehaviour
     void IncreaseToSuperPanicWoosh(){
         wooshInterval = 0.25f;
     }
+
+    bool canWoosh;
+    void StopWoosh(){
+        canWoosh = false;
+
+    }
     bool wooshing = false;
     public IEnumerator Woosh()
     {
         wooshing = true;
-        while (true)
+        while (canWoosh)
         {
             PlayWooshSound(currentWoosh);
             yield return new WaitForSeconds(wooshInterval);
@@ -310,6 +317,7 @@ public class OrbEffects : MonoBehaviour
     void StopFizz(UnityEngine.Object ourObject)
     {
         FizzingParticleSystems.Stop();
+        canWoosh = false;
     }
 
     void IncreaseFizzTempo()
