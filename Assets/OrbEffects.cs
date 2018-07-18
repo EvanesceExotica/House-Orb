@@ -90,7 +90,7 @@ public class OrbEffects : MonoBehaviour
     }
 
     void CloseInOnOrb(){
-        
+
     }
 
     void StopAllButFizz()
@@ -100,6 +100,9 @@ public class OrbEffects : MonoBehaviour
 
     void SetParryParticlesToDoubleSpeed(bool held)
     {
+        foreach(ParticleSystems system in parryParticles){
+            //system.Simulate(1.0f, false);
+        }
         foreach (ParticleSystems system in parryParticles)
         {
            // system.SetPlaybackSpeed(2.0f);

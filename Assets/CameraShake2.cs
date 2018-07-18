@@ -38,8 +38,8 @@ public class CameraShake2 : MonoBehaviour {
 	void Awake(){
 		canvasGroup = GetComponentInChildren<CanvasGroup>();
 		Monster.ReadyToScream += StartShakeWithDelay;
-		StarScream.ScreamHitPlayerCurrentRoom += ScreamShake;
-		PromptPlayerHit.PlayerParried += ScreamShake;
+		//StarScream.ScreamHitPlayerCurrentRoom += ScreamShake;
+		//PromptPlayerHit.PlayerParried += ScreamShake;
 	}
 
 

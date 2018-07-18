@@ -263,7 +263,7 @@ public class PromptPlayerHit : MonoBehaviour
 
     void PlaySystem()
     {
-        //chosenSystem.SetPlaybackSpeed(2.0f);
+        Debug.Log("Playing chosen system " + chosenSystem.gameObject.name);
         chosenSystem.Play();
     }
 
